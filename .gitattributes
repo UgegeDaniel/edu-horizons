@@ -3,3 +3,4 @@
 
 # Set specific behavior for CSS files
 client/src/app/*.css text eol=lf
+* text eol=lf
