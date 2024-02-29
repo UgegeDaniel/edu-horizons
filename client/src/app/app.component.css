@@ -1,0 +1,106 @@
+/* NAVIGATION BAR STYLES */
+.logo-img{
+    max-height: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+}
+.logo-txt{
+    font-size: 28px;
+    font-weight: 400;
+    color: white !important;
+    margin-left: 8px !important;
+    text-align: right;
+}
+.trigger {
+    font-size: 18px;
+    line-height: 64px;
+    padding: 0 24px;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+
+  .trigger:hover {
+    color: #1890ff;
+  }
+
+  .logo {
+    height: 75px;
+    /* background: rgba(255, 255, 255, 0.2); */
+    margin: 16px;
+    padding: 8px;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+
+  /* LAYOUT STYLES */
+  nz-header {
+    background: #fff;
+    padding: 0;
+  }
+
+  .app-header {
+    height: 80px;
+  }
+
+  nz-content {
+    margin: 0 16px;
+  }
+
+  nz-breadcrumb {
+    margin: 16px 0;
+  }
+
+  .inner-content {
+    padding: 24px;
+    background: #fff;
+    min-height: 360px;
+  }
+
+  nz-footer {
+    text-align: center;
+  }
+  
+  .flex-col{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .flex-row{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .space-between{
+    justify-content: space-between;
+  }
+
+  .header-block{
+    margin-bottom: 4px;
+    overflow-y: auto;
+    /* height: fit-content; */
+    padding-bottom: 12px;
+    min-height: 100%;
+  }
+
+  /* FORM STYLES */
+
+  .login-form {
+    max-width: 300px;
+  }
+
+  .login-form-margin {
+    margin-bottom: 16px;
+  }
+
+  .login-form-forgot {
+    float: right;
+  }
+
+  .login-form-button {
+    width: 100%;
+  }
