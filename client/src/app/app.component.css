@@ -87,6 +87,13 @@
     min-height: 100%;
   }
 
+  /* HERO STYLES */
+.hero-image{
+  max-width: 400px;
+  max-height: 400px;
+  margin-left: 20px
+  /* filter: blur(1px) brightness(0.5) */
+}
   /* FORM STYLES */
 
   .login-form {
