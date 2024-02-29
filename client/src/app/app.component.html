@@ -1,5 +1,5 @@
-<nz-layout>
-  <div style="display: flex; flex-direction: column;">
+<nz-layout style="overflow-y: hidden;">
+  <div style="display: flex; flex-direction: column; overflow-y: hidden;">
     <nz-header class="app-header">
       <ul nz-menu nzTheme="dark" class="header-block flex-row space-between">
         <div class="logo">
@@ -9,7 +9,7 @@
         <button nz-button nzType="primary">Sign in / Sign up</button>
       </ul>
     </nz-header>
-    <div style="display: flex; flex-direction: row;" class="app-content">
+    <div style="display: flex; flex-direction: row; overflow:hidden" class="app-content">
       <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
         <ul nz-menu nzTheme="dark" nzMode="inline">
           <li nz-menu-item>
@@ -80,7 +80,7 @@
           </li>
         </ul>
       </nz-sider>
-      <nz-layout>
+      <nz-layout class="main-app-content" style="position: sticky;">
         <nz-header>
           <span class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
             (click)="isCollapsed = !isCollapsed"></span>
@@ -94,14 +94,14 @@
             <nz-breadcrumb-item>Bill</nz-breadcrumb-item>
           </nz-breadcrumb> -->
           <div class="inner-content">
-
             <section class="hero flex-row">
               <div class="hero-content">
                 <h1>Welcome to Edu Horizons</h1>
                 <p>EduHorizons is an online education platform offering diverse courses, interactive lessons, and expert
                   tutors. We empower learners to explore interests, enhance skills, and achieve academic goals,
                   fostering a community where education knows no bounds.</p>
-                <i style="display: block; margin: 4px;">...Building Bridges to Knowledge, Creating Pathways to Success</i>
+                <i style="display: block; margin: 4px;">...Building Bridges to Knowledge, Creating Pathways to
+                  Success</i>
                 <button nz-button nzType="primary">Get Started</button>
               </div>
               <!-- <img src="../assets/hero-image.jpg" alt="Hero Image" class="hero-image"> -->

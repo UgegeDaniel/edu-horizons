@@ -37,6 +37,16 @@
 }
 
 
+/* Side */
+nz-sider{
+  max-height: 74vh;
+  position: relative;
+  overflow-y: scroll !important;
+}
+nz-sider>ul{
+  height: 100%;
+}
+
 /* LAYOUT STYLES */
 nz-header {
   background: #fff;
@@ -52,7 +62,7 @@ nz-header {
 }
 
 .app-content {
-  margin-top: 100px
+  margin-top: 100px;
 }
 
 .app-footer {
@@ -64,6 +74,7 @@ nz-header {
 
 nz-content {
   margin: 0 16px;
+  max-height: 50vh;
 }
 
 nz-breadcrumb {
