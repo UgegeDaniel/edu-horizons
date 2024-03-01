@@ -11,15 +11,24 @@ import { NzIconModule } from 'ng-zorro-antd/icon'; // Import NzIconModule
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
-
+import { NzTableModule } from 'ng-zorro-antd/table';
 import { AppComponent } from './app.component';
+import { RouterModule } from '@angular/router';
+import { AppRoutingModule } from './app-routing.module';
+import { HomepageComponent } from 'src/pages/homepage/homepage.component';
+import { ClassesComponent } from 'src/pages/classes/classes.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomepageComponent,
+    ClassesComponent,
+    
   ],
   imports: [
     BrowserModule,
+    AppRoutingModule,
+    RouterModule.forRoot([]),
     FormsModule, // Add FormsModule
     ReactiveFormsModule, // Add ReactiveFormsModule
     HttpClientModule,
@@ -28,6 +37,7 @@ import { AppComponent } from './app.component';
     NzInputModule, // Add NzInputModule
     NzButtonModule, // Add NzButtonModule
     NzGridModule,// Add NzGridModule
+    NzTableModule,
     HttpClientModule,
     BrowserModule,
     BrowserAnimationsModule,

@@ -14,11 +14,11 @@
         <ul nz-menu nzTheme="dark" nzMode="inline">
           <li nz-menu-item>
             <span nz-icon nzType="home"></span>
-            <span>Home</span>
+            <span><a routerLink="/">Home</a></span>
           </li>
           <li nz-menu-item>
             <span nz-icon nzType="experiment"></span>
-            <span>Classes</span>
+            <span><a routerLink="/classes">Classes</a></span>
           </li>
           <li nz-submenu nzTitle="Tests and Assignment" nzIcon="file-done">
             <ul>
@@ -86,28 +86,7 @@
             (click)="isCollapsed = !isCollapsed"></span>
         </nz-header>
         <nz-content>
-          <nz-breadcrumb>
-            <nz-breadcrumb-item>Home</nz-breadcrumb-item>
-          </nz-breadcrumb>
-          <!-- <nz-breadcrumb>
-            <nz-breadcrumb-item>User</nz-breadcrumb-item>
-            <nz-breadcrumb-item>Bill</nz-breadcrumb-item>
-          </nz-breadcrumb> -->
-          <div class="inner-content">
-            <section class="hero flex-row">
-              <div class="hero-content">
-                <h1>Welcome to Edu Horizons</h1>
-                <p>EduHorizons is an online education platform offering diverse courses, interactive lessons, and expert
-                  tutors. We empower learners to explore interests, enhance skills, and achieve academic goals,
-                  fostering a community where education knows no bounds.</p>
-                <i style="display: block; margin: 4px;">...Building Bridges to Knowledge, Creating Pathways to
-                  Success</i>
-                <button nz-button nzType="primary">Get Started</button>
-              </div>
-              <!-- <img src="../assets/hero-image.jpg" alt="Hero Image" class="hero-image"> -->
-            </section>
-
-          </div>
+          <router-outlet></router-outlet>
         </nz-content>
         <nz-footer class="app-footer">Edu-Horizons ©2024 Designed and Developed By Ugege Daniel</nz-footer>
       </nz-layout>
