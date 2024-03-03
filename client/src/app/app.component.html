@@ -1,85 +1,8 @@
 <nz-layout style="overflow-y: hidden;">
   <div style="display: flex; flex-direction: column; overflow-y: hidden;">
-    <nz-header class="app-header">
-      <ul nz-menu nzTheme="dark" class="header-block flex-row space-between">
-        <div class="logo">
-          <img class="logo-img" src="../assets/logo-no-background.png" alt="logo">
-          <span class="logo-txt">EDU-HORIZONS</span>
-        </div>
-        <button nz-button nzType="primary">Sign in / Sign up</button>
-      </ul>
-    </nz-header>
+    <app-header></app-header>
     <div style="display: flex; flex-direction: row; overflow:hidden" class="app-content">
-      <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
-        <ul nz-menu nzTheme="dark" nzMode="inline">
-          <li nz-menu-item>
-            <span nz-icon nzType="home"></span>
-            <span><a routerLink="/">Home</a></span>
-          </li>
-          <li nz-menu-item>
-            <span nz-icon nzType="experiment"></span>
-            <span><a routerLink="/classes">Classes</a></span>
-          </li>
-          <li nz-submenu nzTitle="Tests and Assignment" nzIcon="file-done">
-            <ul>
-              <li nz-menu-item> Practice Tests</li>
-              <li nz-menu-item>Assigned Assignments</li>
-              <li nz-menu-item>Test Results</li>
-              <li nz-menu-item>Assignment Submissions</li>
-            </ul>
-          </li>
-          <li nz-submenu nzTitle="Scheduling" nzIcon="schedule">
-            <ul>
-              <li nz-menu-item>Class Schedule</li>
-              <li nz-menu-item>Reschedule Class</li>
-              <li nz-menu-item>Upcoming Classes</li>
-              <li nz-menu-item>Previous Classes</li>
-            </ul>
-          </li>
-          <li nz-submenu nzTitle="Profile" nzIcon="user">
-            <ul>
-              <li nz-menu-item>My Profile</li>
-              <li nz-menu-item>Edit Profile</li>
-              <li nz-menu-item>Payment History </li>
-              <li nz-menu-item>Settings</li>
-            </ul>
-          </li>
-          <li nz-submenu nzTitle="Resources" nzIcon="folder">
-            <ul>
-              <li nz-menu-item>Resource Library</li>
-              <li nz-menu-item>Study Guides</li>
-              <li nz-menu-item>Reference Materials</li>
-              <li nz-menu-item>Recommended Books</li>
-            </ul>
-          </li>
-          <li nz-submenu nzTitle="Community" nzIcon="team">
-            <ul>
-              <li nz-menu-item>Discussion Forums</li>
-              <li nz-menu-item>Student Chat</li>
-              <li nz-menu-item>Tutor Chat</li>
-              <li nz-menu-item>Feedback & Reviews</li>
-            </ul>
-          </li>
-          <li nz-submenu nzTitle="Help and Support" nzIcon="question-circle">
-            <ul>
-              <li nz-menu-item>FAQ</li>
-              <li nz-menu-item>Contact Us</li>
-              <li nz-menu-item>Report an Issue</li>
-              <li nz-menu-item>Terms of Service</li>
-              <li nz-menu-item>Privacy Policy</li>
-            </ul>
-          </li>
-          <li nz-submenu nzTitle="Admin" nzIcon="solution">
-            <ul>
-              <li nz-menu-item>Dashboard</li>
-              <li nz-menu-item>User Management</li>
-              <li nz-menu-item>Content Management</li>
-              <li nz-menu-item>Analytics</li>
-              <li nz-menu-item>Settings</li>
-            </ul>
-          </li>
-        </ul>
-      </nz-sider>
+      <app-sidebar [isCollapsed]="isCollapsed"></app-sidebar>
       <nz-layout class="main-app-content" style="position: sticky;">
         <nz-header>
           <span class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
