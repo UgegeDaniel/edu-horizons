@@ -36,6 +36,18 @@
   justify-content: center;
 }
 
+a{
+  color: white !important;
+}
+/* Side */
+nz-sider{
+  max-height: 74vh;
+  position: relative;
+  overflow-y: scroll !important;
+}
+nz-sider>ul{
+  height: 100%;
+}
 
 /* LAYOUT STYLES */
 nz-header {
@@ -51,8 +63,8 @@ nz-header {
   left: 0;
 }
 
-.app-content{
-  margin-top: 100px
+.app-content {
+  margin-top: 100px;
 }
 
 .app-footer {
@@ -64,6 +76,7 @@ nz-header {
 
 nz-content {
   margin: 0 16px;
+  max-height: 50vh;
 }
 
 nz-breadcrumb {
@@ -104,14 +117,6 @@ nz-footer {
   min-height: 100%;
 }
 
-/* HERO STYLES */
-.hero-image {
-  max-width: 400px;
-  max-height: 400px;
-  margin-left: 20px
-    /* filter: blur(1px) brightness(0.5) */
-}
-
 /* FORM STYLES */
 
 .login-form {
@@ -128,4 +133,37 @@ nz-footer {
 
 .login-form-button {
   width: 100%;
+}
+
+/* Tablets in portrait mode */
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+
+  /* Your styles for tablets in portrait mode */
+  .hero {
+    flex-direction: column-reverse;
+  }
+}
+
+/* Tablets in landscape mode */
+@media only screen and (min-width: 1025px) and (max-width: 1366px) {
+
+  /* Your styles for tablets in landscape mode */
+  .hero {
+    flex-direction: column-reverse;
+  }
+}
+
+
+/* Phones in portrait mode */
+@media only screen and (max-width: 767px) {
+  .hero {
+    flex-direction: column-reverse;
+  }
+}
+
+/* Phones in landscape mode */
+@media only screen and (min-width: 568px) and (max-width: 767px) and (orientation: landscape) {
+  .hero {
+    flex-direction: column-reverse;
+  }
 }

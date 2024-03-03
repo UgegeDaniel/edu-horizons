@@ -1,0 +1,21 @@
+a {
+    color: #FFF
+}
+
+li>div{
+    background-color: #001529;
+    -webkit-tap-highlight-color: #001529;
+}
+
+.ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    background-color: #1890ff;
+}
+
+.ant-menu-dark .ant-menu-item:hover, .ant-menu-dark .ant-menu-item-active, .ant-menu-dark .ant-menu-submenu-active, .ant-menu-dark .ant-menu-submenu-open, .ant-menu-dark .ant-menu-submenu-selected, .ant-menu-dark .ant-menu-submenu-title:hover{
+    background-color: #001529;
+}
+
+html {
+    --mat-toolbar-container-background-color: #001529;
+    --mat-toolbar-container-text-color: rgba(0, 0, 0, 0.87);
+}
