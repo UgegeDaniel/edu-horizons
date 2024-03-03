@@ -2,7 +2,10 @@
   <div style="display: flex; flex-direction: column; overflow-y: hidden;">
     <app-header></app-header>
     <div style="display: flex; flex-direction: row; overflow:hidden" class="app-content">
-      <app-sidebar [isCollapsed]="isCollapsed"></app-sidebar>
+      <app-sidebar [isCollapsed]="isCollapsed" style="
+      max-height: 75vh;
+      position: relative;
+      overflow-y: scroll !important; min-width: fit-content;"></app-sidebar>
       <nz-layout class="main-app-content" style="position: sticky;">
         <nz-header>
           <span class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"

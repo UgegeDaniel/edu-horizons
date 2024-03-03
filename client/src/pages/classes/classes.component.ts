@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 interface DataItem {
-  name: string;
-  chinese: number;
-  math: number;
-  english: number;
+  Level: "Junior-Secondary" | "Senior-Secondary" | "Miscelleneous" | "Pre-Secondary" | "Primary";
+  Class: string;
+  Subject: string;
+  Tutor: string;
 }
 @Component({
   selector: 'app-classes',
@@ -13,50 +13,55 @@ interface DataItem {
 export class ClassesComponent {
   listOfColumn = [
     {
-      title: 'Name',
-      compare: (a: DataItem, b: DataItem) => a.name.localeCompare(b.name),
+      title: 'Level',
+      compare: (a: DataItem, b: DataItem) => a.Level.localeCompare(b.Level),
       priority: false,
     },
     {
-      title: 'Chinese Score',
-      compare: (a: DataItem, b: DataItem) => a.chinese - b.chinese,
+      title: 'Class',
+      compare: (a: DataItem, b: DataItem) =>  a.Class.localeCompare(b.Class),
       priority: 3,
     },
     {
-      title: 'Math Score',
-      compare: (a: DataItem, b: DataItem) => a.math - b.math,
+      title: 'Subject',
+      compare: (a: DataItem, b: DataItem) =>  a.Subject.localeCompare(b.Subject),
       priority: 2,
     },
     {
-      title: 'English Score',
-      compare: (a: DataItem, b: DataItem) => a.english - b.english,
-      priority: 1,
+      title: 'Tutor',
+      compare: (a: DataItem, b: DataItem) =>  a.Tutor.localeCompare(b.Tutor),
+      priority: 2,
     },
+    // {
+    //   title: 'Action',
+    //   compare: (a: DataItem, b: DataItem) => a.english - b.english,
+    //   priority: 1,
+    // },
   ];
   listOfData: DataItem[] = [
     {
-      name: 'John Brown',
-      chinese: 98,
-      math: 60,
-      english: 70,
+      Level: 'Junior-Secondary',
+      Class: "Friction",
+      Subject: "MATHS",
+      Tutor: "70",
     },
     {
-      name: 'Jim Green',
-      chinese: 98,
-      math: 66,
-      english: 89,
+      Level: "Junior-Secondary",
+      Class: "Forces",
+      Subject: "MATHS",
+      Tutor: "89",
     },
     {
-      name: 'Joe Black',
-      chinese: 98,
-      math: 90,
-      english: 70,
+      Level: "Junior-Secondary",
+      Class: "Science - stuff",
+      Subject: "90",
+      Tutor: "SCIENCE",
     },
     {
-      name: 'Jim Red',
-      chinese: 88,
-      math: 99,
-      english: 89,
+      Level: "Junior-Secondary",
+      Class: "Atoms, Molecules",
+      Subject: "SCIENCE",
+      Tutor: "89",
     },
   ];
 }

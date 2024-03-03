@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CommunityComponent } from './community.component';
+import { TutorChatComponent } from './tutor-chat.component';
 
-describe('CommunityComponent', () => {
-  let component: CommunityComponent;
-  let fixture: ComponentFixture<CommunityComponent>;
+describe('TutorChatComponent', () => {
+  let component: TutorChatComponent;
+  let fixture: ComponentFixture<TutorChatComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [CommunityComponent]
+      declarations: [TutorChatComponent]
     });
-    fixture = TestBed.createComponent(CommunityComponent);
+    fixture = TestBed.createComponent(TutorChatComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
