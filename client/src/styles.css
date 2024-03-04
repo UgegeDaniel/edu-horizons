@@ -13,3 +13,16 @@ body {
 a {
     color: #FFF
 }
+
+
+.ant-layout-sider-children .ant-menu.ant-menu-inline-collapsed{
+    max-width: 80px;
+}
+
+.ant-layout-footer{
+    height: 50px !important;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

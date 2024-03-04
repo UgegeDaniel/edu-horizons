@@ -7,7 +7,7 @@ import { FormControl, FormGroup, NonNullableFormBuilder, Validators } from '@ang
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  isCollapsed = false;
+  isCollapsed = true;
   isVertical: boolean = true; // Define isVertical property
   validateForm: FormGroup<{
     userName: FormControl<string>;
