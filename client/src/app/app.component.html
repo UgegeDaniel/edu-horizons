@@ -11,6 +11,12 @@
           <span class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
             (click)="isCollapsed = !isCollapsed"></span>
         </nz-header>
+        <nz-breadcrumb class="route-indicator">
+          <nz-breadcrumb-item style="color: #1890ff">
+            <span nz-icon [nzType]="currentLink?.icon!" nzTheme="outline"></span>
+            {{currentLink?.name}} / {{currentSubRouteName ? currentSubRouteName : ""}}
+          </nz-breadcrumb-item>
+        </nz-breadcrumb>
         <nz-content>
           <router-outlet></router-outlet>
         </nz-content>

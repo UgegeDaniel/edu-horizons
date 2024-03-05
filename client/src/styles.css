@@ -26,3 +26,12 @@ a {
     align-items: center;
     justify-content: center;
 }
+
+.route-indicator{
+    font-style: italic;
+    padding: 12px 24px;
+    display: block;
+    background-color: #fff;
+    min-height: 32px;
+    margin: 0 auto;
+}
