@@ -13,7 +13,7 @@ import { LINK } from '../../utils/types';import {
 export class SidebarComponent {
   @Input() isCollapsed: boolean = true;
   links: LINK[] = LINKS;
-  currentLink: string = "";
+  currentRoute: string = "";
 
   constructor(private router: Router){
 
@@ -26,7 +26,7 @@ export class SidebarComponent {
       }
       else if (event instanceof NavigationEnd) {
         // Navigation End
-        this.currentLink = event.url;
+        this.currentRoute = event.url;
         // console.log(event.url);
       }
       else if (event instanceof NavigationCancel) {
