@@ -31,6 +31,18 @@ export class HeaderComponent {
     remember: [true]
   });
 
+
+  tabs = [
+    {
+      name: 'Tab 1',
+      icon: 'apple'
+    },
+    {
+      name: 'Tab 2',
+      icon: 'android'
+    }
+  ];
+
   constructor(private fb: NonNullableFormBuilder) {}
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -65,4 +77,6 @@ export class HeaderComponent {
   handleCancel(): void {
     this.isVisible = false;
   }
+
+  
 }
