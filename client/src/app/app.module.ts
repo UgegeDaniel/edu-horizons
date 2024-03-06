@@ -7,13 +7,11 @@ import { NzFormModule } from 'ng-zorro-antd/form'; // Import NzFormModule
 import { NzModalModule } from 'ng-zorro-antd/modal'; // Import NzFormModule
 import { NzInputModule } from 'ng-zorro-antd/input'; // Import NzInputModule
 import { NzButtonModule } from 'ng-zorro-antd/button'; // Import NzButtonModule
-import { NzModalModule } from 'ng-zorro-antd/modal'; // Import NzButtonModule
 import { NzGridModule } from 'ng-zorro-antd/grid'; // Import NzGridModule
 import { NzIconModule } from 'ng-zorro-antd/icon'; // Import NzIconModule
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
-import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
