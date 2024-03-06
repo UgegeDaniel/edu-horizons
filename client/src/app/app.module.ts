@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 import { NzFormModule } from 'ng-zorro-antd/form'; // Import NzFormModule
 import { NzInputModule } from 'ng-zorro-antd/input'; // Import NzInputModule
 import { NzButtonModule } from 'ng-zorro-antd/button'; // Import NzButtonModule
+import { NzModalModule } from 'ng-zorro-antd/modal'; // Import NzButtonModule
 import { NzGridModule } from 'ng-zorro-antd/grid'; // Import NzGridModule
 import { NzIconModule } from 'ng-zorro-antd/icon'; // Import NzIconModule
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
@@ -45,7 +46,8 @@ import PageComponents from 'src/pages';
     NzLayoutModule,
     NzMenuModule,
     NzBreadCrumbModule,
-    NzIconModule
+    NzIconModule,
+    NzModalModule
   ],
   providers: [],
   bootstrap: [AppComponent]
