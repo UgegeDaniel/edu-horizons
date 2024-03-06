@@ -13,6 +13,7 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
@@ -21,6 +22,9 @@ import { HeaderComponent } from 'src/components/header/header.component';
 import { ModalComponent } from 'src/components/modal/modal.component';
 import PageComponents from 'src/pages';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { SignUpFormComponent } from 'src/components/sign-up-form/sign-up-form.component';
+import { SignInFormComponent } from 'src/components/sign-in-form/sign-in-form.component';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 
 @NgModule({
   declarations: [
@@ -28,6 +32,8 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
     SidebarComponent,
     HeaderComponent,
     ModalComponent,
+    SignUpFormComponent,
+    SignInFormComponent,
     [...PageComponents]
   ],
   imports: [
@@ -52,7 +58,10 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
     NzMenuModule,
     NzBreadCrumbModule,
     NzIconModule,
-    NzModalModule
+    NzModalModule,
+    NzTabsModule,
+    NzSelectModule,
+     
   ],
   providers: [],
   bootstrap: [AppComponent]
