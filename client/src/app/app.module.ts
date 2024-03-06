@@ -12,6 +12,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon'; // Import NzIconModule
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
