@@ -35,10 +35,6 @@
     align-items: center;
     justify-content: center;
   }
-  
-  a{
-    color: white !important;
-  }
   /* Side */
   nz-sider{
     max-height: 74vh;
