@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // Import For
 import { HttpClientModule } from '@angular/common/http'; // Import HttpClientModule
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Import BrowserAnimationsModule
 import { NzFormModule } from 'ng-zorro-antd/form'; // Import NzFormModule
+import { NzModalModule } from 'ng-zorro-antd/modal'; // Import NzFormModule
 import { NzInputModule } from 'ng-zorro-antd/input'; // Import NzInputModule
 import { NzButtonModule } from 'ng-zorro-antd/button'; // Import NzButtonModule
 import { NzGridModule } from 'ng-zorro-antd/grid'; // Import NzGridModule
@@ -17,13 +18,16 @@ import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { SidebarComponent } from 'src/components/sidebar/sidebar.component';
 import { HeaderComponent } from 'src/components/header/header.component';
+import { ModalComponent } from 'src/components/modal/modal.component';
 import PageComponents from 'src/pages';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 
 @NgModule({
   declarations: [
     AppComponent,
     SidebarComponent,
     HeaderComponent,
+    ModalComponent,
     [...PageComponents]
   ],
   imports: [
@@ -39,6 +43,8 @@ import PageComponents from 'src/pages';
     NzButtonModule, // Add NzButtonModule
     NzGridModule,// Add NzGridModule
     NzTableModule,
+    NzModalModule,
+    NzCheckboxModule,
     HttpClientModule,
     BrowserModule,
     BrowserAnimationsModule,
