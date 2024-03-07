@@ -4,6 +4,7 @@ interface DataItem {
   Class: string;
   Subject: string;
   Tutor: string;
+  id: number;
 }
 @Component({
   selector: 'app-classes',
@@ -12,6 +13,12 @@ interface DataItem {
 })
 export class ClassesComponent {
   listOfColumn = [
+    {
+      title: 'Class-id',
+      compare: (a: DataItem, b: DataItem) =>  a.id - b.id,
+      priority: 3,
+      width: "10%",
+    },
     {
       title: 'Class',
       compare: (a: DataItem, b: DataItem) =>  a.Class.localeCompare(b.Class),
@@ -137,6 +144,9 @@ export class ClassesComponent {
       Subject: "ENVIRONMENTAL SCIENCE",
       Tutor: "Ugege Daniel",
     },
-  ];
+  ].map((item, index)=>({
+    ...item,
+    id: index
+  }));
   
 }
