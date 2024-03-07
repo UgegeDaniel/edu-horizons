@@ -14,6 +14,7 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
@@ -61,6 +62,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     NzModalModule,
     NzTabsModule,
     NzSelectModule,
+    NzCollapseModule
      
   ],
   providers: [],
