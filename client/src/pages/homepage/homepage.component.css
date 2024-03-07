@@ -5,4 +5,33 @@
     margin-left: 20px;
       filter: blur(1px) brightness(0.5);
   }
-  
+  /* Customize the appearance of nz-comment-author */
+nz-comment-author {
+  display: block; /* Ensure it behaves like a block element */
+  font-weight: bold; /* Make the text bold */
+  color: #333; /* Set the text color */
+  font-size: 16px; /* Adjust the font size */
+  margin-bottom: 5px; /* Add some bottom margin for spacing */
+}
+
+/* Style for the comment content */
+nz-comment-content {
+  margin-left: 30px; /* Adjust the indentation of the comment content */
+  font-size: 14px; /* Adjust the font size of the comment content */
+  color: #555; /* Set the color of the comment content */
+}
+.ant-tag-blue{
+  font-size: 16px;
+  padding: 12px;
+  border-radius: 5px;
+  border: none
+}
+
+[nz-carousel-content] {
+  /* text-align: center;
+  height: 160px;
+  line-height: 160px; */
+  /* background: #364d79;
+  color: #fff; */
+  overflow: hidden;
+}

@@ -12,6 +12,12 @@ import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzCommentModule } from 'ng-zorro-antd/comment';
+import { NzAvatarModule } from 'ng-zorro-antd/avatar';
+import { NzTagModule } from 'ng-zorro-antd/tag';
+import { NzCarouselModule } from 'ng-zorro-antd/carousel';
+import { NzListModule } from 'ng-zorro-antd/list';
 
 const ngZorroModules = [
     NzFormModule,
@@ -28,7 +34,13 @@ const ngZorroModules = [
     NzModalModule,
     NzTabsModule,
     NzSelectModule,
-    NzCollapseModule
+    NzCollapseModule,
+    NzDividerModule,
+    NzCommentModule,
+    NzAvatarModule,
+    NzTagModule,
+    NzCarouselModule,
+    NzListModule
 ]
 
 export default ngZorroModules;
