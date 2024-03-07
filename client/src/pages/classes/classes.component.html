@@ -1,20 +1,34 @@
-<nz-breadcrumb>
-    <nz-breadcrumb-item>Classes</nz-breadcrumb-item>
-</nz-breadcrumb>
-<nz-table #sortTable [nzData]="listOfData" nzTableLayout="fixed">
+<nz-table #headerTable [nzData]="listOfData" [nzScroll]="{ y: '240px' }">
     <thead>
         <tr>
-            <th *ngFor="let column of listOfColumn" [nzSortFn]="column.compare" [nzSortPriority]="column.priority">
+            <th *ngFor="let column of listOfColumn" [nzSortFn]="column.compare" [nzSortPriority]="column.priority" [nzWidth]="column.width">
                 {{ column.title }}
+            </th>
+            <th>
+                Actions
             </th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let data of sortTable.data">
-            <td>{{ data.Level }}</td>
-            <td>{{ data.Class }}</td>
-            <td>{{ data.Subject }}</td>
-            <td>{{ data.Tutor }}</td>
+        <tr *ngFor="let data of headerTable.data">
+            <td style="
+                overflow-x: scroll;  
+                -webkit-line-clamp: 2; 
+                -webkit-box-orient: vertical; 
+                text-overflow: ellipsis;">{{ data.Class }}</td>
+            <td style="
+            white-space: nowrap;
+            overflow-x: scroll;  
+            -webkit-line-clamp: 2; 
+            -webkit-box-orient: vertical; 
+            text-overflow: ellipsis;">{{ data.Subject }}</td>
+            <td style="
+            overflow-x: scroll;  
+            white-space: nowrap;
+            -webkit-line-clamp: 2; 
+            -webkit-box-orient: vertical; 
+            text-overflow: ellipsis;">{{ data.Tutor }}</td>
+            <td><a routerLink="/resources/resource-library">Go To Resources</a></td>
         </tr>
     </tbody>
 </nz-table>
