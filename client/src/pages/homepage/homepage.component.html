@@ -1,13 +1,48 @@
 <div class="inner-content">
     <section class="hero flex-row">
         <div class="hero-content">
-            <h1>Welcome to Edu Horizons</h1>
-            <p>EduHorizons is an online education platform offering diverse courses, interactive lessons, and expert
-                tutors. We empower learners to explore interests, enhance skills, and achieve academic goals,
-                fostering a community where education knows no bounds.</p>
-            <i style="display: block; margin: 4px;">...Building Bridges to Knowledge, Creating Pathways to
-                Success</i>
-            <button nz-button nzType="primary">Get Started</button>
+            <div class="homepage-container">
+                <h2 style="font-size: xx-large; max-width: 70%;">Discover a world of learning with us. Our platform
+                    offers a wide range of resources and services to <span class="blue-txt" style="color: #1890ff">
+                        support your educational journey.
+                    </span></h2>
+
+                <nz-divider></nz-divider>
+
+                <ul class="flex-row">
+                    <nz-tag [nzColor]="'blue'" nzBordered="false">Interactive lessons</nz-tag>
+                    <nz-tag [nzColor]="'blue'">Expert tutors</nz-tag>
+                    <nz-tag [nzColor]="'blue'">Personalized learning paths</nz-tag>
+                    <nz-tag [nzColor]="'blue'">Community forums</nz-tag>
+                </ul>
+
+                <nz-divider></nz-divider>
+                <!-- <nz-carousel nzAutoPlay>
+                    <div nz-carousel-content *ngFor="let testimonial of testimonials">
+                        <nz-comment>
+                            <nz-comment-content>
+                                <p>{{ testimonial.content }}</p>
+                            </nz-comment-content>
+                            <nz-comment-action>
+                                <nz-avatar nzIcon="user" [nzSize]="48"></nz-avatar>
+                                <nz-comment>{{ testimonial.author }}</nz-comment>
+                            </nz-comment-action>
+                        </nz-comment>
+                    </div>
+                </nz-carousel> -->
+
+                <nz-list [nzDataSource]="data" [nzRenderItem]="item" [nzItemLayout]="'horizontal'" style="max-width: 70%; margin: 0 auto;">
+                    <ng-template #item let-item>
+                      <nz-comment [nzAuthor]="item.author" [nzDatetime]="item.datetime">
+                        <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="item.avatar"></nz-avatar>
+                        <nz-comment-content>
+                          <p>{{ item.content }}</p>
+                        </nz-comment-content>
+                        <nz-comment-action>Reply to</nz-comment-action>
+                      </nz-comment>
+                    </ng-template>
+                  </nz-list>
+            </div>
         </div>
         <!-- <img src="../assets/hero-image.jpg" alt="Hero Image" class="hero-image"> -->
     </section>

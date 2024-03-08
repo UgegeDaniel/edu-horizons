@@ -1,1 +1,19 @@
-<p>resource-library works!</p>
+<nz-collapse [nzExpandIconPosition]="expandIconPosition">
+  <ng-container *ngFor="let item of data; trackBy: trackByFn">
+    <nz-collapse-panel [nzHeader]="item.topic" [nzActive]="item.active" [nzExtra]="extraTpl"
+      [nzDisabled]="item.disabled">
+      <p style="margin:0;">
+        {{item.note}}
+      </p>
+    </nz-collapse-panel>
+    <ng-template #extraTpl>
+      <span>{{item.subject}}</span>
+    </ng-template>
+    <br />
+  </ng-container>
+</nz-collapse>
+<span>Expand Icon Position: </span>
+<nz-select [(ngModel)]="expandIconPosition">
+  <nz-option nzValue="left" nzLabel="left"></nz-option>
+  <nz-option nzValue="right" nzLabel="right"></nz-option>
+</nz-select>
