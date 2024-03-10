@@ -23,6 +23,8 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
+import { NzResultModule } from 'ng-zorro-antd/result';
+import { NzProgressModule } from 'ng-zorro-antd/progress';
 
 const ngZorroModules = [
     NzFormModule,
@@ -50,7 +52,9 @@ const ngZorroModules = [
     NzRadioModule,
     NzPaginationModule,
     NzAlertModule,
-    NzTypographyModule
+    NzTypographyModule,
+    NzResultModule,
+    NzProgressModule
 ]
 
 export default ngZorroModules;

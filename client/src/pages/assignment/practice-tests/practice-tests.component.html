@@ -27,6 +27,10 @@
 <!-- Modal for starting test -->
 <nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
     <ng-container *nzModalContent>
+        <div class="timer-section" style="position: relative;margin-bottom: 20px;">
+            <sapn nz-typography style="position: absolute; right: 16px;"><strong>{{ hoursDisplay }}:{{ minutesDisplay
+                    }}:{{ secondsDisplay }}</strong></sapn>
+        </div>
         <div>
             <span>{{currentIndex + 1}}.</span>
             <span style="margin-left: 4px;" nz-typography>{{ questions[currentIndex].question }}</span>
@@ -39,7 +43,8 @@
             </div>
         </div>
         <div style="margin-top: 12px;">
-            <button nz-button [disabled]="currentIndex <= 0" nzType="default" (click)="goToPreviousQuestion()">Previous</button>
+            <button nz-button [disabled]="currentIndex <= 0" nzType="default"
+                (click)="goToPreviousQuestion()">Previous</button>
             <button nz-button *ngFor="let question of questions; let i = index" [nzType]="getButtonType(i)"
                 [nzLoading]="isCurrentQuestion(i)" (click)="currentIndex = i">
                 {{ i + 1 }}
@@ -55,4 +60,18 @@
     <ng-container *nzModalContent>
         <p>Are you sure you want to cancel the test?</p>
     </ng-container>
+</nz-modal>
+
+
+<nz-modal [(nzVisible)]="isSubmissionModalVisible"
+    (nzOnOk)="handleOk()">
+    <ng-container *nzModalContent>
+    <nz-result nzStatus="success" nzTitle="Successfully submitted test."
+        [nzSubTitle]="submissionSubText">
+        <div nz-result-extra>
+            <button nz-button nzType="primary">Take another test</button>
+            <button nz-button>Go to Profile</button>
+        </div>
+    </nz-result>
+</ng-container>
 </nz-modal>

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NzButtonType } from 'ng-zorro-antd/button';
+import { interval, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-practice-tests',
@@ -31,19 +32,27 @@ export class PracticeTestsComponent {
   itemsPerPage = 1;
   isVisible = false;
   isCancelModalVisible = false;
+  isSubmissionModalVisible: boolean = false;
   currentQuestions: any[] = [];
   currentIndex: number = 0;
   options =['a', 'b', 'c', 'd', 'e', 'f', 'g',]
   buttonType: NzButtonType | undefined;
   modalTitle: string = "";
-
-
+  submissionSubText: string = "";
+  timerSubscription: Subscription | undefined;
+  hoursDisplay: number = 0;
+  minutesDisplay: number = 0;
+  secondsDisplay: number = 5;
   
   constructor() { }
   getButtonType(i: number){
     return this.isCurrentQuestion(i) ? 'dashed' : (this.isQuestionAnswered(i) ? 'primary' : 'default');
   }
-
+  ngOnDestroy() {
+    if (this.timerSubscription) {
+      this.timerSubscription.unsubscribe();
+    }
+  }
 questions: any[] = [];
 mathsQuestions = [
   { question: 'What is 7 multiplied by 8?', options: ['48', '56', '64', '72'], selectedOption: null },
@@ -75,12 +84,48 @@ scienceQuestions = [
   showModal(subject: string): void {
     if (subject === 'Maths') {
       this.questions = this.mathsQuestions;
-      this.modalTitle = 'Practice Tests --- Maths';
+      this.modalTitle = 'Practice Tests --- Maths';  
     } else if (subject === 'Science') {
       this.modalTitle = 'Practice Tests --- Science';
       this.questions = this.scienceQuestions;
     }
+    this.startTimer();
     this.isVisible = true;
+  }
+
+  private startTimer() {
+    let countdownSeconds = this.hoursDisplay * 3600 + this.minutesDisplay * 60 + this.secondsDisplay;
+    this.timerSubscription = interval(1000).subscribe(() => {
+      if (countdownSeconds > 0) {
+        countdownSeconds--;
+        this.hoursDisplay = Math.floor(countdownSeconds / 3600);
+        this.minutesDisplay = Math.floor((countdownSeconds % 3600) / 60);
+        this.secondsDisplay = countdownSeconds % 60;
+      } else {
+        // Countdown finished, do something (e.g., show a message)
+        this.isSubmissionModalVisible = true
+        this.submissionSubText = "You ran out of time"
+        this.clearTimer();
+      }
+    });
+  }
+
+  private stopTimer(): void {
+    if (this.timerSubscription && !this.timerSubscription.closed) {
+      // Unsubscribe from the timer observable to stop the timer
+      this.timerSubscription.unsubscribe();
+    }
+  }
+
+  private clearTimer() {
+    if (this.timerSubscription) {
+      this.timerSubscription.unsubscribe();
+      this.timerSubscription = undefined;
+    }
+    // Reset timer display values
+    this.hoursDisplay = 0;
+    this.minutesDisplay = 0;
+    this.secondsDisplay = 0;
   }
 
   onSelectOption(questionIndex: number, optionIndex: number): void {
@@ -102,6 +147,7 @@ scienceQuestions = [
   handleCancel(): void {
     console.log('Button cancel clicked!');
     this.isVisible = false;
+    this.stopTimer();
   }
   goToPreviousQuestion(): void {
     if (this.currentIndex > 0) {
