@@ -13,6 +13,7 @@ import { FeedbackReviewsComponent } from "src/pages/community/feedback-reviews/f
 import { StudentChatComponent } from "src/pages/community/student-chat/student-chat.component";
 import { TutorChatComponent } from "src/pages/community/tutor-chat/tutor-chat.component";
 import { HomepageComponent } from "src/pages/homepage/homepage.component";
+import { NotFoundComponent } from "src/pages/not-found/not-found.component";
 import { PaymentsComponent } from "src/pages/profile/payments/payments.component";
 import { UserProfileComponent } from "src/pages/profile/user-profile/user-profile.component";
 import { RecommendedBooksComponent } from "src/pages/resources/recommended-books/recommended-books.component";
@@ -61,6 +62,8 @@ const routes: Routes = [
     { path: 'admin/content-management', component: ContentManagementComponent },
     { path: 'admin/analytics', component: AnalyticsComponent },
     { path: 'admin/settings', component: SettingsComponent },
+    //Not Found
+    { path: '**', component: NotFoundComponent },
   ];
 
   export default routes;
