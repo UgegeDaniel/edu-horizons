@@ -25,6 +25,8 @@ import { NzAlertModule } from 'ng-zorro-antd/alert';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzResultModule } from 'ng-zorro-antd/result';
 import { NzProgressModule } from 'ng-zorro-antd/progress';
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzStatisticModule } from 'ng-zorro-antd/statistic';
 
 const ngZorroModules = [
     NzFormModule,
@@ -54,7 +56,9 @@ const ngZorroModules = [
     NzAlertModule,
     NzTypographyModule,
     NzResultModule,
-    NzProgressModule
+    NzProgressModule,
+    NzCardModule,
+    NzStatisticModule
 ]
 
 export default ngZorroModules;

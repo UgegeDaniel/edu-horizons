@@ -1,1 +1,138 @@
-<p>user-profile works!</p>
+<div nz-row style="width: 100%">
+    <div nz-col nzSpan="8" style="background-color: white; margin-right: 16px;">
+        <div class="profile-card">
+            <div class="profile-header">
+                <img class="profile-image" src="../../../assets/profile-image.avif" alt="Profile Picture">
+                <h2 class="profile-name">{{ user.name }}</h2>
+                <p class="profile-subtext">{{ user.role }} / {{user.level}}</p>
+                <p class="profile-subtext">{{ user.location }}</p>
+            </div>
+            <div class="profile-footer">
+                <button nz-button nzType="primary">Edit Profile</button>
+                <button nz-button nzType="default">Logout</button>
+            </div>
+        </div>
+    </div>
+    <div nz-col nzSpan="15" class="profile-details">
+        <div style="width: 100%; padding-inline: 16px">
+            <nz-divider nzText="General Information" nzOrientation="left"></nz-divider>
+            <div nz-row nzGutter="16">
+                <div nz-col nzSpan="8">
+                    <p class="profile-detail"><strong>Email:</strong></p>
+                </div>
+                <div nz-col nzSpan="16">
+                    <p class="profile-detail">{{ user.email }}</p>
+                </div>
+            </div>
+            <div nz-row nzGutter="16">
+                <div nz-col nzSpan="8">
+                    <p class="profile-detail"><strong>Phone:</strong></p>
+                </div>
+                <div nz-col nzSpan="16">
+                    <p class="profile-detail">{{ user.phoneNumber }}</p>
+                </div>
+            </div>
+            <div nz-row nzGutter="16">
+                <div nz-col nzSpan="8">
+                    <p class="profile-detail"><strong>Address:</strong></p>
+                </div>
+                <div nz-col nzSpan="16">
+                    <p class="profile-detail">{{ user.address }}</p>
+                </div>
+            </div>
+        </div>
+        <div style="width: 100%; padding-inline: 16px">
+            <nz-divider nzText="Educational Background" nzOrientation="left"></nz-divider>
+            <div nz-row nzGutter="16">
+                <div nz-col nzSpan="8">
+                    <p class="profile-detail"><strong>Institution:</strong></p>
+                </div>
+                <div nz-col nzSpan="16">
+                    <p class="profile-detail">{{ user.educationalBackground.institution }}</p>
+                </div>
+            </div>
+            <div nz-row nzGutter="16">
+                <div nz-col nzSpan="8">
+                    <p class="profile-detail"><strong>Degree / Current Academic Program :</strong></p>
+                </div>
+                <div nz-col nzSpan="16">
+                    <p class="profile-detail">{{ user.educationalBackground.degree }}</p>
+                </div>
+            </div>
+            <div nz-row nzGutter="16">
+                <div nz-col nzSpan="8">
+                    <p class="profile-detail"><strong>Upcoming Certification Exams :</strong></p>
+                </div>
+                <div nz-col nzSpan="16">
+                    <p class="profile-detail">{{ user.educationalBackground.certificationExams }}</p>
+                </div>
+            </div>
+            <div nz-row nzGutter="16">
+                <div nz-col nzSpan="8">
+                    <p class="profile-detail"><strong>Year of Study:</strong></p>
+                </div>
+                <div nz-col nzSpan="16">
+                    <p class="profile-detail">{{ user.educationalBackground.yearOfStudy }}</p>
+                </div>
+            </div>
+        </div>
+        <div style="width: 100%; padding-inline: 16px">
+            <nz-divider nzText="Additional Information" nzOrientation="left"></nz-divider>
+            <div nz-row nzGutter="16">
+                <div nz-col nzSpan="8">
+                    <p class="profile-detail"><strong>Interests:</strong></p>
+                </div>
+                <div nz-col nzSpan="16">
+                    <ul class="flex-row">
+                        <nz-tag [nzColor]="'blue'" *ngFor="let interest of user.additionalInformation.interests;"
+                            nzBordered="false">{{interest}}</nz-tag>
+                    </ul>
+                </div>
+            </div>
+            <div nz-row nzGutter="16">
+                <div nz-col nzSpan="8">
+                    <p class="profile-detail"><strong>Bio:</strong></p>
+                </div>
+                <div nz-col nzSpan="16">
+                    <p class="profile-detail">{{ user.additionalInformation.bio }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div nz-row>
+    <div nz-col nzSpan="12" class="profile-details" style="flex-direction: row; margin-top: 16px; padding-left: 16px;">
+        <nz-col [nzSpan]="8" style="margin: 4px;">
+            <nz-statistic [nzValue]="(user.userHistory.quizzesTaken | number)!"
+                [nzTitle]="'Total Number Of Tests Taken'"></nz-statistic>
+        </nz-col>
+        <nz-col [nzSpan]="8" style="margin: 4px;">
+            <nz-statistic [nzValue]="(10 | number)!"
+                [nzTitle]="'Number Of Maths Tests Taken'"></nz-statistic>
+        </nz-col>
+        <nz-col [nzSpan]="8" style="margin: 4px;">
+            <nz-statistic [nzValue]="(10 | number)!"
+                [nzTitle]="'Number Of Science Tests Taken'"></nz-statistic>
+        </nz-col>
+    </div>
+    <div nz-col nzSpan="12" class="profile-details" style="flex-direction: row; margin-top: 16px; padding: 16px;">
+        <h4 style="margin-right: 12px">Total Average Score</h4>
+        <nz-progress nzStrokeLinecap="square" nzType="dashboard"
+            [nzPercent]="user.userHistory.averageQuizScore"></nz-progress>
+    </div>
+</div>
+<div nz-row>
+    <div nz-col nzSpan="24" class="profile-details" style="margin-top: 16px; padding-inline: 16px">
+        <h3 style="display: block;">Scores For Each Attempted Subject</h3>
+        <div style="width: 100%">
+            <div *ngFor="let studentScore of user.userHistory.subjectScores">
+                <h4 style="margin-right: 12px">{{studentScore.subject}}</h4>
+                <nz-progress [nzPercent]="studentScore.score" nzStatus="active"></nz-progress>
+            </div>
+            <!-- <nz-progress [nzPercent]="30"></nz-progress>
+            <nz-progress [nzPercent]="70" nzStatus="exception"></nz-progress>
+            <nz-progress [nzPercent]="100"></nz-progress>
+            <nz-progress [nzPercent]="50" [nzShowInfo]="false"></nz-progress> -->
+        </div>
+    </div>
+</div>
