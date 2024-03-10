@@ -7,8 +7,8 @@ import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import PageComponents from 'src/pages';
-import ngZorroModules from './ng-zorro-modules';
 import appComponents from 'src/components';
+import ngZorroModules from './ng-zorro-modules';
 
 @NgModule({
   declarations: [

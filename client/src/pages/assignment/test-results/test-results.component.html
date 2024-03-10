@@ -1,1 +1,27 @@
-<p>test-results works!</p>
+<!-- test-results.component.html -->
+
+<nz-table #testResultsTable [nzData]="testResults" nzBordered nzSize="middle">
+    <thead>
+      <tr>
+        <th nzWidth="100px">Test Type</th>
+        <th nzWidth="100px">Status</th>
+        <th nzWidth="150px">Submission Date</th>
+        <th nzWidth="100px">Subject</th>
+        <th nzWidth="100px">Score (%)</th>
+        <th nzWidth="150px">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let result of testResults">
+        <td>{{ result.testType }}</td>
+        <td>{{ result.status }}</td>
+        <td>{{ result.submissionDate }}</td>
+        <td>{{ result.subject }}</td>
+        <td>{{ result.score }}</td>
+        <td>
+          <button nz-button nzType="primary" (click)="seeCorrections(result)">See Corrections</button>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+  

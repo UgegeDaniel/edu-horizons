@@ -18,6 +18,15 @@ import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzCarouselModule } from 'ng-zorro-antd/carousel';
 import { NzListModule } from 'ng-zorro-antd/list';
+import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { NzPaginationModule } from 'ng-zorro-antd/pagination';
+import { NzAlertModule } from 'ng-zorro-antd/alert';
+import { NzTypographyModule } from 'ng-zorro-antd/typography';
+import { NzResultModule } from 'ng-zorro-antd/result';
+import { NzProgressModule } from 'ng-zorro-antd/progress';
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzStatisticModule } from 'ng-zorro-antd/statistic';
 
 const ngZorroModules = [
     NzFormModule,
@@ -40,7 +49,16 @@ const ngZorroModules = [
     NzAvatarModule,
     NzTagModule,
     NzCarouselModule,
-    NzListModule
+    NzListModule,
+    NzPageHeaderModule,
+    NzRadioModule,
+    NzPaginationModule,
+    NzAlertModule,
+    NzTypographyModule,
+    NzResultModule,
+    NzProgressModule,
+    NzCardModule,
+    NzStatisticModule
 ]
 
 export default ngZorroModules;

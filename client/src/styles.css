@@ -26,6 +26,14 @@ a {
     align-items: center;
     justify-content: center;
 }
+.ant-modal-footer{
+  display: none !important;
+}
+
+/* Inside your component's CSS file or globally in your styles.css */
+.ant-pagination-item-ellipsis, .ant-pagination-jump-prev, .ant-pagination-jump-next {
+  display: none;
+}
 
 .route-indicator{
     font-style: italic;

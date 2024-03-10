@@ -4,7 +4,6 @@ import { DashboardComponent } from "src/pages/admin/dashboard/dashboard.componen
 import { SettingsComponent } from "src/pages/admin/settings/settings.component";
 import { UserManagementComponent } from "src/pages/admin/user-management/user-management.component";
 import { AssignedAssignmentsComponent } from "src/pages/assignment/assigned-assignments/assigned-assignments.component";
-import { AssignmentSubmissionsComponent } from "src/pages/assignment/assignment-submissions/assignment-submissions.component";
 import { PracticeTestsComponent } from "src/pages/assignment/practice-tests/practice-tests.component";
 import { TestResultsComponent } from "src/pages/assignment/test-results/test-results.component";
 import { ClassesComponent } from "src/pages/classes/classes.component";
@@ -25,6 +24,7 @@ import { FaqComponent } from "src/pages/support/faq/faq.component";
 import { PrivacyPolicyComponent } from "src/pages/support/privacy-policy/privacy-policy.component";
 import { ReportIssueComponent } from "src/pages/support/report-issue/report-issue.component";
 import { TermsOfServiceComponent } from "src/pages/support/terms-of-service/terms-of-service.component";
+import { NotFoundComponent } from "./not-found/not-found.component";
 
 const PageComponents = [
     HomepageComponent,
@@ -32,7 +32,6 @@ const PageComponents = [
     PracticeTestsComponent,
     AssignedAssignmentsComponent,
     TestResultsComponent,
-    AssignmentSubmissionsComponent,
     SchedulingComponent,
     UserProfileComponent,
     PaymentsComponent,
@@ -54,6 +53,7 @@ const PageComponents = [
     ContentManagementComponent,
     AnalyticsComponent,
     SettingsComponent,
+    NotFoundComponent
   ];
 
   export default PageComponents;
