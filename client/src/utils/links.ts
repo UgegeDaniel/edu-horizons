@@ -22,10 +22,6 @@ const LINKS = [
         route: '/assignments/assigned-assignments',
       },
       { name: 'Test Results', route: '/assignments/test-results' },
-      {
-        name: 'Assignment Submissions',
-        route: '/assignments/assignment-submissions',
-      },
     ],
   },
   {
