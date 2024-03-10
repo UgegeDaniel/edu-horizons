@@ -24,6 +24,7 @@ import { FaqComponent } from "src/pages/support/faq/faq.component";
 import { PrivacyPolicyComponent } from "src/pages/support/privacy-policy/privacy-policy.component";
 import { ReportIssueComponent } from "src/pages/support/report-issue/report-issue.component";
 import { TermsOfServiceComponent } from "src/pages/support/terms-of-service/terms-of-service.component";
+import { NotFoundComponent } from "./not-found/not-found.component";
 
 const PageComponents = [
     HomepageComponent,
@@ -52,6 +53,7 @@ const PageComponents = [
     ContentManagementComponent,
     AnalyticsComponent,
     SettingsComponent,
+    NotFoundComponent
   ];
 
   export default PageComponents;
