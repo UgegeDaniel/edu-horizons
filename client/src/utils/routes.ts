@@ -27,7 +27,7 @@ import { PrivacyPolicyComponent } from "src/pages/support/privacy-policy/privacy
 import { ReportIssueComponent } from "src/pages/support/report-issue/report-issue.component";
 import { TermsOfServiceComponent } from "src/pages/support/terms-of-service/terms-of-service.component";
 
-
+// { path: '', pathMatch: 'full', redirectTo: '/login' },
 const routes: Routes = [
     { path: '', component: HomepageComponent },
     { path: 'classes', component: ClassesComponent },

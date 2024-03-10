@@ -1,1 +1,58 @@
-<p>practice-tests works!</p>
+<nz-page-header [nzTitle]="'Practice Tests'">
+    <ng-template #subTitle>
+        Practice tests available for different subjects or topics.
+    </ng-template>
+</nz-page-header>
+<nz-alert nzType="info" nzMessage="The allotted time for each test is 2 hours and starts immediately you select one"
+    nzShowIcon></nz-alert>
+
+<div class="content-container">
+    <nz-list [nzDataSource]="practiceTests" [nzRenderItem]="itemTemplate">
+        <ng-template #itemTemplate let-item>
+            <nz-list-item>
+                <nz-list-item-meta [nzAvatar]="item.avatar" [nzTitle]="nzTitleTemplate"
+                    [nzDescription]="item.description">
+                    <ng-template #nzTitleTemplate>
+                        <a href="">{{ item.title.topic }}</a> <i style="margin-left: 10px;">{{item.title.subject}}</i>
+                        <button nz-button [nzType]="'primary'" (click)="showModal(item.title.subject)"
+                            style="display: block;"><span>Start Test</span></button>
+                    </ng-template>
+                </nz-list-item-meta>
+            </nz-list-item>
+        </ng-template>
+    </nz-list>
+</div>
+
+
+<!-- Modal for starting test -->
+<nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+    <ng-container *nzModalContent>
+        <div>
+            <span>{{currentIndex + 1}}.</span>
+            <span style="margin-left: 4px;" nz-typography>{{ questions[currentIndex].question }}</span>
+            <div style="margin-top: 12px;">
+                <nz-radio-group [(ngModel)]="questions[currentIndex].selectedOption">
+                    <label nz-radio [nzValue]="options[i]"
+                        *ngFor="let option of questions[currentIndex].options; let i = index">{{options[i]}}.
+                        {{option}}</label>
+                </nz-radio-group>
+            </div>
+        </div>
+        <div style="margin-top: 12px;">
+            <button nz-button [disabled]="currentIndex <= 0" nzType="default" (click)="goToPreviousQuestion()">Previous</button>
+            <button nz-button *ngFor="let question of questions; let i = index" [nzType]="getButtonType(i)"
+                [nzLoading]="isCurrentQuestion(i)" (click)="currentIndex = i">
+                {{ i + 1 }}
+            </button>
+            <button nz-button [disabled]="currentIndex >= questions.length - 1" nzType="default"
+                (click)="goToNextQuestion()">Next</button>
+        </div>
+    </ng-container>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="isCancelModalVisible" nzTitle="Cancel Test" (nzOnCancel)="handleCancel()"
+    (nzOnOk)="handleOk()">
+    <ng-container *nzModalContent>
+        <p>Are you sure you want to cancel the test?</p>
+    </ng-container>
+</nz-modal>
