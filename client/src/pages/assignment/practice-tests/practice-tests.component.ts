@@ -2,11 +2,16 @@ import { Component } from '@angular/core';
 import { NzButtonType } from 'ng-zorro-antd/button';
 import { interval, Subscription } from 'rxjs';
 
+const userList = ['Lucy', 'U', 'Tom'];
+const colorList = ['#f56a00', '#7265e6', '#ffbf00', '#00a2ae'];
+
 @Component({
   selector: 'app-practice-tests',
   templateUrl: './practice-tests.component.html',
   styleUrls: ['./practice-tests.component.css'],
 })
+
+
 export class PracticeTestsComponent {
   practiceTests = [
     {
@@ -15,7 +20,7 @@ export class PracticeTestsComponent {
         topic: 'Quadratic Equations',
       },
       description: 'Test your math skills',
-      avatar: 'calculator',
+      avatar: 'tag',
     },
     {
       title: {
@@ -23,7 +28,7 @@ export class PracticeTestsComponent {
         topic: 'Atoms and Molecules',
       },
       description: 'Test your science knowledge',
-      avatar: 'science-icon',
+      avatar: 'tag',
     },
     // Add more practice tests as needed
   ];
@@ -43,6 +48,9 @@ export class PracticeTestsComponent {
   hoursDisplay: number = 0;
   minutesDisplay: number = 0;
   secondsDisplay: number = 5;
+  
+  color: string = colorList[1];
+  gap = 4;
   
   constructor() { }
   getButtonType(i: number){
@@ -146,7 +154,12 @@ scienceQuestions = [
 
   handleCancel(): void {
     console.log('Button cancel clicked!');
-    this.isVisible = false;
+    this.isCancelModalVisible = false;
+    this.stopTimer();
+  }
+  handleTestCancel(): void {
+    console.log('Button cancel clicked!');
+    this.isCancelModalVisible = true;
     this.stopTimer();
   }
   goToPreviousQuestion(): void {
