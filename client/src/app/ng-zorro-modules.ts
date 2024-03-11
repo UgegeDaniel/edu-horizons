@@ -27,6 +27,7 @@ import { NzResultModule } from 'ng-zorro-antd/result';
 import { NzProgressModule } from 'ng-zorro-antd/progress';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzStatisticModule } from 'ng-zorro-antd/statistic';
+import { NzBadgeModule } from 'ng-zorro-antd/badge';
 
 const ngZorroModules = [
     NzFormModule,
@@ -58,7 +59,8 @@ const ngZorroModules = [
     NzResultModule,
     NzProgressModule,
     NzCardModule,
-    NzStatisticModule
+    NzStatisticModule,
+    NzBadgeModule
 ]
 
 export default ngZorroModules;
