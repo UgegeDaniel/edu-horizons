@@ -31,6 +31,7 @@ export class ModalComponent {
   @Input() modalContentRef: string | TemplateRef<any> | Type<any> | undefined;
   @Input() modalFooterBtns: Array<ModalButtonOptions> | null= null;
   @Input() modalCloseBtn: ModalButtonOptions | null = null;
+  @Input() confirmBtn: ModalButtonOptions | null = null;
 
   constructor(
     private modal: NzModalService,
@@ -48,7 +49,9 @@ export class ModalComponent {
         type: this.modalCloseBtn.type,
         onClick:() => modal.destroy()
       }, ...this.modalFooterBtns] 
-      : this.modalFooterBtns
+      : this.modalFooterBtns,
+      nzClosable: false,
+      nzMaskClosable: false
     });
   }
   showModal(): void {
@@ -61,5 +64,9 @@ export class ModalComponent {
 
   handleCancel(): void {
     this.isVisible = false;
+  }
+
+  getFooterButtons(){
+    
   }
 }
