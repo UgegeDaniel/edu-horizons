@@ -35,6 +35,21 @@ export class PracticeTestsComponent {
   
   currentPage = 1;
   itemsPerPage = 1;
+
+
+testModalButtons =[
+  {
+    label: 'Submit',
+    type: 'primary'as NzButtonType,
+    autoLoading: true,
+    show: true,
+    // loading: true,
+    onClick: () => {
+      console.log('submitted');
+    }
+  }
+]
+
   isVisible = false;
   isCancelModalVisible = false;
   isSubmissionModalVisible: boolean = false;
@@ -45,9 +60,9 @@ export class PracticeTestsComponent {
   modalTitle: string = "";
   submissionSubText: string = "";
   timerSubscription: Subscription | undefined;
-  hoursDisplay: number = 0;
+  hoursDisplay: number = 1;
   minutesDisplay: number = 0;
-  secondsDisplay: number = 5;
+  secondsDisplay: number = 0;
   
   color: string = colorList[1];
   gap = 4;
@@ -90,6 +105,7 @@ scienceQuestions = [
   // Add more science questions as needed
 ];
   showModal(subject: string): void {
+    console.log(subject);
     if (subject === 'Maths') {
       this.questions = this.mathsQuestions;
       this.modalTitle = 'Practice Tests --- Maths';  

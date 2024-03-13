@@ -1,7 +1,4 @@
 <nz-page-header [nzTitle]="'Practice Tests'">
-    <ng-template #subTitle>
-        Practice tests available for different subjects or topics.
-    </ng-template>
 </nz-page-header>
 <nz-alert nzType="info" nzMessage="The allotted time for each test is 2 hours and starts immediately you select one"
     nzShowIcon></nz-alert>
@@ -10,15 +7,15 @@
     <nz-list [nzDataSource]="practiceTests" [nzRenderItem]="itemTemplate">
         <ng-template #itemTemplate let-item>
             <nz-list-item>
-                <nz-list-item-meta [nzTitle]="nzTitleTemplate" [nzDescription]="item.description">
+                <nz-list-item-meta [nzTitle]="nzTitleTemplate">
                     <ng-template #nzTitleTemplate>
-                        <div style="display: flex; align-items: center; gap: 12px;" >
+                        <div style="display: flex; align-items: center; gap: 12px;">
                             <nz-avatar [nzGap]="4" [ngStyle]="{ 'background-color': color }"
                                 [nzText]="item.title.subject" nzSize="large"
                                 style="vertical-align: middle;"></nz-avatar>
-                            <!-- <i style="margin-left: 10px;">{{item.title.subject}}</i> -->
-                            <button nz-button [nzType]="'primary'" (click)="showModal(item.title.subject)"
-                                style="display: block;"><span>Start Test</span></button>
+                            <app-modal modalBtnTxt="Start Test" [modalTitle]="'Practice' + ' / ' + item.title.subject"
+                                [modalContentRef]="testModal" (onOpen)="showModal(item.title.subject)" [modalFooterBtns]="testModalButtons">
+                            </app-modal>
                         </div>
                     </ng-template>
                 </nz-list-item-meta>
@@ -28,9 +25,18 @@
 </div>
 
 
+<!-- <app-modal openModalText="openModal" modalTitle="Modal Title" [modalContentRef]="cancelModalContent">
+</app-modal> -->
+
+
+<!-- <ng-template #cancelModalContent>
+    <p>Are you sure you want to cancel the test?</p>
+    <p>Closing this test will automatically submit your current progress</p>
+</ng-template> -->
 <!-- Modal for starting test -->
-<nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" (nzOnCancel)="handleTestCancel()" (nzOnOk)="handleOk()">
-    <ng-container *nzModalContent>
+<!-- <nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" (nzOnCancel)="handleTestCancel()" (nzOnOk)="handleOk()"> -->
+    <ng-template #testModal>
+    <!-- <ng-container *nzModalContent> -->
         <div class="timer-section" style="position: relative;margin-bottom: 20px;">
             <sapn nz-typography style="position: absolute; right: 16px;"><strong>{{ hoursDisplay }}:{{ minutesDisplay
                     }}:{{ secondsDisplay }}</strong></sapn>
@@ -55,12 +61,11 @@
             </button>
             <button nz-button [disabled]="currentIndex >= questions.length - 1" nzType="default"
                 (click)="goToNextQuestion()">Next</button>
-        </div>
-    </ng-container>
-</nz-modal>
-
-<nz-modal [(nzVisible)]="isCancelModalVisible" nzTitle="Cancel Test" 
-    (nzOnOk)="handleOk()">
+            </div>
+        <!-- </ng-container> -->
+    </ng-template>
+        
+<nz-modal [(nzVisible)]="isCancelModalVisible" nzTitle="Cancel Test" (nzOnOk)="handleOk()">
     <ng-container *nzModalContent>
         <p>Are you sure you want to cancel the test?</p>
         <p>Closing this test will automaically submit your current progress</p>
