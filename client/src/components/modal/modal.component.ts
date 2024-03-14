@@ -32,6 +32,7 @@ export class ModalComponent {
   @Input() modalFooterBtns: Array<ModalButtonOptions> | null= null;
   @Input() modalCloseBtn: ModalButtonOptions | null = null;
   @Input() confirmBtn: ModalButtonOptions | null = null;
+  @Input() maskable: boolean = false;
 
   constructor(
     private modal: NzModalService,
@@ -51,7 +52,7 @@ export class ModalComponent {
       }, ...this.modalFooterBtns] 
       : this.modalFooterBtns,
       nzClosable: false,
-      nzMaskClosable: false
+      nzMaskClosable: this.maskable ? this.maskable : false
     });
   }
   showModal(): void {
