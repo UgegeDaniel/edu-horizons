@@ -28,6 +28,8 @@ import { NzProgressModule } from 'ng-zorro-antd/progress';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzStatisticModule } from 'ng-zorro-antd/statistic';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
+import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 const ngZorroModules = [
     NzFormModule,
@@ -60,7 +62,9 @@ const ngZorroModules = [
     NzProgressModule,
     NzCardModule,
     NzStatisticModule,
-    NzBadgeModule
+    NzBadgeModule,
+    NzSkeletonModule,
+    ScrollingModule
 ]
 
 export default ngZorroModules;

@@ -1,1 +1,21 @@
-<p>recommended-books works!</p>
+<div>
+  <cdk-virtual-scroll-viewport itemSize="73" class="demo-infinite-container">
+    <nz-list>
+      <ng-container *cdkVirtualFor="let item of ds">
+        <ng-container *ngIf="item; else skeleton">
+          <nz-list-item>
+            <nz-list-item-meta nzAvatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+              [nzDescription]="item.email">
+              <nz-list-item-meta-title>
+                <a href="https://ng.ant.design">{{ item.name.last }}</a>
+              </nz-list-item-meta-title>
+            </nz-list-item-meta>
+          </nz-list-item>
+        </ng-container>
+        <ng-template #skeleton>
+          <nz-skeleton [nzAvatar]="true" [nzParagraph]="{ rows: 1 }"></nz-skeleton>
+        </ng-template>
+      </ng-container>
+    </nz-list>
+  </cdk-virtual-scroll-viewport>
+</div>
