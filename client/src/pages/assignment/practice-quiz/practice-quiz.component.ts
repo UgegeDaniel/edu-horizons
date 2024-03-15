@@ -2,20 +2,23 @@ import { Component } from '@angular/core';
 import { NzButtonType } from 'ng-zorro-antd/button';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { interval } from 'rxjs';
-import { TimerService } from 'src/services/timer.service';
-import { assignments } from 'src/utils/dummyData/assignments';
 import {
   mathsQuestions,
   scienceQuestions,
 } from 'src/utils/dummyData/dummyData';
+import { practiceQuizes } from 'src/utils/dummyData/practice-quiz';
+import { TimerService } from 'src/services/timer.service';
+import { interval } from 'rxjs';
+
+const colorList = ['#f56a00', '#7265e6', '#ffbf00', '#00a2ae'];
 
 @Component({
-  selector: 'app-assigned-assignments',
-  templateUrl: './assigned-assignments.component.html',
-  styleUrls: ['./assigned-assignments.component.css'],
+  selector: 'app-practice-quiz',
+  templateUrl: './practice-quiz.component.html',
+  styleUrls: ['./practice-quiz.component.css'],
 })
-export class AssignedAssignmentsComponent {
+export class PracticeQuizComponent {
+  practiceQuizes = practiceQuizes;
   quizModalButtons = [
     {
       label: 'Submit',
@@ -41,7 +44,10 @@ export class AssignedAssignmentsComponent {
         }),
     },
   ];
-  assignments = assignments;
+
+  isVisible = false;
+  color: string = colorList[1];
+  gap = 4;
   quizDetails: {
     questions: {
       question: string;
@@ -70,10 +76,10 @@ export class AssignedAssignmentsComponent {
     private timerService: TimerService
   ) {}
 
-  startAssignment(assignment: any): void {
-    if (assignment.subject === 'Maths') {
+  showModal(subject: string): void {
+    if (subject === 'Maths') {
       this.quizDetails.questions = mathsQuestions;
-    } else if (assignment.subject === 'Science') {
+    } else if (subject === 'Science') {
       this.quizDetails.questions = scienceQuestions;
     }
     this.timerService.startTimer(
@@ -81,7 +87,6 @@ export class AssignedAssignmentsComponent {
       this.quizDetails.timer.minutesDisplay,
       this.quizDetails.timer.secondsDisplay
     );
-
     // Update the tmer display every second
     let countdownSeconds =
       this.quizDetails.timer.hoursDisplay * 3600 +
@@ -105,5 +110,10 @@ export class AssignedAssignmentsComponent {
         );
       }
     });
+  }
+  ngOnDestroy() {
+    if (this.timerService.timerSubscription) {
+      this.timerService.timerSubscription.unsubscribe();
+    }
   }
 }

@@ -1,26 +1,30 @@
 <nz-table #assignmentTable [nzData]="assignments" nzBordered nzSize="middle">
-  <thead>
-    <tr>
-      <th nzWidth="120px">Assignment Date</th>
-      <th nzWidth="120px">Due Date</th>
-      <th>Subject</th>
-      <th nzWidth="120px">Number of Questions</th>
-      <th nzWidth="120px">Allotted Time</th>
-      <th>Topics</th>
-      <th nzWidth="120px">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let assignment of assignmentTable.data">
-      <td>{{ assignment.assignmentDate | date }}</td>
-      <td>{{ assignment.dueDate | date }}</td>
-      <td>{{ assignment.subject }}</td>
-      <td>{{ assignment.numQuestions }}</td>
-      <td>{{ assignment.allottedTime }}</td>
-      <td>{{ assignment.topics }}</td>
-      <td>
-        <button nz-button nzType="primary" (click)="startAssignment(assignment)">Start Assignment</button>
-      </td>
-    </tr>
-  </tbody>
-</nz-table>
+    <thead>
+      <tr>
+        <th nzWidth="120px">Assignment Date</th>
+        <th nzWidth="120px">Due Date</th>
+        <th>Subject</th>
+        <th nzWidth="120px">Number of Questions</th>
+        <th nzWidth="120px">Allotted Time</th>
+        <th>Topics</th>
+        <th nzWidth="120px">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let assignment of assignmentTable.data">
+        <td>{{ assignment.assignmentDate | date }}</td>
+        <td>{{ assignment.dueDate | date }}</td>
+        <td>{{ assignment.subject }}</td>
+        <td>{{ assignment.numQuestions }}</td>
+        <td>{{ assignment.allottedTime }}</td>
+        <td>{{ assignment.topics }}</td>
+        <td>
+          <app-modal modalBtnTxt="Start Assignment" [modalContentRef]="quizModalContent"  (onOpen)="startAssignment(assignment)" [modalFooterBtns]="quizModalButtons"></app-modal>
+          <ng-template #quizModalContent >
+            <app-quiz [quizDetails]="quizDetails"></app-quiz>
+          </ng-template>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+  

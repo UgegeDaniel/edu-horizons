@@ -4,7 +4,6 @@ import { DashboardComponent } from "src/pages/admin/dashboard/dashboard.componen
 import { SettingsComponent } from "src/pages/admin/settings/settings.component";
 import { UserManagementComponent } from "src/pages/admin/user-management/user-management.component";
 import { AssignedAssignmentsComponent } from "src/pages/assignment/assigned-assignments/assigned-assignments.component";
-import { PracticeTestsComponent } from "src/pages/assignment/practice-tests/practice-tests.component";
 import { TestResultsComponent } from "src/pages/assignment/test-results/test-results.component";
 import { ClassesComponent } from "src/pages/classes/classes.component";
 import { DiscussionForumsComponent } from "src/pages/community/discussion-forums/discussion-forums.component";
@@ -25,11 +24,12 @@ import { PrivacyPolicyComponent } from "src/pages/support/privacy-policy/privacy
 import { ReportIssueComponent } from "src/pages/support/report-issue/report-issue.component";
 import { TermsOfServiceComponent } from "src/pages/support/terms-of-service/terms-of-service.component";
 import { NotFoundComponent } from "./not-found/not-found.component";
+import { PracticeQuizComponent } from "./assignment/practice-quiz/practice-quiz.component";
 
 const PageComponents = [
     HomepageComponent,
     ClassesComponent,
-    PracticeTestsComponent,
+    PracticeQuizComponent,
     AssignedAssignmentsComponent,
     TestResultsComponent,
     SchedulingComponent,

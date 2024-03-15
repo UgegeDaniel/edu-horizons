@@ -1,0 +1,23 @@
+<div *ngIf="quizDetails.timer.show" class="timer-section" style="position: relative;margin-bottom: 20px;">
+    <sapn nz-typography style="position: absolute; right: 16px;"><strong>{{ quizDetails.timer.hoursDisplay }}:{{ quizDetails.timer.minutesDisplay}}:{{ quizDetails.timer.secondsDisplay }}</strong></sapn>
+</div>
+<div>
+    <span>{{currentIndex + 1}}.</span>
+    <span style="margin-left: 4px;" nz-typography>{{ quizDetails.questions[currentIndex].question }}</span>
+    <div style="margin-top: 12px;">
+        <nz-radio-group [(ngModel)]="quizDetails.questions[currentIndex].selectedOption">
+            <label nz-radio [nzValue]="options[i]"
+                *ngFor="let option of quizDetails.questions[currentIndex].options; let i = index">{{options[i]}}.
+                {{option}}</label>
+        </nz-radio-group>
+    </div>
+</div>
+<div style="margin-top: 12px;">
+    <button nz-button [disabled]="currentIndex <= 0" nzType="default" (click)="goToPreviousQuestion()">Previous</button>
+    <button nz-button *ngFor="let question of quizDetails.questions; let i = index" [nzType]="getButtonType(i)"
+        [nzLoading]="isCurrentQuestion(i)" (click)="currentIndex = i">
+        {{ i + 1 }}
+    </button>
+    <button nz-button [disabled]="currentIndex >= quizDetails.questions.length - 1" nzType="default"
+        (click)="goToNextQuestion()">Next</button>
+</div>
