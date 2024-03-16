@@ -68,7 +68,13 @@ export class AssignedAssignmentsComponent {
     private modal: NzModalService,
     private notification: NzNotificationService,
     private timerService: TimerService
-  ) {}
+  ) {
+    this.timerService.clearTimer(
+      this.quizDetails.timer.hoursDisplay,
+      this.quizDetails.timer.minutesDisplay,
+      this.quizDetails.timer.secondsDisplay
+    );
+  }
 
   startAssignment(assignment: any): void {
     if (assignment.subject === 'Maths') {
