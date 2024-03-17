@@ -19,7 +19,10 @@
         <td>{{ assignment.allottedTime }}</td>
         <td>{{ assignment.topics }}</td>
         <td>
-          <button nz-button nzType="primary" (click)="startAssignment(assignment)">Start Assignment</button>
+          <app-modal modalBtnTxt="Start Assignment" [modalContentRef]="quizModalContent"  (onOpen)="startAssignment(assignment)" [modalFooterBtns]="quizModalButtons"></app-modal>
+          <ng-template #quizModalContent >
+            <app-quiz [quizDetails]="quizDetails"></app-quiz>
+          </ng-template>
         </td>
       </tr>
     </tbody>

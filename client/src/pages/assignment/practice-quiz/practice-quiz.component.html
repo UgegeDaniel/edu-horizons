@@ -1,0 +1,30 @@
+<nz-page-header [nzTitle]="'Available Practice Quizes'">
+</nz-page-header>
+<nz-alert nzType="info" nzMessage="The allotted time for each quiz is 2 hours and starts immediately you select one"
+    nzShowIcon></nz-alert>
+
+<div class="content-container">
+    <nz-list [nzDataSource]="practiceQuizes" [nzRenderItem]="itemTemplate">
+        <ng-template #itemTemplate let-item>
+            <nz-list-item>
+                <nz-list-item-meta [nzTitle]="nzTitleTemplate">
+                    <ng-template #nzTitleTemplate>
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <nz-avatar [nzGap]="4" [ngStyle]="{ 'background-color': color }"
+                                [nzText]="item.title.subject" nzSize="large"
+                                style="vertical-align: middle;"></nz-avatar>
+                            <app-modal modalBtnTxt="Start Quiz" [modalTitle]="'Practice' + ' / ' + item.title.subject"
+                                [modalContentRef]="quizModalContent" (onOpen)="showModal(item.title.subject)"
+                                [modalFooterBtns]="quizModalButtons">
+                            </app-modal>
+                        </div>
+                    </ng-template>
+                </nz-list-item-meta>
+            </nz-list-item>
+        </ng-template>
+    </nz-list>
+</div>
+
+<ng-template #quizModalContent>
+  <app-quiz [quizDetails]="quizDetails"></app-quiz>
+</ng-template>

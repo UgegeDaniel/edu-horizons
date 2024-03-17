@@ -5,7 +5,7 @@ import { DashboardComponent } from "src/pages/admin/dashboard/dashboard.componen
 import { SettingsComponent } from "src/pages/admin/settings/settings.component";
 import { UserManagementComponent } from "src/pages/admin/user-management/user-management.component";
 import { AssignedAssignmentsComponent } from "src/pages/assignment/assigned-assignments/assigned-assignments.component";
-import { PracticeTestsComponent } from "src/pages/assignment/practice-tests/practice-tests.component";
+import { PracticeQuizComponent } from "src/pages/assignment/practice-quiz/practice-quiz.component";
 import { TestResultsComponent } from "src/pages/assignment/test-results/test-results.component";
 import { ClassesComponent } from "src/pages/classes/classes.component";
 import { DiscussionForumsComponent } from "src/pages/community/discussion-forums/discussion-forums.component";
@@ -32,7 +32,7 @@ const routes: Routes = [
     { path: '', component: HomepageComponent },
     { path: 'classes', component: ClassesComponent },
     //Assignments
-    { path: 'assignments/practice-tests', component: PracticeTestsComponent },
+    { path: 'assignments/practice-tests', component: PracticeQuizComponent },
     { path: 'assignments/assigned-assignments', component: AssignedAssignmentsComponent },
     { path: 'assignments/test-results', component: TestResultsComponent },
     //Scheduling

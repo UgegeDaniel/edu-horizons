@@ -4,7 +4,7 @@
             <img class="logo-img" src="../assets/logo-no-background.png" alt="logo">
             <span class="logo-txt">EDU-HORIZONS</span>
         </div>
-        <app-modal modalBtnTxt="Sign In / Sign Up" [modalContentRef]="authForm"></app-modal>
+        <app-modal modalBtnTxt="Sign In / Sign Up" [modalContentRef]="authForm" [maskable]="true"></app-modal>
         <ng-template #authForm>
             <app-auth-form></app-auth-form>
         </ng-template>
