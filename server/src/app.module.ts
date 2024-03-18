@@ -12,3 +12,4 @@ import { AppointmentsModule } from './appointments/appointments.module';
   providers: [AppService],
 })
 export class AppModule {}
+

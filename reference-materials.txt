@@ -1,0 +1,9 @@
+https://angular.io/api/common/NgIf   angular
+ant design 
+nest js
+https://www.sipios.com/blog-posts/implementing-authentication-in-nestjs-using-passport-and-jwt    local auth strategy integration
+https://blog.stackademic.com/integrating-google-login-with-nestjs-using-passport-js-0f25e02e503b  google-oauth integration
+
+
+Functional / Functional Reactive / Object Oriented Programming 
+Dependency Injection
