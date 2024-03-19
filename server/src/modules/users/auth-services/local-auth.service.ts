@@ -1,28 +1,40 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+} from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
-import { User } from '../types';
-import { DEMO_USERS } from 'src/demo/users';
+import { AuthenticatedUser, User } from '../types';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UsersService } from '../users.service';
 
 @Injectable()
 export class LocalAuthService {
-  private readonly users: User[] = DEMO_USERS;
   constructor(
     private jwtService: JwtService,
     private readonly usersService: UsersService,
   ) {}
-  async login(email: string, password: string): Promise<User> {
+
+  async login(email: string, password: string): Promise<AuthenticatedUser> {
     const user: User = await this.usersService.findOneByEmail(email);
     if (!user) {
-      throw new BadRequestException('User not found');
+      throw new HttpException(
+        'Invalid User Credentials',
+        HttpStatus.BAD_REQUEST,
+      );
     }
     const isMatch: boolean = bcrypt.compareSync(password, user.password);
     if (!isMatch) {
-      throw new BadRequestException('Password does not match');
+      throw new HttpException(
+        'Invalid User Credentials',
+        HttpStatus.BAD_REQUEST,
+      );
     }
-    return user;
+    return {
+      jwt_token: (await this.getToken(user)).access_token,
+      ...user,
+    };
   }
 
   async getToken(user: User): Promise<{ access_token: string }> {
@@ -32,7 +44,7 @@ export class LocalAuthService {
 
   async register(
     createUserDto: CreateUserDto,
-  ): Promise<{ access_token: string }> {
+  ): Promise<AuthenticatedUser> {
     const newUserToBeRegistered: Omit<User, 'id'> = {
       ...createUserDto,
       role: 'unassigned',
@@ -43,7 +55,10 @@ export class LocalAuthService {
       createUserDto.email,
     );
     if (existingUser) {
-      throw new BadRequestException('email already exists');
+      throw new HttpException(
+        'Invalid User Credentials',
+        HttpStatus.BAD_REQUEST,
+      );
     }
     const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
     const newUser: User = {
@@ -53,7 +68,7 @@ export class LocalAuthService {
     };
     await this.usersService.create(newUser);
     return {
-      access_token: (await this.getToken(newUser)).access_token,
+      jwt_token: (await this.getToken(newUser)).access_token,
       ...newUser,
     };
   }

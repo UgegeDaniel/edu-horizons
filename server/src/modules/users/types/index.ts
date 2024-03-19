@@ -10,3 +10,7 @@ export interface User {
     picture?: string;
     role?: 'admin' | 'tutor' | 'student' | 'unassigned';
   }
+
+  export interface AuthenticatedUser extends User {
+    jwt_token: string;
+  }
