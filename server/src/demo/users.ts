@@ -1,4 +1,4 @@
-import { User } from "src/users/types";
+import { User } from "src/modules/users/types";
 
 export const DEMO_USERS: User[] = [
     {
