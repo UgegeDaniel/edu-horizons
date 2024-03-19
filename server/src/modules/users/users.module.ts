@@ -6,6 +6,7 @@ import { GoogleStrategy } from './auth-strategies/google.auth-strategy';
 import { ConfigModule, ConfigService } from '@nestjs/config'; 
 import { LocalStrategy } from './auth-strategies/local.auth-strategy';
 import { JwtStrategy } from './auth-strategies/jwt.auth-strategy';
+import { GoogleAuthService } from './google-auth.service';
 // import { APP_GUARD } from '@nestjs/core';
 // import { JwtGuard } from './guards/jwt.guard';
 
@@ -28,6 +29,6 @@ import { JwtStrategy } from './auth-strategies/jwt.auth-strategy';
     ConfigModule.forRoot()
   ],
   controllers: [UsersController],
-  providers: [UsersService, GoogleStrategy, LocalStrategy, JwtStrategy],
+  providers: [UsersService, GoogleAuthService, GoogleStrategy, LocalStrategy, JwtStrategy],
 })
 export class UsersModule {}

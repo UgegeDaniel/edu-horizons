@@ -16,6 +16,7 @@ import { UsersService } from './users.service';
 import { CheckTokenExpiryGuard } from './guards/auth.guard';
 import { CreateUserDto } from './dto/create-user.dto';
 import { JwtAuthGuard } from './guards/jwt.guard';
+import { GoogleAuthService } from './google-auth.service';
 
 //alll dynamic routes ie. (:id) should be defined last
 //Transform id string to number
@@ -25,7 +26,10 @@ import { JwtAuthGuard } from './guards/jwt.guard';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly googleAuthService: GoogleAuthService,
+  ) {}
 
   @Get('auth/google')
   @UseGuards(AuthGuard('google'))
@@ -34,20 +38,14 @@ export class UsersController {
   @Get('auth/google/redirect')
   @UseGuards(AuthGuard('google'))
   googleLoginCallback(@Request() req, @Res() res: Response) {
-    const googleToken = req.user.accessToken;
-    const googleRefreshToken = req.user.refreshToken;
-    res.cookie('access_token', googleToken, { httpOnly: true });
-    res.cookie('refresh_token', googleRefreshToken, {
-      httpOnly: true,
-    });
-    res.redirect('http://localhost:5000/users/profile');
+    this.googleAuthService.googleSignIn(req, res);
   }
 
   @Post('auth/local/register')
   async registerWithLocalStrategy(
     @Body(ValidationPipe) createUserDto: CreateUserDto,
   ) {
-     const newUser = await this.usersService.register({
+    const newUser = await this.usersService.register({
       ...createUserDto,
       role: 'unassigned',
       verified_email: false,
@@ -55,32 +53,27 @@ export class UsersController {
     });
     return newUser;
   }
-  
+
   @UseGuards(CheckTokenExpiryGuard)
   @Get('profile')
   async getProfile(@Request() req) {
     const accessToken = req.cookies['access_token'];
-    if (accessToken)
-      return (await this.usersService.getProfile(accessToken)).data;
-    throw new UnauthorizedException('No access token');
+    if (accessToken) {
+      return (await this.googleAuthService.getProfile(accessToken)).data;
+    }
   }
 
-  @Get('local/profile')
-  @UseGuards(JwtAuthGuard)
-  async getLocalProfile(@Request() req) {
-    const user = req.user;
-    console.log(user)
-    if (user)
-      return (await this.usersService.findOneByEmail(user.email));
-    throw new UnauthorizedException('No access token');
-  }
+  // @Get('local/profile')
+  // @UseGuards(JwtAuthGuard)
+  // async getLocalProfile(@Request() req) {
+  //   const user = req.user;
+  //   if (user) return await this.usersService.findOneByEmail(user.email);
+  //   throw new UnauthorizedException('No access token');
+  // }
 
   @Get('logout')
   logout(@Req() req, @Res() res: Response) {
     const refreshToken = req.cookies['refresh_token'];
-    res.clearCookie('access_token');
-    res.clearCookie('refresh_token');
-    this.usersService.revokeGoogleToken(refreshToken);
-    res.redirect('http://localhost:5000/');
+      this.googleAuthService.googleSignOut(res, refreshToken);
   }
 }
