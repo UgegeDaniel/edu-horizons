@@ -4,17 +4,17 @@ import {
   ExecutionContext,
   UnauthorizedException,
 } from '@nestjs/common';
-import { UsersService } from '../users.service';
+import { GoogleAuthService } from '../auth-services/google-auth.service';
 
 @Injectable()
 export class CheckTokenExpiryGuard implements CanActivate {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly googleAuthService: GoogleAuthService) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
     const accessToken = request.cookies['access_token'];
 
-    if (accessToken && (await this.usersService.isTokenExpired(accessToken))) {
+    if (accessToken && (await this.googleAuthService.isTokenExpired(accessToken))) {
       const refreshToken = request.cookies['refresh_token'];
       if (!refreshToken) {
         throw new UnauthorizedException('Refresh token not found');
@@ -22,7 +22,7 @@ export class CheckTokenExpiryGuard implements CanActivate {
 
       try {
         const newAccessToken =
-          await this.usersService.getNewAccessToken(refreshToken);
+          await this.googleAuthService.getNewAccessToken(refreshToken);
         request.res.cookie('access_token', newAccessToken, { httpOnly: true });
         request.cookies['access_token'] = newAccessToken;
       } catch (error) {
