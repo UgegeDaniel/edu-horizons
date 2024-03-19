@@ -1,85 +1,89 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import axios from 'axios';
-import { User } from '../types';
-import { DEMO_USERS } from 'src/demo/users';
+import { Request as App_Request, Response } from 'express';
+import {
+  BASE_ROUTE,
+  GOOGLE_PROFILE_LINK,
+  GOOGLE_REVOKE_TOKEN_LINK,
+  GOOGLE_TOKEN_LINK,
+  GOOGLE_TOKEN_REFRESH_LINK,
+  PROFILE_ROUTE,
+} from 'src/modules/@constants';
+
+interface GoogleAuthRequest extends App_Request {
+  user: { accessToken: string; refreshToken: string };
+}
 
 @Injectable()
 export class GoogleAuthService {
-  googleSignOut(res:any, refreshToken: any) {
-    res.clearCookie('access_token');
-    res.clearCookie('refresh_token');
-    this.revokeGoogleToken(refreshToken);
-    res.redirect('http://localhost:5000/');
-  }
-  private readonly users: User[] = DEMO_USERS
-  constructor(  ){
+  constructor() {}
 
-  }
-  async googleSignIn(req: any, res: any){
+  async googleSignIn(req: GoogleAuthRequest, res: Response) {
     const googleToken = req.user.accessToken;
     const googleRefreshToken = req.user.refreshToken;
     res.cookie('access_token', googleToken, { httpOnly: true });
     res.cookie('refresh_token', googleRefreshToken, {
       httpOnly: true,
     });
-    res.redirect('http://localhost:5000/users/profile');
+    res.redirect(PROFILE_ROUTE);
   }
-  
-  async create(newUser: User) {
-    this.users.push(newUser)
+
+  googleSignOut(res: Response, refreshToken: string) {
+    res.clearCookie('access_token');
+    res.clearCookie('refresh_token');
+    this.revokeGoogleToken(refreshToken);
+    res.redirect(BASE_ROUTE);
   }
 
   async getNewAccessToken(refreshToken: string): Promise<string> {
     try {
-      const response = await axios.post(
-        'https://accounts.google.com/o/oauth2/token',
-        {
-          client_id: process.env.GOOGLE_CLIENT_ID,
-          client_secret: process.env.GOOGLE_CLIENT_SECRET,
-          refresh_token: refreshToken,
-          grant_type: 'refresh_token',
-        },
-      );
+      const response = await axios.post(GOOGLE_TOKEN_LINK, {
+        client_id: process.env.GOOGLE_CLIENT_ID,
+        client_secret: process.env.GOOGLE_CLIENT_SECRET,
+        refresh_token: refreshToken,
+        grant_type: 'refresh_token',
+      });
 
       return response.data.access_token;
     } catch (error) {
-      throw new Error('Failed to refresh the access token.');
+      throw new HttpException(
+        'Failed to refresh the access token.',
+        HttpStatus.BAD_REQUEST,
+      );
     }
   }
 
   async getProfile(token: string) {
     try {
-      return axios.get(
-        `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${token}`,
-      );
+      return axios.get(`${GOOGLE_PROFILE_LINK}${token}`);
     } catch (error) {
-      console.error('Failed to revoke the token:', error);
+      throw new HttpException(
+        'Failed to revoke the token',
+        HttpStatus.BAD_REQUEST,
+      );
     }
   }
 
   async isTokenExpired(token: string): Promise<boolean> {
     try {
-      const response = await axios.get(
-        `https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${token}`,
-      );
-
+      const response = await axios.get(`${GOOGLE_TOKEN_REFRESH_LINK}${token}`);
       const expiresIn = response.data.expires_in;
-
       if (!expiresIn || expiresIn <= 0) {
         return true;
       }
     } catch (error) {
-      return true;
+      throw new HttpException('Expired Access Token', HttpStatus.FORBIDDEN);
     }
   }
 
   async revokeGoogleToken(token: string) {
     try {
-      await axios.get(
-        `https://accounts.google.com/o/oauth2/revoke?token=${token}`,
-      );
+      await axios.get(`${GOOGLE_REVOKE_TOKEN_LINK}${token}`);
     } catch (error) {
-      console.error('Failed to revoke the token:', error);
+      throw new HttpException(
+        'Failed to revoke the token:',
+        HttpStatus.FORBIDDEN,
+      );
     }
   }
 }
