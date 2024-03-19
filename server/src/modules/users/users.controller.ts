@@ -25,6 +25,11 @@ import { SigninUserDto } from './dto/signin-user.dto';
 // update(@Param('id', ParseIntPipe)id: number){
 // }
 
+//return profile details for either google profile or custom profile
+//verify email route 
+//change/forgot passowrd route (send link to email)
+//change password callback route (secret sent to email and accept new password)
+
 @Controller('users')
 export class UsersController {
   constructor(

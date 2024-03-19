@@ -26,13 +26,15 @@ export class GoogleAuthService {
       httpOnly: true,
     });
     res.redirect(PROFILE_ROUTE);
+    //return instead of redirecting to profile route
   }
-
+  
   googleSignOut(res: Response, refreshToken: string) {
     res.clearCookie('access_token');
     res.clearCookie('refresh_token');
     this.revokeGoogleToken(refreshToken);
     res.redirect(BASE_ROUTE);
+    //return instead of redirecting to base route
   }
 
   async getNewAccessToken(refreshToken: string): Promise<string> {

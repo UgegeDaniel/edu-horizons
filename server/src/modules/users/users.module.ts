@@ -3,18 +3,16 @@ import { JwtModule } from '@nestjs/jwt';
 import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
 import { GoogleStrategy } from './auth-strategies/google.auth-strategy';
-import { ConfigModule, ConfigService } from '@nestjs/config'; 
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { LocalStrategy } from './auth-strategies/local.auth-strategy';
 import { JwtStrategy } from './auth-strategies/jwt.auth-strategy';
 import { GoogleAuthService } from './auth-services/google-auth.service';
 import { LocalAuthService } from './auth-services/local-auth.service';
-// import { APP_GUARD } from '@nestjs/core';
-// import { JwtGuard } from './guards/jwt.guard';
 
 @Module({
   imports: [
     JwtModule.registerAsync({
-      imports: [ConfigModule], // Import ConfigModule here
+      imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
         secret: configService.get<string>('JWT_SECRET'),
         signOptions: {
@@ -27,9 +25,16 @@ import { LocalAuthService } from './auth-services/local-auth.service';
       }),
       inject: [ConfigService],
     }),
-    ConfigModule.forRoot()
+    ConfigModule.forRoot(),
   ],
   controllers: [UsersController],
-  providers: [UsersService, GoogleAuthService, LocalAuthService, GoogleStrategy, LocalStrategy, JwtStrategy],
+  providers: [
+    UsersService,
+    GoogleAuthService,
+    LocalAuthService,
+    GoogleStrategy,
+    LocalStrategy,
+    JwtStrategy,
+  ],
 })
 export class UsersModule {}

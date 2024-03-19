@@ -4,6 +4,9 @@ import { Strategy } from 'passport-google-oauth20';
 import { ConfigService } from '@nestjs/config';
 import { config } from 'dotenv';
 
+//use config service
+//use conditional redirect uri
+
 config();
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
