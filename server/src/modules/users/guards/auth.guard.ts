@@ -4,7 +4,7 @@ import {
   ExecutionContext,
   UnauthorizedException,
 } from '@nestjs/common';
-import { GoogleAuthService } from '../google-auth.service';
+import { GoogleAuthService } from '../auth-services/google-auth.service';
 
 @Injectable()
 export class CheckTokenExpiryGuard implements CanActivate {

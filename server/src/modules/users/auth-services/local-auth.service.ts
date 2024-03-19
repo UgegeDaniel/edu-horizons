@@ -1,10 +1,10 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
-import { User } from './types';
+import { User } from '../types';
 import { DEMO_USERS } from 'src/demo/users';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UsersService } from './users.service';
+import { CreateUserDto } from '../dto/create-user.dto';
+import { UsersService } from '../users.service';
 
 @Injectable()
 export class LocalAuthService {

@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import axios from 'axios';
-import { User } from './types';
+import { User } from '../types';
 import { DEMO_USERS } from 'src/demo/users';
 
 @Injectable()

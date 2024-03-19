@@ -12,12 +12,11 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Response } from 'express';
-// import { UsersService } from './users.service';
 import { CheckTokenExpiryGuard } from './guards/auth.guard';
 import { CreateUserDto } from './dto/create-user.dto';
 // import { JwtAuthGuard } from './guards/jwt.guard';
-import { GoogleAuthService } from './google-auth.service';
-import { LocalAuthService } from './local-auth.service';
+import { GoogleAuthService } from './auth-services/google-auth.service';
+import { LocalAuthService } from './auth-services/local-auth.service';
 import { SigninUserDto } from './dto/signin-user.dto';
 
 //alll dynamic routes ie. (:id) should be defined last
@@ -29,7 +28,6 @@ import { SigninUserDto } from './dto/signin-user.dto';
 @Controller('users')
 export class UsersController {
   constructor(
-    // private readonly usersService: UsersService,
     private readonly googleAuthService: GoogleAuthService,
     private readonly localAuthService: LocalAuthService
   ) {}

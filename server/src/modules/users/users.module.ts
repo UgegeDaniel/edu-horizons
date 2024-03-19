@@ -6,8 +6,8 @@ import { GoogleStrategy } from './auth-strategies/google.auth-strategy';
 import { ConfigModule, ConfigService } from '@nestjs/config'; 
 import { LocalStrategy } from './auth-strategies/local.auth-strategy';
 import { JwtStrategy } from './auth-strategies/jwt.auth-strategy';
-import { GoogleAuthService } from './google-auth.service';
-import { LocalAuthService } from './local-auth.service';
+import { GoogleAuthService } from './auth-services/google-auth.service';
+import { LocalAuthService } from './auth-services/local-auth.service';
 // import { APP_GUARD } from '@nestjs/core';
 // import { JwtGuard } from './guards/jwt.guard';
 
