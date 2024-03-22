@@ -1,8 +1,8 @@
-import { User } from "src/modules/users/types";
+import { User, UserFromDb } from "src/modules/users/types";
 
-export const DEMO_USERS: User[] = [
+export const DEMO_USERS: UserFromDb[] = [
     {
-      id: "1",
+      id: 1,
       email: "user1@example.com",
       verified_email: true,
       strategy: "google",
@@ -14,7 +14,7 @@ export const DEMO_USERS: User[] = [
       role: "admin"
     },
     {
-      id: "2",
+      id: 2,
       email: "user2@example.com",
       verified_email: true,
       strategy: "local",
@@ -26,7 +26,7 @@ export const DEMO_USERS: User[] = [
       role: "tutor"
     },
     {
-      id: "3",
+      id: 3,
       email: "user3@example.com",
       verified_email: true,
       strategy: "google",
@@ -38,7 +38,7 @@ export const DEMO_USERS: User[] = [
       role: "student"
     },
     {
-      id: "4",
+      id: 4,
       email: "user4@example.com",
       verified_email: true,
       strategy: "local",
@@ -50,7 +50,7 @@ export const DEMO_USERS: User[] = [
       role: "student"
     },
     {
-      id: "5",
+      id: 5,
       email: "user5@example.com",
       verified_email: true,
       strategy: "google",
