@@ -1,4 +1,6 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { GlobalEntity } from "src/modules/@database/global-entity.entity";
+import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
+import { Profile } from "./profile.entity";
 
 // you can add length constraint to columns for number of characters
 // check out check constraint for password column
@@ -14,9 +16,7 @@ import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, U
 enum UserRoles { 'admin' , 'tutor' , 'student' , 'unassigned'}
 
 @Entity('user')
-export class User extends BaseEntity {
-    @PrimaryGeneratedColumn()
-    id: number;
+export class User extends GlobalEntity {
     
     @Column({
         unique: true,
@@ -41,7 +41,7 @@ export class User extends BaseEntity {
         nullable: false
     })
     get fullName(): string {
-    return `${this. given_name} ${this. given_name}`;
+    return `${this.given_name} ${this.family_name}`;
     }
     
     @Column({
@@ -55,25 +55,17 @@ export class User extends BaseEntity {
     family_name: string;
 
     @Column({
-        nullable: true
-    })
-    picture: string;
-    
-    @Column({
-        nullable: true
-    })
-    bio: string;
-
-    @Column({
         nullable: false,
-        type: 'enum', enum: UserRoles, default: UserRoles.unassigned
+        type: 'enum',
+        enum: UserRoles,
+        default: UserRoles.unassigned
     })
     role: UserRoles;
 
-    @CreateDateColumn()
-    createdAt: Date;
+    @Column()
+    profileId: number;
     
-    @UpdateDateColumn()
-    updatedAt: Date;
-    
+    @OneToOne(() => Profile, profile=> profile.id, {onDelete: 'CASCADE'})
+    @JoinColumn()
+    profile: Profile
  }

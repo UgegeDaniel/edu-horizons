@@ -1,5 +1,7 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { DataSource } from 'typeorm';
+import { User } from '../users/entities/user.entity';
+import { Profile } from '../users/entities/profile.entity';
 
 //convert to try/catch
 
@@ -11,10 +13,13 @@ export class DatabaseService implements OnModuleInit {
   private AppDataSource = new DataSource({
     type: 'postgres',
     host: process.env.DB_HOST!,
-    port: 3306,
+    // port: 3306,
     username: process.env.DB_USER!,
     password: process.env.DB_PASSWORD!,
     database: process.env.DB_DATABSE!,
+    entities: [User, Profile],
+    synchronize: true,
+    logging: true
   });
 
   createDbConnection() {
