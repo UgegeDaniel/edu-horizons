@@ -9,6 +9,8 @@ import {
   Body,
   Post,
   ValidationPipe,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Response } from 'express';
@@ -18,6 +20,10 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { GoogleAuthService } from './auth-services/google-auth.service';
 import { LocalAuthService } from './auth-services/local-auth.service';
 import { SigninUserDto } from './dto/signin-user.dto';
+import path from 'path';
+import { diskStorage } from 'multer';
+import { v4 as uuidv4 } from 'uuid';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 //alll dynamic routes ie. (:id) should be defined last
 //Transform id string to number
@@ -29,6 +35,19 @@ import { SigninUserDto } from './dto/signin-user.dto';
 //verify email route 
 //change/forgot passowrd route (send link to email)
 //change password callback route (secret sent to email and accept new password)
+
+export const storage = {
+    storage: diskStorage({
+        destination: './uploads/profileimages',
+        filename: (req, file, cb) => {
+            const filename: string = uuidv4();
+          const extension: string = file.mimetype.split('/')[1];
+
+            cb(null, `${filename}.${extension}`)
+        }
+    })
+
+}
 
 @Controller('users')
 export class UsersController {
@@ -74,6 +93,12 @@ export class UsersController {
     //   const user = req.user;
     //   if (user) return await this.usersService.findOneByEmail(user.email);
     //   throw new UnauthorizedException('No access token');
+  }
+
+  @Post('profile/update-profile')
+  @UseInterceptors(FileInterceptor('file', storage))
+  async updateProfile(@UploadedFile() file, @Request() req) {
+    console.log(file)
   }
 
   @Get('logout')

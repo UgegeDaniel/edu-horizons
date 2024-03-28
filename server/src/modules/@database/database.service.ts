@@ -19,7 +19,7 @@ export class DatabaseService implements OnModuleInit {
     database: process.env.DB_DATABSE!,
     entities: [User, Profile],
     synchronize: true,
-    logging: true
+    logging: false
   });
 
   createDbConnection() {

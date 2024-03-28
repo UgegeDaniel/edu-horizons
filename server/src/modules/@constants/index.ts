@@ -22,5 +22,3 @@ export const GOOGLE_REVOKE_TOKEN_LINK =
   'https://accounts.google.com/o/oauth2/revoke?token=';
 
 export const GOOGLE_REDIRECT_URI = `${BASE_ROUTE}users/auth/google/redirect`;
-
-console.log(GOOGLE_REDIRECT_URI)
