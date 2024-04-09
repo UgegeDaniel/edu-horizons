@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { addDays, formatDistance } from 'date-fns';
+import { Observable } from 'rxjs';
+import { ApiService } from 'src/services/api.service';
 
 @Component({
   selector: 'app-homepage',
@@ -7,6 +9,14 @@ import { addDays, formatDistance } from 'date-fns';
   styleUrls: ['./homepage.component.css']
 })
 export class HomepageComponent {
+  constructor(
+    private readonly apiService: ApiService
+  ) {
+    this.apiService.getResource<{message: string}>().subscribe((value) => {
+      this.testString = value.message
+    })
+    console.log(this.testString);
+  }
   testimonials = [
     { content: 'This platform helped me improve my grades significantly!', author: 'John Doe' },
     { content: 'I love the interactive lessons and personalized learning experience.', author: 'Jane Smith' }
@@ -30,4 +40,5 @@ export class HomepageComponent {
       datetime: formatDistance(new Date(), addDays(new Date(), 2))
     }
   ];
+  testString!: string;
 }
