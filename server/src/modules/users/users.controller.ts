@@ -20,7 +20,6 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { GoogleAuthService } from './auth-services/google-auth.service';
 import { LocalAuthService } from './auth-services/local-auth.service';
 import { SigninUserDto } from './dto/signin-user.dto';
-import path from 'path';
 import { diskStorage } from 'multer';
 import { v4 as uuidv4 } from 'uuid';
 import { FileInterceptor } from '@nestjs/platform-express';

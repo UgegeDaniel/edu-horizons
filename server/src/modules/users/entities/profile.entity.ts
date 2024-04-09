@@ -1,6 +1,6 @@
-import { GlobalEntity } from "src/modules/@database/global-entity.entity";
 import { Column, Entity, OneToOne } from "typeorm";
 import { User } from "./user.entity";
+import { GlobalEntity } from "src/modules/@database/global-entity.entity";
 
 // you can add length constraint to columns for number of characters
 // check out check constraint for password column

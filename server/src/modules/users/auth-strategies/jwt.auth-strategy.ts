@@ -13,10 +13,10 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 // : Promise<User>
   async validate(email: string, password: string) {
-    // const user = await this.localAuthService.login(email, password);
-    // if (!user) {
-    //   throw new UnauthorizedException();
-    // }
-    // return user;
+    const user = await this.localAuthService.login(email, password);
+    if (!user) {
+      throw new UnauthorizedException();
+    }
+    return user;
   }
 }

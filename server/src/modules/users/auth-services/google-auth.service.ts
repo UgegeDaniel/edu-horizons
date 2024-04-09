@@ -7,8 +7,9 @@ import {
   GOOGLE_REVOKE_TOKEN_LINK,
   GOOGLE_TOKEN_LINK,
   GOOGLE_TOKEN_REFRESH_LINK,
-  PROFILE_ROUTE,
 } from 'src/modules/@constants';
+import { UsersService } from '../users.service';
+import { CreateUserDto } from '../dto/create-user.dto';
 
 interface GoogleAuthRequest extends App_Request {
   user: { accessToken: string; refreshToken: string };
@@ -16,7 +17,9 @@ interface GoogleAuthRequest extends App_Request {
 
 @Injectable()
 export class GoogleAuthService {
-  constructor() {}
+  constructor(
+    private readonly usersService: UsersService,
+  ) {}
 
   async googleSignIn(req: GoogleAuthRequest, res: Response) {
     const googleToken = req.user.accessToken;
@@ -25,8 +28,10 @@ export class GoogleAuthService {
     res.cookie('refresh_token', googleRefreshToken, {
       httpOnly: true,
     });
-    res.redirect(PROFILE_ROUTE);
-    //return instead of redirecting to profile route
+    const googleProfileResponse = await this.getProfile(req.cookies['access_token']);
+    await this.usersService.findOneByEmailOrCreate(googleProfileResponse.data)
+    console.log(googleProfileResponse.data)
+    return googleProfileResponse.data
   }
   
   googleSignOut(res: Response, refreshToken: string) {
@@ -55,7 +60,7 @@ export class GoogleAuthService {
     }
   }
 
-  async getProfile(token: string) {
+  async getProfile(token: string): Promise<{data: CreateUserDto}> {
     try {
       return axios.get(`${GOOGLE_PROFILE_LINK}${token}`);
     } catch (error) {

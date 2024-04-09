@@ -8,6 +8,9 @@ import { LocalStrategy } from './auth-strategies/local.auth-strategy';
 import { JwtStrategy } from './auth-strategies/jwt.auth-strategy';
 import { GoogleAuthService } from './auth-services/google-auth.service';
 import { LocalAuthService } from './auth-services/local-auth.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { User } from './entities/user.entity';
+import { Profile } from './entities/profile.entity';
 
 @Module({
   imports: [
@@ -26,6 +29,7 @@ import { LocalAuthService } from './auth-services/local-auth.service';
       inject: [ConfigService],
     }),
     ConfigModule.forRoot(),
+    TypeOrmModule.forFeature([User, Profile])
   ],
   controllers: [UsersController],
   providers: [
@@ -36,5 +40,6 @@ import { LocalAuthService } from './auth-services/local-auth.service';
     LocalStrategy,
     JwtStrategy,
   ],
+  exports: [UsersService] 
 })
 export class UsersModule {}

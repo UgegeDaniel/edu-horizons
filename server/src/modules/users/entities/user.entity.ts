@@ -1,17 +1,9 @@
-import { GlobalEntity } from "src/modules/@database/global-entity.entity";
 import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
 import { Profile } from "./profile.entity";
+import { GlobalEntity } from "src/modules/@database/global-entity.entity";
 
 // you can add length constraint to columns for number of characters
 // check out check constraint for password column
-
-
-// @ManyToOne(() => Category)
-// @JoinColumn({ name: 'category_id' })
-// category: Category;
-
-// @Column('varchar', { array: true })
-// tags: string[];
 
 enum UserRoles { 'admin' , 'tutor' , 'student' , 'unassigned'}
 

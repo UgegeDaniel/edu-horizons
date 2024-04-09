@@ -1,26 +1,57 @@
 import { Injectable } from '@nestjs/common';
-import { User, UserFromDb } from './types';
-import { DatabaseService } from '../@database/database.service';
-
-//DB SERVICE
+import { User } from './entities/user.entity';
+import { CreateUserDto } from './dto/create-user.dto';
+import { EntityManager, Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly databaseService: DatabaseService) { }
-  // : Promise<UserFromDb | undefined>
-  async findOneByEmail(email: string) {
-  // const user = await this.databaseService.user.findUnique({
-  //     where:{
-  //       email
-  //     }
-  //   });
-  //   return user
+  constructor( 
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
+    private readonly entityManager: EntityManager,
+  ) {}
+
+  async findAll(){
+    return await this.userRepository.find();
   }
 
+  async findById(id: number){
+    return await this.userRepository.findOne({
+      where: {
+        id,
+      },
+    });
+  }
 
-  async create(newUser: User) {
-    // const user = await this.databaseService.user.create({ data: newUser });
-    // console.log({user}, 'usersignup');
-    // return user;
+  async findOneByEmail(email: string){
+    return await this.userRepository.findOne({
+      where: {
+      email
+    }});
+  }
+
+  async findOneByEmailOrCreate(user: CreateUserDto){
+    const existingUser = await this.userRepository.findOne({
+      where: {
+      email: user.email
+      }
+    });
+    console.log(existingUser)
+    if(existingUser) return existingUser;
+    return this.create(user)
+  }
+
+  async create(user: CreateUserDto){
+    return await this.userRepository.save(user);
+  }
+
+  async update(id: number, user: User) {
+    await this.userRepository.update(id, user);
+    return await this.userRepository.findOne({ where: { id } });
+  }
+
+  async delete(id: number): Promise<void> {
+    await this.userRepository.delete(id);
   }
 }
