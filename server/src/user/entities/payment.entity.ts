@@ -1,6 +1,6 @@
 import { Column, Entity, ManyToOne } from 'typeorm';
-import { GlobalEntity } from 'src/modules/@database/global-entity.entity';
 import { User } from './user.entity';
+import { AbstractEntity } from './abstract-entity.entity';
 
 enum PaymentStatus {
   'CONFIRMED',
@@ -13,7 +13,7 @@ enum PaymentPurpose {
 }
 
 @Entity('payment')
-export class Payment extends GlobalEntity {
+export class Payment extends AbstractEntity {
   @ManyToOne(() => User, (user) => user.assigned_assesments, {
     onDelete: 'CASCADE',
   })

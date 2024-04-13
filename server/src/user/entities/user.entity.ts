@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToMany, OneToOne } from "typeorm";
 import { Profile } from "./profile.entity";
-import { GlobalEntity } from "src/modules/@database/global-entity.entity";
+import { AbstractEntity } from "./abstract-entity.entity";
 import { Appointment } from "./appointments.entity";
 import { VerificationToken } from "./verification_entity";
 import { Assesment } from "./assessment.entity";
@@ -8,15 +8,8 @@ import { Payment } from "./payment.entity";
 
 enum UserRoles { 'admin', 'tutor', 'student', 'unassigned' }
 
-/**
- * THIS ENTITY DEFINES THE AUTHENTICATION CREDENTIALS ( EMAIL, PASSWORD, GIVEN_NAME, FAMILY_NAME)
- * AND USER RELATIONSHIP TO OTHER ENTITIES : (PROFILE, VERIFICATION_TOKEN, APPONMENTS, ASSESSMENT,ASSIGNMENT)
- */
-
-//TO RESEARCH: make the password column nullable if the strategy is local
-
 @Entity('user')
-export class User extends GlobalEntity {
+export class User extends AbstractEntity {
     
     @Column({
         unique: true,
@@ -42,19 +35,16 @@ export class User extends GlobalEntity {
     @Column({
         nullable: false
     })
-    get full_name(): string {
-    return `${this.given_name} ${this.family_name}`;
-    }
-    
-    @Column({
-        nullable: false
-    })
     given_name: string;
 
     @Column({
         nullable: false
     })
     family_name: string;
+    
+    // get full_name(): string {
+    //     return `${this.given_name} ${this.family_name}`;
+    // }
 
     @Column({
         nullable: false,
@@ -98,4 +88,4 @@ export class User extends GlobalEntity {
         { onDelete: 'CASCADE' }
     )
     payments: Payment[];
- }
+}

@@ -11,15 +11,9 @@ export class CreateUserDto {
   @IsString()
   password: string;
 
-  @IsOptional()
   @IsString()
   given_name?: string;
 
-  @IsOptional()
   @IsString()
   family_name?: string;
-  
-  @IsOptional()
-  @IsString()
-  picture?: string;
 }

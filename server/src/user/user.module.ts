@@ -1,7 +1,5 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
-import { UsersService } from './users.service';
-import { UsersController } from './users.controller';
 import { GoogleStrategy } from './auth-strategies/google.auth-strategy';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { LocalStrategy } from './auth-strategies/local.auth-strategy';
@@ -16,6 +14,8 @@ import { Appointment } from './entities/appointments.entity';
 import { Assesment } from './entities/assessment.entity';
 import { Payment } from './entities/payment.entity';
 import { Topic } from './entities/topic.entity';
+import { UserService } from './user.service';
+import { UserController } from './user.controller';
 
 @Module({
   imports: [
@@ -36,15 +36,15 @@ import { Topic } from './entities/topic.entity';
     ConfigModule.forRoot(),
     TypeOrmModule.forFeature([User, Profile, VerificationToken, Appointment, Assesment, Topic, Payment])
   ],
-  controllers: [UsersController],
+  controllers: [UserController],
   providers: [
-    UsersService,
+    UserService,
     GoogleAuthService,
     LocalAuthService,
     GoogleStrategy,
     LocalStrategy,
     JwtStrategy,
   ],
-  exports: [UsersService] 
+  exports: [UserService] 
 })
 export class UsersModule {}

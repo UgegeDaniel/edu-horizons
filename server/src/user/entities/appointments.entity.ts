@@ -1,6 +1,6 @@
 import { Column, Entity, ManyToOne } from "typeorm";
-import { GlobalEntity } from "src/modules/@database/global-entity.entity";
 import { User } from "./user.entity";
+import { AbstractEntity } from "./abstract-entity.entity";
 
 enum AppointmentState {
     'UPCOMING',
@@ -9,7 +9,7 @@ enum AppointmentState {
 }
 
 @Entity('appointments')
-export class Appointment extends GlobalEntity {
+export class Appointment extends AbstractEntity {
     
     @ManyToOne(() => User, user => user.appointments_to_host, { onDelete: "CASCADE"})
     host: User;

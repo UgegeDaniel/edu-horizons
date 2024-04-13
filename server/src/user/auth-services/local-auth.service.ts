@@ -3,16 +3,16 @@ import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { AuthenticatedUser, User, UserFromDb, UserRoles } from '../types';
 import { CreateUserDto } from '../dto/create-user.dto';
-import { UsersService } from '../users.service';
+import { UserService } from '../user.service';
 
 @Injectable()
 export class LocalAuthService {
   constructor(
     private jwtService: JwtService,
-    private readonly usersService: UsersService,
+    private readonly userService: UserService,
   ) {}
   async login(email: string, password: string): Promise<AuthenticatedUser> {
-    const user: UserFromDb = await this.usersService.findOneByEmail(email);
+    const user: UserFromDb = await this.userService.findOneByEmail(email);
     if (!user) {
       throw new HttpException(
         'Invalid User Credentials',
@@ -44,7 +44,7 @@ export class LocalAuthService {
       verified_email: false,
       strategy: 'local',
     };
-    const existingUser = await this.usersService.findOneByEmail(
+    const existingUser = await this.userService.findOneByEmail(
       createUserDto.email,
     );
     if (existingUser) {
@@ -58,8 +58,8 @@ export class LocalAuthService {
       ...newUserToBeRegistered,
       password: hashedPassword,
     };
-    await this.usersService.create(newUser);
-    const createdUser = await this.usersService.findOneByEmail(newUser.email);
+    await this.userService.create(newUser);
+    const createdUser = await this.userService.findOneByEmail(newUser.email);
     return {
       jwt_token: (await this.getToken(createdUser)).access_token,
       ...newUser,

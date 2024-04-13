@@ -1,11 +1,11 @@
 import { Column, Entity } from 'typeorm';
-import { GlobalEntity } from 'src/modules/@database/global-entity.entity';
 import { AssignedLevels, Days } from './types';
+import { AbstractEntity } from './abstract-entity.entity';
 
 //TO RESEARCH: make the assigned_level column nullable if the role is not student
 
 @Entity('profile')
-export class Profile extends GlobalEntity {
+export class Profile extends AbstractEntity {
   @Column({
     nullable: true,
   })

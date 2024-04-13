@@ -1,10 +1,10 @@
 import { Column, Entity, JoinTable, ManyToMany } from 'typeorm';
-import { GlobalEntity } from 'src/modules/@database/global-entity.entity';
 import { AssignedLevels } from './types';
 import { Topic } from './topic.entity';
+import { AbstractEntity } from './abstract-entity.entity';
 
 @Entity('resource')
-export class Resource extends GlobalEntity {
+export class Resource extends AbstractEntity {
   @Column()
   title: string;
 

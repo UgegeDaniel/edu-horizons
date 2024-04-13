@@ -1,8 +1,6 @@
 export enum UserRoles { 'admin' , 'tutor' , 'student' , 'unassigned'}
 
-export interface User {
-    // id: string;
-    email: string;
+export interface User {    email: string;
     verified_email: boolean;
     strategy: 'google' | 'local';
     password: string;

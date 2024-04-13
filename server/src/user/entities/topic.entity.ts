@@ -1,9 +1,9 @@
 import { Column, Entity } from 'typeorm';
-import { GlobalEntity } from 'src/modules/@database/global-entity.entity';
 import { AssignedLevels } from './types';
+import { AbstractEntity } from './abstract-entity.entity';
 
 @Entity('topic')
-export class Topic extends GlobalEntity {
+export class Topic extends AbstractEntity {
   @Column()
   title: string;
 

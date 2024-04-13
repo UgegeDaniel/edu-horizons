@@ -1,8 +1,8 @@
 import { Column, Entity, JoinTable, ManyToMany, ManyToOne } from 'typeorm';
-import { GlobalEntity } from 'src/modules/@database/global-entity.entity';
 import { User } from './user.entity';
 import { Quiz } from './quiz.entity';
 import { Topic } from './topic.entity';
+import { AbstractEntity } from './abstract-entity.entity';
 
 enum AssessmentType {
   'PRACTICE',
@@ -15,7 +15,7 @@ enum SubmissionStatus {
 }
 
 @Entity('assesment')
-export class Assesment extends GlobalEntity {
+export class Assesment extends AbstractEntity {
   @ManyToOne(() => User, (user) => user.assigned_assesments, {
     onDelete: 'CASCADE',
   })

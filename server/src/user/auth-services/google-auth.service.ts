@@ -1,15 +1,15 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import axios from 'axios';
 import { Request as App_Request, Response } from 'express';
+import { UserService } from '../user.service';
+import { CreateUserDto } from '../dto/create-user.dto';
 import {
   BASE_ROUTE,
-  GOOGLE_PROFILE_LINK,
-  GOOGLE_REVOKE_TOKEN_LINK,
   GOOGLE_TOKEN_LINK,
+  GOOGLE_PROFILE_LINK,
   GOOGLE_TOKEN_REFRESH_LINK,
-} from 'src/modules/@constants';
-import { UsersService } from '../users.service';
-import { CreateUserDto } from '../dto/create-user.dto';
+  GOOGLE_REVOKE_TOKEN_LINK,
+} from '../utils/constants';
 
 interface GoogleAuthRequest extends App_Request {
   user: { accessToken: string; refreshToken: string };
@@ -17,9 +17,7 @@ interface GoogleAuthRequest extends App_Request {
 
 @Injectable()
 export class GoogleAuthService {
-  constructor(
-    private readonly usersService: UsersService,
-  ) {}
+  constructor(private readonly userService: UserService) {}
 
   async googleSignIn(req: GoogleAuthRequest, res: Response) {
     const googleToken = req.user.accessToken;
@@ -28,12 +26,14 @@ export class GoogleAuthService {
     res.cookie('refresh_token', googleRefreshToken, {
       httpOnly: true,
     });
-    const googleProfileResponse = await this.getProfile(req.cookies['access_token']);
-    await this.usersService.findOneByEmailOrCreate(googleProfileResponse.data)
-    console.log(googleProfileResponse.data)
-    return googleProfileResponse.data
+    const googleProfileResponse = await this.getProfile(
+      req.cookies['access_token'],
+    );
+    await this.userService.findOneByEmailOrCreate(googleProfileResponse.data);
+    console.log(googleProfileResponse.data);
+    return googleProfileResponse.data;
   }
-  
+
   googleSignOut(res: Response, refreshToken: string) {
     res.clearCookie('access_token');
     res.clearCookie('refresh_token');
@@ -60,7 +60,7 @@ export class GoogleAuthService {
     }
   }
 
-  async getProfile(token: string): Promise<{data: CreateUserDto}> {
+  async getProfile(token: string): Promise<{ data: CreateUserDto }> {
     try {
       return axios.get(`${GOOGLE_PROFILE_LINK}${token}`);
     } catch (error) {

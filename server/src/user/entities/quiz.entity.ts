@@ -1,7 +1,7 @@
 import { Column, Entity, JoinTable, ManyToMany } from 'typeorm';
-import { GlobalEntity } from 'src/modules/@database/global-entity.entity';
 import { AssignedLevels } from './types';
 import { Topic } from './topic.entity';
+import { AbstractEntity } from './abstract-entity.entity';
 
 type OptionType = {
   a: string;
@@ -18,7 +18,7 @@ enum QuizType {
 //TO RESEARCH: make the options column nullable if the quiz type is MULTIPLE_CHOICE
 
 @Entity('quiz')
-export class Quiz extends GlobalEntity {
+export class Quiz extends AbstractEntity {
   @Column({
     nullable: false,
     type: 'enum',

@@ -3,7 +3,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-google-oauth20';
 import { ConfigService } from '@nestjs/config';
 import { config } from 'dotenv';
-import { GOOGLE_REDIRECT_URI } from 'src/modules/@constants';
+import { GOOGLE_REDIRECT_URI } from '../utils/constants';
 
 //use config service
 
