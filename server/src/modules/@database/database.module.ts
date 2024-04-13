@@ -1,9 +1,9 @@
 import { Global, Module } from '@nestjs/common';
-// import { DatabaseService } from './database.service';
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-//throw an error when any env variable is not found 
+//INFO: getOrThrow WILL throw an error when any env variable is not found 
+//TODO: create a method to notify me when the database is connected
 
 @Global()
     @Module({
@@ -12,7 +12,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
         host: configService.getOrThrow('DB_HOST'),
-        // port: configService.getOrThrow('MYSQL_PORT'),
         database: configService.getOrThrow('DB_DATABASE'),
         username: configService.getOrThrow('DB_USERNAME'),
         password: configService.getOrThrow('DB_PASSWORD'),
@@ -22,7 +21,5 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       inject: [ConfigService],
     }),
   ],
-    // providers: [DatabaseService],
-    // exports: [DatabaseService]
 })
 export class DatabaseModule {    }

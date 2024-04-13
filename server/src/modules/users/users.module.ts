@@ -11,6 +11,11 @@ import { LocalAuthService } from './auth-services/local-auth.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Profile } from './entities/profile.entity';
+import { VerificationToken } from './entities/verification_entity';
+import { Appointment } from './entities/appointments.entity';
+import { Assesment } from './entities/assessment.entity';
+import { Payment } from './entities/payment.entity';
+import { Topic } from './entities/topic.entity';
 
 @Module({
   imports: [
@@ -29,7 +34,7 @@ import { Profile } from './entities/profile.entity';
       inject: [ConfigService],
     }),
     ConfigModule.forRoot(),
-    TypeOrmModule.forFeature([User, Profile])
+    TypeOrmModule.forFeature([User, Profile, VerificationToken, Appointment, Assesment, Topic, Payment])
   ],
   controllers: [UsersController],
   providers: [
