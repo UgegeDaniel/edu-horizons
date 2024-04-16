@@ -1,0 +1,232 @@
+{
+  "appRoutes": [
+    {
+      "endpoint": "/",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/user/auth/google",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/user/auth/google/redirect",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/user/auth/local/register",
+      "method": "POST"
+    },
+    {
+      "endpoint": "/user/auth/local/login",
+      "method": "POST"
+    },
+    {
+      "endpoint": "/user/password/change",
+      "method": "POST"
+    },
+    {
+      "endpoint": "/user/email/verify/:token",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/resources",
+      "method": "POST"
+    },
+    {
+      "endpoint": "/resources",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/resources/:id",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/resources/:id",
+      "method": "PATCH"
+    },
+    {
+      "endpoint": "/resources/:id",
+      "method": "DELETE"
+    },
+    {
+      "endpoint": "/quizes",
+      "method": "POST"
+    },
+    {
+      "endpoint": "/quizes",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/quizes/:id",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/quizes/:id",
+      "method": "PATCH"
+    },
+    {
+      "endpoint": "/quizes/:id",
+      "method": "DELETE"
+    },
+    {
+      "endpoint": "/appointments",
+      "method": "POST"
+    },
+    {
+      "endpoint": "/appointments",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/appointments/:id",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/appointments/:id",
+      "method": "PATCH"
+    },
+    {
+      "endpoint": "/appointments/:id",
+      "method": "DELETE"
+    },
+    {
+      "endpoint": "/assesments",
+      "method": "POST"
+    },
+    {
+      "endpoint": "/assesments",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/assesments/:id",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/assesments/:id",
+      "method": "PATCH"
+    },
+    {
+      "endpoint": "/assesments/:id",
+      "method": "DELETE"
+    },
+    {
+      "endpoint": "/payment",
+      "method": "POST"
+    },
+    {
+      "endpoint": "/payment",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/payment/:id",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/payment/:id",
+      "method": "PATCH"
+    },
+    {
+      "endpoint": "/payment/:id",
+      "method": "DELETE"
+    },
+    {
+      "endpoint": "/profile",
+      "method": "POST"
+    },
+    {
+      "endpoint": "/profile",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/profile/:id",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/profile/:id",
+      "method": "PATCH"
+    },
+    {
+      "endpoint": "/profile/:id",
+      "method": "DELETE"
+    },
+    {
+      "endpoint": "/resource",
+      "method": "POST"
+    },
+    {
+      "endpoint": "/resource",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/resource/:id",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/resource/:id",
+      "method": "PATCH"
+    },
+    {
+      "endpoint": "/resource/:id",
+      "method": "DELETE"
+    },
+    {
+      "endpoint": "/topic",
+      "method": "POST"
+    },
+    {
+      "endpoint": "/topic",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/topic/:id",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/topic/:id",
+      "method": "PATCH"
+    },
+    {
+      "endpoint": "/topic/:id",
+      "method": "DELETE"
+    },
+    {
+      "endpoint": "/mailing",
+      "method": "POST"
+    },
+    {
+      "endpoint": "/mailing",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/mailing/:id",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/mailing/:id",
+      "method": "PATCH"
+    },
+    {
+      "endpoint": "/mailing/:id",
+      "method": "DELETE"
+    },
+    {
+      "endpoint": "/auth",
+      "method": "POST"
+    },
+    {
+      "endpoint": "/auth",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/auth/:id",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/auth/:id",
+      "method": "PATCH"
+    },
+    {
+      "endpoint": "/auth/:id",
+      "method": "DELETE"
+    }
+  ]
+}

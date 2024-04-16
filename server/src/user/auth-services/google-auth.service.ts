@@ -9,7 +9,7 @@ import {
   GOOGLE_PROFILE_LINK,
   GOOGLE_TOKEN_REFRESH_LINK,
   GOOGLE_REVOKE_TOKEN_LINK,
-} from '../utils/constants';
+} from '../../utils/constants';
 
 interface GoogleAuthRequest extends App_Request {
   user: { accessToken: string; refreshToken: string };
