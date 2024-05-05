@@ -12,10 +12,19 @@ import {
 } from '@nestjs/common';
 import { Response } from 'express';
 import { CreateUserDto } from './dto/create-user.dto';
-import { LocalAuthService } from './auth-services/local-auth.service';
 import { AuthGuard } from '@nestjs/passport';
 import { SigninUserDto } from './dto/signin-user.dto';
-import { GoogleAuthService } from './auth-services/google-auth.service';
+import { GoogleAuthService } from 'src/auth/google-auth.service';
+import { LocalAuthService } from 'src/auth/local-auth.service';
+import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
+import {
+  ForgotPasswordDto,
+  PasswordChangeRequestDto,
+} from './dto/forgot-password.dto';
+import { LocalAuthGuard } from 'src/auth/guards/local-auth.guard';
+import { UpdateRoleDto } from './dto/update-role.dto';
+import { AuthenticatedUser, User, UserRoles } from './utils/types';
+import { Verified } from 'src/auth/guards/verified.guard';
 
 @Controller('user')
 export class UserController {
@@ -30,22 +39,26 @@ export class UserController {
 
   @Get('auth/google/redirect')
   @UseGuards(AuthGuard('google'))
-  googleLoginCallback(@Request() req, @Res() res: Response) {
-    this.googleAuthService.googleSignIn(req, res);
+  googleLoginCallback(
+    @Request() req,
+    @Res() res: Response,
+  ): Promise<AuthenticatedUser> {
+    return this.googleAuthService.googleSignIn(req, res);
   }
 
   @Post('auth/local/register')
   async registerWithLocalStrategy(
-    @Body(ValidationPipe) createUserDto: CreateUserDto,
-  ) {
+    @Body(ValidationPipe) createUserDto: CreateUserDto<'local'>,
+  ): Promise<AuthenticatedUser> {
     const newUser = await this.localAuthService.register(createUserDto);
     return newUser;
   }
 
   @Post('auth/local/login')
+  @UseGuards(LocalAuthGuard)
   async loginWithLocalStrategy(
     @Body(ValidationPipe) signinUserDto: SigninUserDto,
-  ) {
+  ): Promise<AuthenticatedUser> {
     const newUser = await this.localAuthService.login(
       signinUserDto.email,
       signinUserDto.password,
@@ -53,13 +66,46 @@ export class UserController {
     return newUser;
   }
 
-  @Post('password/change')
-  requestPasswordChange(@Req() req) {
-    // Logic for requesting password change
+  @Post('request-password-change')
+  async requestPasswordChange(
+    @Body(ValidationPipe) passwordChangeRequestDto: PasswordChangeRequestDto,
+  ): Promise<{ message: string }> {
+    return await this.localAuthService.requestPasswordChange(
+      passwordChangeRequestDto,
+    );
   }
 
-  @Get('email/verify/:token')
-  verifyEmailCallback(@Param('token') token: string) {
-    // Logic for verifying email
+  @Post('forgot-password/:token')
+  async forgotPasswordReset(
+    @Body(ValidationPipe) forgotPasswordDto: ForgotPasswordDto,
+    @Param('token') token: string,
+  ): Promise<{ message: string }> {
+    return this.localAuthService.forgotPasswordReset(forgotPasswordDto, token);
+  }
+
+  @Get('verify-email/:token')
+  @UseGuards(JwtAuthGuard)
+  async verifyEmailCallback(
+    @Req() req,
+    @Param('token') token: string,
+  ): Promise<{ verified_email: boolean }> {
+    const verifiedUser = await this.localAuthService.verifyUserEmail(
+      req.user.id,
+      token,
+    );
+    return verifiedUser;
+  }
+
+  @Post('update-user-role')
+  @UseGuards(JwtAuthGuard)
+  @UseGuards(Verified)
+  async updateUserRole(
+    @Req() req,
+    @Body(ValidationPipe) updateRoleDto: UpdateRoleDto,
+  ): Promise<{ role: UserRoles }>{
+    return await this.localAuthService.updateUserRole(
+      req.user.id,
+      updateRoleDto.role,
+    );
   }
 }

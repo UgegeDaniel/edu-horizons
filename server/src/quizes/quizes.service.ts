@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { CreateQuizeDto } from './dto/create-quize.dto';
-import { UpdateQuizeDto } from './dto/update-quize.dto';
+import { CreateQuizDto } from './dto/create-quiz.dto';
+import { UpdateQuizDto } from './dto/update-quiz.dto';
 
 @Injectable()
 export class QuizesService {
-  create(createQuizeDto: CreateQuizeDto) {
+  create(createQuizeDto: CreateQuizDto) {
     return 'This action adds a new quize';
   }
 
@@ -16,7 +16,7 @@ export class QuizesService {
     return `This action returns a #${id} quize`;
   }
 
-  update(id: number, updateQuizeDto: UpdateQuizeDto) {
+  update(id: number, updateQuizeDto: UpdateQuizDto) {
     return `This action updates a #${id} quize`;
   }
 

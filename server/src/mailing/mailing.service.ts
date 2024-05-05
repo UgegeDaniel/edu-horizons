@@ -1,26 +1,31 @@
 import { Injectable } from '@nestjs/common';
-import { CreateMailingDto } from './dto/create-mailing.dto';
-import { UpdateMailingDto } from './dto/update-mailing.dto';
+import * as nodemailer from 'nodemailer';
 
 @Injectable()
 export class MailingService {
-  create(createMailingDto: CreateMailingDto) {
-    return 'This action adds a new mailing';
+  private transporter: nodemailer.Transporter;
+
+  constructor() {
+    this.transporter = nodemailer.createTransport({
+      service: 'Gmail',
+      auth: {
+        user: 'ugege62@gmail.com',
+        pass: 'bcpjihgrztaeztig',
+      },
+    });
   }
 
-  findAll() {
-    return `This action returns all mailing`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} mailing`;
-  }
-
-  update(id: number, updateMailingDto: UpdateMailingDto) {
-    return `This action updates a #${id} mailing`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} mailing`;
+  async sendMail(to: string, subject: string, html: string) {
+    try {
+      await this.transporter.sendMail({
+        from: 'Ugege Daniel @ EDU-HORIZONS',
+        to,
+        subject,
+        html,
+      });
+    } catch (error) {
+      console.error('Error sending email:', error);
+      throw new Error('Failed to send email');
+    }
   }
 }

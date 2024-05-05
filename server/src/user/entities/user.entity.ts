@@ -1,12 +1,11 @@
-import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToMany, OneToOne } from "typeorm";
-import { Profile } from "./profile.entity";
-import { AbstractEntity } from "./abstract-entity.entity";
-import { Appointment } from "./appointments.entity";
-import { VerificationToken } from "./verification_entity";
-import { Assesment } from "./assessment.entity";
-import { Payment } from "./payment.entity";
-
-enum UserRoles { 'admin', 'tutor', 'student', 'unassigned' }
+import { Column, Entity, JoinColumn, OneToMany, OneToOne } from "typeorm";
+import { AbstractEntity } from "../../utils/abstract-entity.entity";
+import { Appointment } from "../../appointments/entities/appointment.entity";
+import { VerificationToken } from "./verification-token.entity";
+import { Assesment } from "src/assesments/entities/assessment.entity";
+import { Payment } from "src/payment/entities/payment.entity";
+import { Profile } from "src/profile/entities/profile.entity";
+import { AuthenticationStrategy, UserRoles } from "../utils/types";
 
 @Entity('user')
 export class User extends AbstractEntity {
@@ -25,7 +24,7 @@ export class User extends AbstractEntity {
     @Column({
         nullable: false
     })
-    strategy: 'google' | 'local';
+    strategy: AuthenticationStrategy;
 
     @Column({
         nullable: true
@@ -50,16 +49,21 @@ export class User extends AbstractEntity {
         nullable: false,
         type: 'enum',
         enum: UserRoles,
-        default: UserRoles.unassigned
+        default: UserRoles.UNASSIGNED
     })
     role: UserRoles;
+
+    profileId: number;
     
     @OneToOne(() => Profile, profile=> profile.id, {onDelete: 'CASCADE'})
     @JoinColumn()
     profile: Profile
     
-    @OneToOne(() => VerificationToken, verificationToken=> verificationToken.id, {onDelete: 'CASCADE'})
+    @OneToOne(() => VerificationToken, verificationToken=> verificationToken.id, {onDelete: 'SET NULL'})
+    @JoinColumn()
     verification_token: VerificationToken
+
+    verificationTokenId: number;
 
     @OneToMany(
         () => Appointment,
