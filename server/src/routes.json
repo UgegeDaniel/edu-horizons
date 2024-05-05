@@ -1,0 +1,180 @@
+{
+  "appRoutes": [
+    {
+      "endpoint": "/",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/appointments",
+      "method": "POST"
+    },
+    {
+      "endpoint": "/appointments",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/appointments/:id",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/appointments/:id",
+      "method": "PATCH"
+    },
+    {
+      "endpoint": "/appointments/:id",
+      "method": "DELETE"
+    },
+    {
+      "endpoint": "/payment",
+      "method": "POST"
+    },
+    {
+      "endpoint": "/payment",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/payment/:id",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/payment/:id",
+      "method": "PATCH"
+    },
+    {
+      "endpoint": "/payment/:id",
+      "method": "DELETE"
+    },
+    {
+      "endpoint": "/profile",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/profile/change-password",
+      "method": "PATCH"
+    },
+    {
+      "endpoint": "/quiz",
+      "method": "POST"
+    },
+    {
+      "endpoint": "/quiz",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/quiz/:id",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/quiz/:id",
+      "method": "PATCH"
+    },
+    {
+      "endpoint": "/quiz/:id",
+      "method": "DELETE"
+    },
+    {
+      "endpoint": "/resource",
+      "method": "POST"
+    },
+    {
+      "endpoint": "/resource",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/resource/:id",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/resource/:id",
+      "method": "PATCH"
+    },
+    {
+      "endpoint": "/resource/:id",
+      "method": "DELETE"
+    },
+    {
+      "endpoint": "/topic",
+      "method": "POST"
+    },
+    {
+      "endpoint": "/topic",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/topic/:id",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/topic/:id",
+      "method": "PATCH"
+    },
+    {
+      "endpoint": "/topic/:id",
+      "method": "DELETE"
+    },
+    {
+      "endpoint": "/user/auth/google",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/user/auth/google/redirect",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/user/auth/local/register",
+      "method": "POST"
+    },
+    {
+      "endpoint": "/user/auth/local/login",
+      "method": "POST"
+    },
+    {
+      "endpoint": "/user/request-password-change",
+      "method": "POST"
+    },
+    {
+      "endpoint": "/user/forgot-password/:token",
+      "method": "POST"
+    },
+    {
+      "endpoint": "/user/verify-email/:token",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/user/update-user-role",
+      "method": "POST"
+    },
+    {
+      "endpoint": "/profile/updated-profile",
+      "method": "PATCH"
+    },
+    {
+      "endpoint": "/profile/uploads/profile-images:fileName",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/profile/uploads/profile-images/:fileName",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/quizes",
+      "method": "POST"
+    },
+    {
+      "endpoint": "/quizes",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/quizes/:id",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/quizes/:id",
+      "method": "PATCH"
+    },
+    {
+      "endpoint": "/quizes/:id",
+      "method": "DELETE"
+    }
+  ]
+}
