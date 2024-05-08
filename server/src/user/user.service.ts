@@ -14,8 +14,6 @@ import {
   VerificationTokenType,
 } from './utils/types';
 
-//TODO: Create an Abstrct Service
-
 @Injectable()
 export class UserService {
   constructor(

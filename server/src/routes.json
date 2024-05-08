@@ -175,6 +175,22 @@
     {
       "endpoint": "/quizes/:id",
       "method": "DELETE"
+    },
+    {
+      "endpoint": "/appointments/to-host",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/appointments/to-attend",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/appointments/update-appointment:id",
+      "method": "PATCH"
+    },
+    {
+      "endpoint": "/appointments/update-appointment/:id",
+      "method": "PATCH"
     }
   ]
 }

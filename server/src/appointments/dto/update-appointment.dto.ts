@@ -1,8 +1,7 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { CreateAppointmentDto } from './create-appointment.dto';
-import { IsArray, IsDateString, IsEnum, IsString } from 'class-validator';
+import { IsArray, IsDateString, IsString } from 'class-validator';
 import { User } from 'src/user/entities/user.entity';
-import { AppointmentState } from '../utils/types';
 
 //TODO: Consider changing User entity to type
 
@@ -18,9 +17,6 @@ export class UpdateAppointmentDto extends PartialType(CreateAppointmentDto) {
 
     @IsString()
     description?: string;
-
-    @IsEnum(AppointmentState)
-    state?: AppointmentState;
 
     @IsArray()
     attendees?: User[];
