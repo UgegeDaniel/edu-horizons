@@ -1,0 +1,10 @@
+{
+    "/user/auth/google": {
+        "target": "https://accounts.google.com",
+        "secure": false,
+        "changeOrigin": true,
+        "pathRewrite": {
+            "^/user/auth/google": "/o/oauth2/v2/auth"
+        }
+    }
+}

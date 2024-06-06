@@ -9,8 +9,8 @@ import {
   Body,
   UseGuards,
   Request,
+  Response
 } from '@nestjs/common';
-import { Response } from 'express';
 import { CreateUserDto } from './dto/create-user.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { SigninUserDto } from './dto/signin-user.dto';
@@ -23,47 +23,77 @@ import {
 } from './dto/forgot-password.dto';
 import { LocalAuthGuard } from 'src/auth/guards/local-auth.guard';
 import { UpdateRoleDto } from './dto/update-role.dto';
-import { AuthenticatedUser, User, UserRoles } from './utils/types';
+import { AuthenticatedUser, UserRole } from './utils/types';
 import { Verified } from 'src/auth/guards/verified.guard';
+import { GoogleOAuthGuard } from 'src/auth/guards/google-auth.guard';
 
 @Controller('user')
 export class UserController {
   constructor(
     private readonly googleAuthService: GoogleAuthService,
     private readonly localAuthService: LocalAuthService,
-  ) {}
+  ) { }
 
   @Get('auth/google')
   @UseGuards(AuthGuard('google'))
-  googleLogin() {}
+  googleLogin() { }
 
   @Get('auth/google/redirect')
-  @UseGuards(AuthGuard('google'))
-  googleLoginCallback(
-    @Request() req,
-    @Res() res: Response,
-  ): Promise<AuthenticatedUser> {
-    return this.googleAuthService.googleSignIn(req, res);
+  @UseGuards(GoogleOAuthGuard)
+  async googleLoginCallback(@Request() req, @Response() res) {
+    const { jwt_token, ...googleUser } = await this.googleAuthService.googleSignIn(req.user);
+    res.cookie('jwt', jwt_token, { httpOnly: true });
+    res.redirect('http://localhost:4200');
+    return googleUser;
   }
+
+  @Get('auth/verify-token')
+  @UseGuards(JwtAuthGuard)
+  async verifyToken(@Request() req, @Response() res) {
+    try {
+      const authenticatedUser = await this.localAuthService.findUserWithProfile(req.user.id);
+      res.json(authenticatedUser);
+    } catch (error) {
+      res.status(500).json({ message: "Internal Server Error" });
+    }
+  }
+
+  @Get('auth/sign-out')
+  @UseGuards(JwtAuthGuard)
+  async signOut(@Request() _req, @Response() res) {
+    try {
+      res.cookie('jwt', '', { expires: new Date(0), path: '/' });
+      res.redirect('http://localhost:4200');
+    } catch (error) {
+      res.status(500).json({ message: "Internal Server Error" });
+    }
+  }
+
 
   @Post('auth/local/register')
   async registerWithLocalStrategy(
     @Body(ValidationPipe) createUserDto: CreateUserDto<'local'>,
-  ): Promise<AuthenticatedUser> {
-    const newUser = await this.localAuthService.register(createUserDto);
-    return newUser;
+    @Response() res
+  ) {
+    const {jwt_token, ...newUser} = await this.localAuthService.register(createUserDto);
+    res.cookie('jwt', jwt_token, { httpOnly: true });
+    res.status(302).redirect('http://localhost:4200');
+    return newUser
   }
 
   @Post('auth/local/login')
   @UseGuards(LocalAuthGuard)
   async loginWithLocalStrategy(
     @Body(ValidationPipe) signinUserDto: SigninUserDto,
-  ): Promise<AuthenticatedUser> {
-    const newUser = await this.localAuthService.login(
+    @Response() res
+  ) {
+    const {jwt_token, ...user} = await this.localAuthService.login(
       signinUserDto.email,
       signinUserDto.password,
     );
-    return newUser;
+    res.cookie('jwt', jwt_token, { httpOnly: true });
+    res.redirect('http://localhost:4200');
+    return user
   }
 
   @Post('request-password-change')
@@ -102,7 +132,7 @@ export class UserController {
   async updateUserRole(
     @Req() req,
     @Body(ValidationPipe) updateRoleDto: UpdateRoleDto,
-  ): Promise<{ role: UserRoles }>{
+  ): Promise<{ role: UserRole }> {
     return await this.localAuthService.updateUserRole(
       req.user.id,
       updateRoleDto.role,

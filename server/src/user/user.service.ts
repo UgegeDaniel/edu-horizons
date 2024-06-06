@@ -6,11 +6,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { VerificationToken } from './entities/verification-token.entity';
 import { Profile } from 'src/profile/entities/profile.entity';
 import { Appointment } from 'src/appointments/entities/appointment.entity';
-import { Assesment } from 'src/assesments/entities/assessment.entity';
+import { Assessment } from 'src/assessment/entities/assessment.entity';
 import { Payment } from 'src/payment/entities/payment.entity';
 import {
   AuthenticationStrategy,
-  UserRoles,
+  UserRole,
   VerificationTokenType,
 } from './utils/types';
 
@@ -28,16 +28,21 @@ export class UserService {
   async findAll() {
     return await this.userRepository.find();
   }
+  async findAllByRole(role: UserRole) {
+    return await this.userRepository.find({ where: { role } });
+  }
 
   async findById(id: number) {
     const foundUser = await this.userRepository.findOne({
       where: {
         id,
       },
+      relations: ["profile"]
     });
     if (!foundUser) {
       throw new Error('User not found');
     }
+    console.log({ pic: foundUser.profile})
     return foundUser;
   }
 
@@ -55,14 +60,15 @@ export class UserService {
       where: {
         email: user.email,
       },
+      relations: ['profile'],
     });
     if (existingUser) return existingUser;
-    return this.create(user);
+    return await this.createUser(user, {}, user.picture);
   }
 
   async findAndUpdate(
     id: number,
-    updateUserDto: {verified_email?: boolean, password?: string},
+    updateUserDto: { verified_email?: boolean; password?: string },
   ): Promise<User | null> {
     const userToUpdate = await this.findById(id);
     if (!userToUpdate) {
@@ -75,37 +81,42 @@ export class UserService {
 
   async findAndUpdateUserRole(
     id: number,
-    role: UserRoles,
-  ): Promise<{role: UserRoles}> {
+    role: UserRole,
+  ): Promise<{ role: UserRole }> {
     const userToUpdate = await this.findById(id);
     if (!userToUpdate) {
       return null;
     }
-    if (userToUpdate.role !== UserRoles.UNASSIGNED) {
+    if (userToUpdate.role !== "UNASSIGNED") {
       throw new Error('User already has a role');
     }
-    Object.assign(userToUpdate, { role: UserRoles[role] });
+    Object.assign(userToUpdate, { role: role });
     await this.userRepository.save(userToUpdate);
     return { role };
   }
 
-  async create(
+  async createUser(
     user: CreateUserDto<AuthenticationStrategy>,
     relations?: Partial<{
       verification_token: VerificationToken;
       profile: Profile;
       appointments_to_host: Appointment[];
-      assigned_assesments: Assesment[];
-      assesments: Assesment[];
+      assigned_assessment: Assessment[];
+      assessment: Assessment[];
       payments: Payment[];
     }>,
+    picture?: string,
   ) {
     const newUser = this.userRepository.create(user);
     const profileDetails = this.profileRepository.create();
-    relations.profile = await this.profileRepository.save(profileDetails);
+    if (picture) {
+      profileDetails.picture = picture;
+    }
+    const userRelations = { ...relations };
+    userRelations.profile = await this.profileRepository.save(profileDetails);
     const userTobeSaved = {
       ...newUser,
-      ...relations,
+      ...userRelations,
     };
     return await this.userRepository.save(userTobeSaved);
   }
@@ -162,6 +173,11 @@ export class UserService {
 
   async delete(id: number): Promise<void> {
     await this.userRepository.delete(id);
+  }
+  async getUsersByRole(role: UserRole) {
+    return await this.userRepository.find({
+      where: { role },
+    });
   }
 
   async updateVerificationToken(

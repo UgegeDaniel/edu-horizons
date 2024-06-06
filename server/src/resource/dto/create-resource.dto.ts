@@ -16,7 +16,7 @@ export class CreateResourceDto {
     @IsNotEmpty()
     @IsArray()
     @IsString({ each: true })
-    topics: string[];
+    topics: number[];
 
     @IsNotEmpty()
     @IsArray()

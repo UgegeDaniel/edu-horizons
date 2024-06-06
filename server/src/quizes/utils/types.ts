@@ -5,9 +5,6 @@ export type OptionType = {
   d: string;
 };
 
-export enum QuizType {
-  'MULTIPLE_CHOICE',
-  'ESSAY',
-}
+export type QuizType = 'MULTIPLE_CHOICE' | 'ESSAY';
 
 //TO RESEARCH: make the options column nullable if the quiz type is MULTIPLE_CHOICE

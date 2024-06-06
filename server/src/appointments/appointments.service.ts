@@ -144,10 +144,33 @@ export class AppointmentService {
     return { message: 'Appointment Updated Successfully' };
   }
 
-  async remove(userId: number, appointmentId: number) {
+  async getAppointmentById(id: number) {
+    return await this.appointmentRepository.findOne({
+      where: { id },
+    });
+  }
+
+  async getAllAppointments() {
+    return await this.appointmentRepository.find();
+  }
+  async searchAppointmentsByDate(
+    startDate: Date,
+    endDate: Date,
+  ): Promise<Appointment[]> {
+    const queryBuilder =
+      this.appointmentRepository.createQueryBuilder('appointment');
+    const appointmentsWithinRange = await queryBuilder
+      .where('appointment.appointment_time BETWEEN :startDate AND :endDate', {
+        startDate,
+        endDate,
+      })
+      .getMany();
+
+    return appointmentsWithinRange;
+  }
+  async cancelAppointment(userId: number, appointmentId: number) {
     const appointmentToDelete = await this.appointmentRepository.findOne({
       where: { id: appointmentId },
-      relations: ['host'],
     });
     if (appointmentToDelete.host.id !== userId) {
       throw new ForbiddenException(

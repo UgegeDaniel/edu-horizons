@@ -1,6 +1,7 @@
 import { IsNotEmpty, IsString, IsEnum, IsObject, IsNumber, ValidateNested, IsArray } from 'class-validator';
 import { Type } from 'class-transformer';
 import { QuizType } from '../utils/types';
+import { AssignedLevels } from 'src/utils/types';
 
 export class OptionType {
     @IsString()
@@ -18,7 +19,6 @@ export class OptionType {
 
 export class CreateQuizDto {
     @IsNotEmpty()
-    @IsEnum(QuizType)
     quiz_type: QuizType;
 
     @IsNotEmpty()
@@ -37,10 +37,10 @@ export class CreateQuizDto {
 
     @IsNotEmpty()
     @IsString()
-    intended_level: string;
+    intended_level: AssignedLevels;
 
     @IsNotEmpty()
     @IsArray()
     @IsNumber({}, { each: true })
-    topics: number[]; // Assuming this array contains the IDs of the topics associated with the quiz
+    topics: number[];
 }

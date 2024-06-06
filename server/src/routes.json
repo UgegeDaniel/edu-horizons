@@ -191,6 +191,18 @@
     {
       "endpoint": "/appointments/update-appointment/:id",
       "method": "PATCH"
+    },
+    {
+      "endpoint": "/user/auth/verify",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/user/auth/verify-token",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/user/auth/sign-out",
+      "method": "GET"
     }
   ]
 }

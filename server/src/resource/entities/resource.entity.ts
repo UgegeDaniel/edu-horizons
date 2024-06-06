@@ -13,7 +13,7 @@ export class Resource extends AbstractEntity {
 
   @Column({
     nullable: false,
-    default: "UNASSIGNED",
+    default: 'UNASSIGNED',
   })
   intended_level: AssignedLevels;
 
@@ -21,6 +21,9 @@ export class Resource extends AbstractEntity {
   @JoinTable()
   topics: Topic[];
 
-  @Column()
+  @Column({
+    type: 'simple-array',
+    nullable: false,
+  })
   references: string[];
 }

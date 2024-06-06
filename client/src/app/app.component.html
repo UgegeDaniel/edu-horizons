@@ -1,6 +1,6 @@
 <nz-layout style="overflow-y: hidden;">
   <div style="display: flex; flex-direction: column; overflow-y: hidden;">
-    <app-header></app-header>
+    <app-header [isAuthenticated]="isAuthenticated"></app-header>
     <div style="display: flex; flex-direction: row; overflow:hidden" class="app-content">
       <app-sidebar [isCollapsed]="isCollapsed" style="
       max-height: 75vh;

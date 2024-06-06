@@ -8,12 +8,14 @@ import { User } from 'src/user/entities/user.entity';
 import { VerificationToken } from 'src/user/entities/verification-token.entity';
 import { Profile } from 'src/profile/entities/profile.entity';
 import { JwtService } from '@nestjs/jwt';
+import { AppointmentCommand } from './appointment.command';
+import { AbilityFactory } from 'src/ability/ability.factory/ability.factory';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Appointment, User, VerificationToken, Profile]),
   ],
   controllers: [AppointmentsController],
-  providers: [AppointmentService, UserService, JwtService],
+  providers: [AbilityFactory, AppointmentService, UserService, JwtService, AppointmentCommand],
 })
 export class AppointmentsModule {}

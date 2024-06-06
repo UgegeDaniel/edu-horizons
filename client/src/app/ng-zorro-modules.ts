@@ -30,6 +30,8 @@ import { NzStatisticModule } from 'ng-zorro-antd/statistic';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 const ngZorroModules = [
     NzFormModule,
@@ -43,7 +45,6 @@ const ngZorroModules = [
     NzMenuModule,
     NzBreadCrumbModule,
     NzIconModule,
-    NzModalModule,
     NzTabsModule,
     NzSelectModule,
     NzCollapseModule,
@@ -64,7 +65,9 @@ const ngZorroModules = [
     NzStatisticModule,
     NzBadgeModule,
     NzSkeletonModule,
-    ScrollingModule
+    ScrollingModule,
+    NzDropDownModule,
+    NzToolTipModule
 ]
 
 export default ngZorroModules;

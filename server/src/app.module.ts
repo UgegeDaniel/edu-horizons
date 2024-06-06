@@ -11,7 +11,9 @@ import { ResourceModule } from './resource/resource.module';
 import { TopicModule } from './topic/topic.module';
 import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './user/user.module';
-import { QuizesModule } from './quizes/quizes.module';
+import { QuizModule } from './quizes/quiz.module';
+import { CommandModule } from 'nestjs-command';
+import { AbilityModule } from './ability/ability.module';
 
 @Module({
   imports: [
@@ -23,11 +25,13 @@ import { QuizesModule } from './quizes/quizes.module';
     MailingModule,
     PaymentModule,
     ProfileModule,
-    QuizesModule,
+    QuizModule,
     ResourceModule,
     TopicModule,
     UserModule,
     DatabaseModule,
+    CommandModule,
+    AbilityModule,
   ],
   controllers: [AppController],
   providers: [AppService],

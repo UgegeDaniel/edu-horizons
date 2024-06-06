@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import PageComponents from 'src/pages';
 import appComponents from 'src/components';
 import ngZorroModules from './ng-zorro-modules';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -24,9 +25,9 @@ import ngZorroModules from './ng-zorro-modules';
     HttpClientModule,
     RouterModule.forRoot([]),
     ReactiveFormsModule,
-    [...ngZorroModules]
+    [...ngZorroModules],
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

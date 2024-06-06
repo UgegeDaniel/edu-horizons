@@ -10,10 +10,10 @@ import {
 import { AbstractEntity } from '../../utils/abstract-entity.entity';
 import { Appointment } from '../../appointments/entities/appointment.entity';
 import { VerificationToken } from './verification-token.entity';
-import { Assesment } from 'src/assesments/entities/assessment.entity';
+import { Assessment } from 'src/assessment/entities/assessment.entity';
 import { Payment } from 'src/payment/entities/payment.entity';
 import { Profile } from 'src/profile/entities/profile.entity';
-import { AuthenticationStrategy, UserRoles } from '../utils/types';
+import { AuthenticationStrategy, UserRole } from '../utils/types';
 
 @Entity('user')
 export class User extends AbstractEntity {
@@ -54,15 +54,13 @@ export class User extends AbstractEntity {
 
   @Column({
     nullable: false,
-    type: 'enum',
-    enum: UserRoles,
-    default: UserRoles.UNASSIGNED,
+    default: "UNASSIGNED",
   })
-  role: UserRoles;
+  role: UserRole;
 
   profileId: number;
 
-  @OneToOne(() => Profile, (profile) => profile.id, { onDelete: 'CASCADE' })
+  @OneToOne(() => Profile, { onDelete: 'CASCADE' })
   @JoinColumn()
   profile: Profile;
 
@@ -85,15 +83,15 @@ export class User extends AbstractEntity {
   })
   appointments_to_host: Appointment[];
 
-  @OneToMany(() => Assesment, (assesment) => assesment.assigned_by, {
+  @OneToMany(() => Assessment, (assessment) => assessment.assigned_by, {
     onDelete: 'CASCADE',
   })
-  assigned_assesments: Assesment[];
+  assigned_assessment: Assessment[];
 
-  @OneToMany(() => Assesment, (assesment) => assesment.assigned_to, {
+  @OneToMany(() => Assessment, (assessment) => assessment.assigned_to, {
     onDelete: 'CASCADE',
   })
-  assesments: Assesment[];
+  assessment: Assessment[];
 
   @OneToMany(() => Payment, (payment) => payment.student, {
     onDelete: 'CASCADE',

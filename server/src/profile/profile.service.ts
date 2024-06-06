@@ -61,7 +61,7 @@ export class ProfileService {
     const { profileId } = await this.userRepository.findOne({
       where: { id: userId },
     });
-
+    console.log({ updateProfileDto: updateProfileDto.picture })
     const profile = await this.profileRepository.findOne({
       where: { id: profileId },
     });
@@ -76,10 +76,10 @@ export class ProfileService {
       profile.phoneNumber = updateProfileDto.phoneNumber;
     }
     if (updateProfileDto.address) {
-      profile.address = updateProfileDto.address;
+      profile.address = { ...profile.address, ...updateProfileDto.address};
     }
     if (updateProfileDto.edu_bg) {
-      profile.edu_bg = updateProfileDto.edu_bg;
+      profile.edu_bg = { ...profile.edu_bg, ...updateProfileDto.edu_bg };
     }
     if (updateProfileDto.assigned_level) {
       profile.assigned_level = updateProfileDto.assigned_level;
@@ -95,6 +95,8 @@ export class ProfileService {
     }
 
     await this.profileRepository.save(profile);
+
+    console.log({ profile })
     return profile;
   }
 

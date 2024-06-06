@@ -8,8 +8,6 @@ import { Topic } from 'src/topic/entities/topic.entity';
 export class Quiz extends AbstractEntity {
   @Column({
     nullable: false,
-    type: 'enum',
-    enum: QuizType,
   })
   quiz_type: QuizType;
 
@@ -23,7 +21,7 @@ export class Quiz extends AbstractEntity {
   options: OptionType;
 
   @Column()
-  answer: keyof OptionType;
+  answer: string;
 
   @Column({
     nullable: false,

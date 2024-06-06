@@ -37,6 +37,8 @@
     "cookie-parser": "^1.4.6",
     "file-type-mime": "^0.3.10",
     "handlebars": "^4.7.8",
+    "nest-casl": "^1.9.3",
+    "nestjs-command": "^3.1.4",
     "nodemailer": "^6.9.13",
     "passport-google-oauth20": "^2.0.0",
     "passport-local": "^1.0.0",
