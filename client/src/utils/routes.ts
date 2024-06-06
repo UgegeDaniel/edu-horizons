@@ -26,10 +26,14 @@ import { FaqComponent } from "src/pages/support/faq/faq.component";
 import { PrivacyPolicyComponent } from "src/pages/support/privacy-policy/privacy-policy.component";
 import { ReportIssueComponent } from "src/pages/support/report-issue/report-issue.component";
 import { TermsOfServiceComponent } from "src/pages/support/terms-of-service/terms-of-service.component";
+// import { AuthGuard } from "src/services/auth.guard";
 
 // { path: '', pathMatch: 'full', redirectTo: '/login' },
 const routes: Routes = [
-    { path: '', component: HomepageComponent },
+  {
+    path: '', component: HomepageComponent,
+    // canActivate: [AuthGuard]
+  },
     { path: 'classes', component: ClassesComponent },
     //Assignments
     { path: 'assignments/practice-tests', component: PracticeQuizComponent },
@@ -40,7 +44,7 @@ const routes: Routes = [
     //Profile
     { path: 'profile/user-profile', component: UserProfileComponent },
     { path: 'profile/payments', component: PaymentsComponent },
-    //Resourses
+    //Resources
     { path: 'resources/resource-library', component: ResourceLibraryComponent },
     { path: 'resources/study-guides', component: StudyGuidesComponent },
     { path: 'resources/reference-materials', component: ReferenceMaterialsComponent },

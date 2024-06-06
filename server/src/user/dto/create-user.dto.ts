@@ -6,7 +6,7 @@ import {
   IsBoolean,
   IsOptional,
 } from 'class-validator';
-import { AuthenticationStrategy } from '../utils/types';
+import { AuthenticationStrategy, UserRole } from '../utils/types';
 
 export class CreateUserDto<Method extends AuthenticationStrategy> {
   @IsNotEmpty()
@@ -41,4 +41,8 @@ export class CreateUserDto<Method extends AuthenticationStrategy> {
   verified_email: Method extends 'google' ? true : false;
 
   strategy: Method;
+
+  id?: Method extends 'google' ? number : null;
+  picture?: Method extends 'google' ? string : null;
+  role: UserRole
 }

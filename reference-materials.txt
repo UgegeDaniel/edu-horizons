@@ -15,5 +15,5 @@ Dependency Injection
    * @param createUserDto
    * @returns Type of AuthenticatedUser
    * @description 1. Registers a new user while simultaneously creating the relationship with the profile, verification token
-   * 2. Sends a verifacation to the user
+   * 2. Sends a verification to the user
    */

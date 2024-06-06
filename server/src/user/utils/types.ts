@@ -1,16 +1,16 @@
-export enum UserRoles {
-  'ADMIN',
-  'TUTOR',
-  'STUDENT',
-  'UNASSIGNED',
-}
+export type UserRole =
+  'ADMIN' |
+  'TUTOR' |
+  'STUDENT' |
+  'UNASSIGNED'
+
 
 export enum VerificationTokenType {
   'VERIFICATION-TOKEN',
   'FORGOT-PASSWORD-TOKEN',
 }
 
-export type AuthenticationStrategy =  'google' | 'local'
+export type AuthenticationStrategy = 'google' | 'local'
 
 export interface User {
   email: string;
@@ -20,7 +20,7 @@ export interface User {
   given_name: string;
   family_name: string;
   picture?: string;
-  role: UserRoles;
+  role: UserRole;
 }
 
 export interface AuthenticatedUser extends Omit<User, 'password'> {

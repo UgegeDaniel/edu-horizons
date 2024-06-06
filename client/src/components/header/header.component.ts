@@ -1,5 +1,9 @@
-import { Component } from '@angular/core';
-import { FormControl, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
+import { Component, Input } from '@angular/core';
+import { User } from 'src/utils/types';
+
+const userDetails: User | null = localStorage.getItem("authenticatedUser")
+  ? JSON.parse(localStorage.getItem("authenticatedUser")!)
+  : null
 
 @Component({
   selector: 'app-header',
@@ -7,4 +11,11 @@ import { FormControl, FormGroup, NonNullableFormBuilder, Validators } from '@ang
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {  
+  @Input() isAuthenticated: boolean = false;
+  authenticatedUser: string | null = `${userDetails?.given_name} ${userDetails?.family_name}`
+  authenticatedUserEmail: string | null = `${userDetails?.email}`
+  constructor() { }
+
+  async ngOnInit() {
+  }
 }

@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Request as App_Request, Response } from 'express';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { UserService } from 'src/user/user.service';
-import { AuthenticatedUser, UserFromDb } from 'src/user/utils/types';
+import { AuthenticatedUser, UserRole } from 'src/user/utils/types';
 import {
   BASE_ROUTE,
   GOOGLE_TOKEN_LINK,
@@ -13,39 +13,45 @@ import {
   GOOGLE_REVOKE_TOKEN_LINK,
 } from 'src/utils/constants';
 
-interface GoogleAuthRequest extends App_Request {
-  user: { accessToken: string; refreshToken: string };
-}
+// interface GoogleAuthRequest extends App_Request {
+//   user: { accessToken: string; refreshToken: string };
+// }
+
+type GoogleProfileResponse = Omit<
+  CreateUserDto<'google'>,
+  "password" | "verified_email" | "strategy" | "role"
+>
 
 @Injectable()
 export class GoogleAuthService {
   constructor(
     private jwtService: JwtService,
     private readonly userService: UserService,
-  ) {}
+  ) { }
 
   async googleSignIn(
-    req: GoogleAuthRequest,
-    res: Response,
+    googleProfileResponse: GoogleProfileResponse,
   ): Promise<AuthenticatedUser> {
-    const googleToken = req.user.accessToken;
-    const googleRefreshToken = req.user.refreshToken;
-    res.cookie('access_token', googleToken, { httpOnly: true });
-    res.cookie('refresh_token', googleRefreshToken, {
-      httpOnly: true,
-    });
-    const googleProfileResponse = await this.getProfile(
-      req.cookies['access_token'],
-    );
-    const user = await this.userService.findOneByEmailOrCreate({
-      ...googleProfileResponse.data,
-      verified_email: true,
-    });
-    const { password: passwordFromDb, createdAt, updatedAt, ...rest } = user;
-    return {
-      jwt_token: (await this.getJwtToken(user.email, user.id)).access_token,
-      ...rest,
-    };
+    try {
+      const { email, given_name, family_name } = googleProfileResponse;
+      const user = await this.userService.findOneByEmailOrCreate({
+        given_name,
+        family_name,
+        email,
+        password: null,
+        strategy: 'google',
+        role: "UNASSIGNED",
+        verified_email: true,
+      });
+      const { password: passwordFromDb, createdAt, updatedAt, ...rest } = user;
+      return {
+        jwt_token: (await this.getJwtToken(user.email, user.id)).access_token,
+        ...rest,
+      };
+    } catch (err) {
+      console.log(err);
+      throw new HttpException('OOPS... Something went wrong.', HttpStatus.BAD_REQUEST);
+    }
   }
 
   googleSignOut(res: Response, refreshToken: string) {
@@ -53,12 +59,9 @@ export class GoogleAuthService {
     res.clearCookie('refresh_token');
     this.revokeGoogleToken(refreshToken);
     res.redirect(BASE_ROUTE);
-    //return instead of redirecting to base route
   }
-  private async getJwtToken(
-    email: string,
-    id: number,
-  ): Promise<{ access_token: string }> {
+
+  private async getJwtToken(email: string, id: number): Promise<{ access_token: string }> {
     const payload = { email: email, id: id };
     return {
       access_token: this.jwtService.sign(payload, {
@@ -66,6 +69,7 @@ export class GoogleAuthService {
       }),
     };
   }
+
   async getNewAccessToken(refreshToken: string): Promise<string> {
     try {
       const response = await axios.post(GOOGLE_TOKEN_LINK, {
@@ -77,21 +81,29 @@ export class GoogleAuthService {
 
       return response.data.access_token;
     } catch (error) {
-      throw new HttpException(
-        'Failed to refresh the access token.',
-        HttpStatus.BAD_REQUEST,
-      );
+      console.error('Failed to refresh the access token:', error.response?.data || error.message);
+      throw new HttpException('Failed to refresh the access token.', HttpStatus.BAD_REQUEST);
     }
   }
 
-  async getProfile(token: string): Promise<{ data: CreateUserDto<'google'> }> {
+  async getProfile(token: string, refresh_token: string): Promise<{ data: CreateUserDto<'google'> }> {
     try {
-      return axios.get(`${GOOGLE_PROFILE_LINK}${token}`);
+      let isExpired = false;
+      try {
+        isExpired = await this.isTokenExpired(token);
+      } catch (error) {
+        console.log('Token expiration check failed, proceeding to get new access token:', error.message);
+      }
+
+      if (isExpired) {
+        token = await this.getNewAccessToken(refresh_token);
+      }
+
+      const response = await axios.get(`${GOOGLE_PROFILE_LINK}${token}`);
+      return response;
     } catch (error) {
-      throw new HttpException(
-        'Failed to revoke the token',
-        HttpStatus.BAD_REQUEST,
-      );
+      console.log(error);
+      throw new HttpException('Failed to get the profile', HttpStatus.BAD_REQUEST);
     }
   }
 
@@ -99,22 +111,26 @@ export class GoogleAuthService {
     try {
       const response = await axios.get(`${GOOGLE_TOKEN_REFRESH_LINK}${token}`);
       const expiresIn = response.data.expires_in;
-      if (!expiresIn || expiresIn <= 0) {
-        return true;
-      }
+      return !expiresIn || expiresIn <= 0;
     } catch (error) {
-      throw new HttpException('Expired Access Token', HttpStatus.FORBIDDEN);
+      console.log('Error checking token expiry:', error.response?.data || error.message);
+      throw new HttpException('Failed to check token expiry', HttpStatus.BAD_REQUEST);
     }
   }
 
   async revokeGoogleToken(token: string) {
     try {
-      await axios.get(`${GOOGLE_REVOKE_TOKEN_LINK}${token}`);
+      await axios.post(GOOGLE_REVOKE_TOKEN_LINK, null, {
+        params: {
+          token: token,
+        },
+        headers: {
+          'Content-type': 'application/x-www-form-urlencoded',
+        },
+      });
     } catch (error) {
-      throw new HttpException(
-        'Failed to revoke the token:',
-        HttpStatus.FORBIDDEN,
-      );
+      console.error('Failed to revoke the token:', error.response?.data || error.message);
+      throw new HttpException('Failed to revoke the token', HttpStatus.BAD_REQUEST);
     }
   }
 }

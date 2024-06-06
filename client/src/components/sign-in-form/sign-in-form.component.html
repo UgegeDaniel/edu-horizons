@@ -1,1 +1,29 @@
-<p>sign-in-form works!</p>
+<form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
+    <nz-form-item>
+        <nz-form-control nzErrorTip="Please provide a valid email!">
+            <nz-input-group nzPrefixIcon="mail">
+                <input type="email" nz-input formControlName="email" placeholder="Your email" />
+            </nz-input-group>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-control nzErrorTip="Please input your Password!">
+            <nz-input-group nzPrefixIcon="lock">
+                <input type="password" nz-input formControlName="password" placeholder="Password" />
+            </nz-input-group>
+        </nz-form-control>
+    </nz-form-item>
+    <div nz-row class="login-form-margin">
+        <div nz-col [nzSpan]="12">
+            <label nz-checkbox formControlName="remember" ngDefaultControl>
+                <span>Remember me</span>
+            </label>
+        </div>
+        <div nz-col [nzSpan]="12" class="forgot-password-link" style="color: #1890ff;">
+            <a class="login-form-forgot" style="color: #1890ff;">Forgot password</a>
+        </div>
+    </div>
+    <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">Sign
+        in</button>
+</form>
+<app-google-signin-button></app-google-signin-button>

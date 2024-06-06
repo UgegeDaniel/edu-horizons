@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, ValidatorFn, AbstractControl, Validators, FormBuilder } from '@angular/forms';
-import { NzFormTooltipIcon } from 'ng-zorro-antd/form';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { ApiService } from 'src/services/api.service';
 
 @Component({
   selector: 'app-sign-up-form',
@@ -8,25 +9,61 @@ import { NzFormTooltipIcon } from 'ng-zorro-antd/form';
   styleUrls: ['./sign-up-form.component.css']
 })
 export class SignUpFormComponent {
+  passwordVisible = false;
+  confirmPasswordVisible = false;
+  password?: string;
+  isLoading: boolean = false;
   validateForm: FormGroup<{
     email: FormControl<string>;
     password: FormControl<string>;
-    checkPassword: FormControl<string>;
-    username: FormControl<string>;
-    phoneNumberPrefix: FormControl<'+234' | '+44'>;
-    phoneNumber: FormControl<string>;
-    website: FormControl<string>;
-    captcha: FormControl<string>;
+    confirm_password: FormControl<string>;
+    given_name: FormControl<string>;
+    family_name: FormControl<string>;
     agree: FormControl<boolean>;
   }>;
-  captchaTooltipIcon: NzFormTooltipIcon = {
-    type: 'info-circle',
-    theme: 'twotone'
-  };
 
-  submitForm(): void {
+  constructor(
+    private fb: FormBuilder,
+    private apiService: ApiService,
+    private messageService: NzMessageService
+  ) {
+    this.validateForm = this.fb.group({
+      email: ['', [Validators.email, Validators.required]],
+      password: ['', [Validators.required]],
+      confirm_password: ['', [Validators.required, this.confirmationValidator]],
+      given_name: ['', [Validators.required]],
+      family_name: ['', [Validators.required]],
+      agree: [false]
+    }) as FormGroup<{
+      email: FormControl<string>;
+      password: FormControl<string>;
+      confirm_password: FormControl<string>;
+      given_name: FormControl<string>;
+      family_name: FormControl<string>;
+      agree: FormControl<boolean>;
+    }>;
+  }
+
+  async submitForm() {
     if (this.validateForm.valid) {
-      console.log('submit', this.validateForm.value);
+      const { email, given_name, family_name, password } = this.validateForm.value;
+      const userCredentials = { email, given_name, family_name, password };
+      this.isLoading = true;
+      try {
+        const res = await this.apiService.postResource("user/auth/local/register", userCredentials);
+        if (res.data?.statusCode && res.data?.statusCode === 401) {
+          this.messageService.error(res.data.message);
+          this.isLoading = false;
+          return;
+        }
+        this.messageService.success('Registration successful! Reloading page...');
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000); // Adding a delay to ensure the message is shown
+      } catch (error) {
+        this.messageService.error('An error occurred. Please try again.');
+        this.isLoading = false;
+      }
     } else {
       Object.values(this.validateForm.controls).forEach(control => {
         if (control.invalid) {
@@ -38,8 +75,7 @@ export class SignUpFormComponent {
   }
 
   updateConfirmValidator(): void {
-    /** wait for refresh value */
-    Promise.resolve().then(() => this.validateForm.controls.checkPassword.updateValueAndValidity());
+    Promise.resolve().then(() => this.validateForm.controls.confirm_password.updateValueAndValidity());
   }
 
   confirmationValidator: ValidatorFn = (control: AbstractControl): { [s: string]: boolean } => {
@@ -50,32 +86,4 @@ export class SignUpFormComponent {
     }
     return {};
   };
-
-  getCaptcha(e: MouseEvent): void {
-    e.preventDefault();
-  }
-
-  constructor(private fb: FormBuilder) {
-    this.validateForm = this.fb.group({
-      email: ['', [Validators.email, Validators.required]],
-      password: ['', [Validators.required]],
-      checkPassword: ['', [Validators.required, this.confirmationValidator]],
-      username: ['', [Validators.required]],
-      phoneNumberPrefix: '+86' as '+234' | '+44',
-      phoneNumber: ['', [Validators.required]],
-      website: ['', [Validators.required]],
-      captcha: ['', [Validators.required]],
-      agree: [false]
-    }) as FormGroup<{
-      email: FormControl<string>;
-      password: FormControl<string>;
-      checkPassword: FormControl<string>;
-      username: FormControl<string>;
-      phoneNumberPrefix: FormControl<'+234' | '+44'>;
-      phoneNumber: FormControl<string>;
-      website: FormControl<string>;
-      captcha: FormControl<string>;
-      agree: FormControl<boolean>;
-  }>;
-  }
 }

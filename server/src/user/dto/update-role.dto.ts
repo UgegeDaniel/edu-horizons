@@ -1,7 +1,8 @@
-import { IsEnum } from "class-validator";
-import { UserRoles } from "../utils/types";
+import { IsEnum, IsNotEmpty, IsString } from "class-validator";
+import { UserRole } from "../utils/types";
 
 export class UpdateRoleDto {
-    @IsEnum(UserRoles, { message: "Invalid Role Passed "})
-      role: UserRoles;
+  @IsNotEmpty()
+  @IsString()
+  role: UserRole;
 }

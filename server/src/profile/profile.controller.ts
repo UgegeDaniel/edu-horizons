@@ -63,7 +63,7 @@ export class ProfileController {
 
   @Patch('updated-profile')
   @UseGuards(JwtAuthGuard)
-  // @UseGuards(Verified)
+  @UseGuards(Verified)
   @UseInterceptors(FileInterceptor('file', multerOptions))
   updateProfile(
     @Req() req,

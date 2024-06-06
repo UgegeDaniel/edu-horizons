@@ -175,6 +175,34 @@
     {
       "endpoint": "/quizes/:id",
       "method": "DELETE"
+    },
+    {
+      "endpoint": "/appointments/to-host",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/appointments/to-attend",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/appointments/update-appointment:id",
+      "method": "PATCH"
+    },
+    {
+      "endpoint": "/appointments/update-appointment/:id",
+      "method": "PATCH"
+    },
+    {
+      "endpoint": "/user/auth/verify",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/user/auth/verify-token",
+      "method": "GET"
+    },
+    {
+      "endpoint": "/user/auth/sign-out",
+      "method": "GET"
     }
   ]
 }

@@ -1,141 +1,275 @@
-<div nz-row style="width: 100%">
-    <div nz-col nzSpan="8" style="background-color: white; margin-right: 16px;">
+<div fxLayout="row wrap" fxLayoutGap="16px" style="width: 100%">
+    <div fxFlex="100" fxFlex.gt-sm="25" style="background-color: white; margin-right: 16px;">
         <div class="profile-card">
             <div class="profile-header">
-                <img class="profile-image" src="../../../assets/profile-image.avif" alt="Profile Picture">
+                <img class="profile-image" [src]="'http://localhost:5000/profile' + user.profilePicture"
+                    alt="Profile Picture">
                 <h2 class="profile-name">{{ user.name }}</h2>
-                <p class="profile-subtext">{{ user.role }} / {{user.level}}</p>
+                <p class="profile-subtext">{{ user.role }} / {{user.assigned_level}}</p>
                 <p class="profile-subtext">{{ user.location }}</p>
             </div>
             <div class="profile-footer">
-                <button nz-button nzType="primary">Edit Profile</button>
-                <button nz-button nzType="default">Logout</button>
+                <button nz-button nzType="primary" (click)="showModal()">Edit Profile</button>
+                <button nz-button nzType="default" (click)="signOut()">Logout</button>
             </div>
         </div>
     </div>
-    <div nz-col nzSpan="15" class="profile-details">
+    <div fxFlex="100" fxFlex.gt-sm="70" class="profile-details">
         <div style="width: 100%; padding-inline: 16px">
-            <nz-alert nzType="warning" nzMessage="Please click the link in your mail to verify your email" nzShowIcon></nz-alert>
-            <nz-divider nzText="General Information" nzOrientation="left"></nz-divider>
-            <div nz-row nzGutter="16">
-                <div nz-col nzSpan="8">
-                    <p class="profile-detail"><strong>Email:</strong></p>
-                </div>
-                <div nz-col nzSpan="16">
-                    <div style="display: flex;">
-                        <nz-badge nzStatus="processing"></nz-badge>
-                        <nz-badge nzStatus="success"></nz-badge>
-                        <p class="profile-detail">{{ user.email }}</p>
-                    </div>
-                </div>
-            </div>
-            <div nz-row nzGutter="16">
-                <div nz-col nzSpan="8">
-                    <p class="profile-detail"><strong>Phone:</strong></p>
-                </div>
-                <div nz-col nzSpan="16">
-                    <p class="profile-detail">{{ user.phoneNumber }}</p>
-                </div>
-            </div>
-            <div nz-row nzGutter="16">
-                <div nz-col nzSpan="8">
-                    <p class="profile-detail"><strong>Address:</strong></p>
-                </div>
-                <div nz-col nzSpan="16">
-                    <p class="profile-detail">{{ user.address }}</p>
-                </div>
-            </div>
-        </div>
-        <div style="width: 100%; padding-inline: 16px">
-            <nz-divider nzText="Educational Background" nzOrientation="left"></nz-divider>
-            <div nz-row nzGutter="16">
-                <div nz-col nzSpan="8">
-                    <p class="profile-detail"><strong>Institution:</strong></p>
-                </div>
-                <div nz-col nzSpan="16">
-                    <p class="profile-detail">{{ user.educationalBackground.institution }}</p>
-                </div>
-            </div>
-            <div nz-row nzGutter="16">
-                <div nz-col nzSpan="8">
-                    <p class="profile-detail"><strong>Degree / Current Academic Program :</strong></p>
-                </div>
-                <div nz-col nzSpan="16">
-                    <p class="profile-detail">{{ user.educationalBackground.degree }}</p>
-                </div>
-            </div>
-            <div nz-row nzGutter="16">
-                <div nz-col nzSpan="8">
-                    <p class="profile-detail"><strong>Upcoming Certification Exams :</strong></p>
-                </div>
-                <div nz-col nzSpan="16">
-                    <p class="profile-detail">{{ user.educationalBackground.certificationExams }}</p>
-                </div>
-            </div>
-            <div nz-row nzGutter="16">
-                <div nz-col nzSpan="8">
-                    <p class="profile-detail"><strong>Year of Study:</strong></p>
-                </div>
-                <div nz-col nzSpan="16">
-                    <p class="profile-detail">{{ user.educationalBackground.yearOfStudy }}</p>
-                </div>
-            </div>
-        </div>
-        <div style="width: 100%; padding-inline: 16px">
-            <nz-divider nzText="Additional Information" nzOrientation="left"></nz-divider>
-            <div nz-row nzGutter="16">
-                <div nz-col nzSpan="8">
-                    <p class="profile-detail"><strong>Interests:</strong></p>
-                </div>
-                <div nz-col nzSpan="16">
-                    <ul class="flex-row">
-                        <nz-tag [nzColor]="'blue'" *ngFor="let interest of user.additionalInformation.interests;"
-                            nzBordered="false">{{interest}}</nz-tag>
+            <nz-alert *ngIf="!user.verified_email" nzType="warning"
+                nzMessage="Please click the link in your mail to verify your email" nzShowIcon></nz-alert>
+
+            <nz-collapse>
+                <nz-collapse-panel nzHeader="Personal Information" [nzActive]="true">
+                    <ul class="ant-list-items">
+                        <li class="ant-list-item">
+                            <span class="ant-list-item-meta-title">Name:</span> <span>{{ user.name }}</span>
+                        </li>
+                        <li class="ant-list-item">
+                            <span class="ant-list-item-meta-title">Role:</span> <span>{{ user.role }}</span>
+                        </li>
+                        <li class="ant-list-item">
+                            <span class="ant-list-item-meta-title">Assigned Level:</span> <span>{{ user.assigned_level
+                                }}</span>
+                        </li>
+                        <li class="ant-list-item">
+                            <span class="ant-list-item-meta-title">Location:</span> <span>{{ user.location }}</span>
+                        </li>
+                        <li class="ant-list-item">
+                            <span class="ant-list-item-meta-title">Phone Number:</span> <span>{{ user.phoneNumber
+                                }}</span>
+                        </li>
                     </ul>
-                </div>
-            </div>
-            <div nz-row nzGutter="16">
-                <div nz-col nzSpan="8">
-                    <p class="profile-detail"><strong>Bio:</strong></p>
-                </div>
-                <div nz-col nzSpan="16">
-                    <p class="profile-detail">{{ user.additionalInformation.bio }}</p>
-                </div>
-            </div>
+                </nz-collapse-panel>
+
+                <nz-collapse-panel nzHeader="Educational Background" [nzActive]="false">
+                    <ul class="ant-list-items">
+                        <li class="ant-list-item">
+                            <span class="ant-list-item-meta-title">Institution:</span>
+                            <span>{{ user.educationalBackground?.institution }}</span>
+                        </li>
+                        <li class="ant-list-item">
+                            <span class="ant-list-item-meta-title">Degree:</span>
+                            <span>{{ user.educationalBackground?.degree }}</span>
+                        </li>
+                        <li class="ant-list-item">
+                            <span class="ant-list-item-meta-title">Certification Exams:</span>
+                            <span>{{ user.educationalBackground?.certificationExams }}</span>
+                        </li>
+                        <li class="ant-list-item">
+                            <span class="ant-list-item-meta-title">Year of Study:</span>
+                            <span>{{ user.educationalBackground?.yearOfStudy }}</span>
+                        </li>
+                    </ul>
+                </nz-collapse-panel>
+
+                <nz-collapse-panel nzHeader="Additional Information" [nzActive]="false">
+                    <ul class="ant-list-items">
+                        <li class="ant-list-item">
+                            <span class="ant-list-item-meta-title">Interests:</span>
+                            <div class="tags">
+                                <nz-tag *ngFor="let interest of interests" nzColor="blue">{{ interest }}</nz-tag>
+                            </div>
+                        </li>
+                        <li class="ant-list-item">
+                            <span class="ant-list-item-meta-title">Bio:</span>
+                            <i>{{ user.additionalInformation?.bio }}</i>
+                        </li>
+                    </ul>
+                </nz-collapse-panel>
+            </nz-collapse>
         </div>
     </div>
-</div>
-<div nz-row>
-    <div nz-col nzSpan="12" class="profile-details" style="flex-direction: row; margin-top: 16px; padding-left: 16px;">
-        <nz-col [nzSpan]="8" style="margin: 4px;">
-            <nz-statistic [nzValue]="(user.userHistory.quizzesTaken | number)!"
-                [nzTitle]="'Total Number Of Tests Taken'"></nz-statistic>
-        </nz-col>
-        <nz-col [nzSpan]="8" style="margin: 4px;">
-            <nz-statistic [nzValue]="(10 | number)!" [nzTitle]="'Number Of Maths Tests Taken'"></nz-statistic>
-        </nz-col>
-        <nz-col [nzSpan]="8" style="margin: 4px;">
-            <nz-statistic [nzValue]="(10 | number)!" [nzTitle]="'Number Of Science Tests Taken'"></nz-statistic>
-        </nz-col>
-    </div>
-    <div nz-col nzSpan="12" class="profile-details" style="flex-direction: row; margin-top: 16px; padding: 16px;">
-        <h4 style="margin-right: 12px">Total Average Score</h4>
-        <nz-progress nzStrokeLinecap="square" nzType="dashboard"
-            [nzPercent]="user.userHistory.averageQuizScore"></nz-progress>
-    </div>
-</div>
-<div nz-row>
-    <div nz-col nzSpan="24" class="profile-details" style="margin-top: 16px; padding-inline: 16px">
-        <h3 style="display: block;">Scores For Each Attempted Subject</h3>
-        <div style="width: 100%">
-            <div *ngFor="let studentScore of user.userHistory.subjectScores">
-                <h4 style="margin-right: 12px">{{studentScore.subject}}</h4>
-                <nz-progress [nzPercent]="studentScore.score" nzStatus="active"></nz-progress>
-            </div>
-            <!-- <nz-progress [nzPercent]="30"></nz-progress>
-            <nz-progress [nzPercent]="70" nzStatus="exception"></nz-progress>
-            <nz-progress [nzPercent]="100"></nz-progress>
-            <nz-progress [nzPercent]="50" [nzShowInfo]="false"></nz-progress> -->
-        </div>
-    </div>
+    <nz-modal [nzFooter]="nzFooter" [(nzVisible)]="isVisible" nzTitle="Edit profile" (nzOnCancel)="handleCancel()"
+        (nzOnOk)="handleOk()">
+        <ng-container *nzModalContent>
+            <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="6" nzFor="profilePicture">Profile Picture</nz-form-label>
+                    <nz-form-control>
+                        <nz-input-group nzPrefixIcon="picture">
+                            <input type="file" (change)="onFileSelected($event)" />
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item *ngIf="user.role === 'UNASSIGNED'">
+                    <nz-form-label [nzSpan]="6" nzFor="role">Role</nz-form-label>
+                    <nz-form-control nzErrorTip="Please select a role!">
+                        <nz-select nz-input formControlName="role" placeholder="Select Role">
+                            <nz-option nzValue="TUTOR" nzLabel="TUTOR"></nz-option>
+                            <nz-option nzValue="STUDENT" nzLabel="STUDENT"></nz-option>
+                            <nz-option nzValue="UNASSIGNED" nzLabel="UNASSIGNED"></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item *ngIf="user.role === 'STUDENT'">
+                    <nz-form-label [nzSpan]="6" nzFor="assigned_level">Assigned Level</nz-form-label>
+                    <nz-form-control nzErrorTip="Please input your level!">
+                        <nz-select nz-input formControlName="assigned_level" placeholder="Select Level">
+                            <nz-option nzValue="PRE-SECONDARY" nzLabel="PRE-SECONDARY"></nz-option>
+                            <nz-option nzValue="JUNIOR_SECONDARY" nzLabel="JUNIOR SECONDARY"></nz-option>
+                            <nz-option nzValue="SECONDARY" nzLabel="SECONDARY"></nz-option>
+                            <nz-option nzValue="SENIOR_SECONDARY" nzLabel="SENIOR SECONDARY"></nz-option>
+                            <nz-option nzValue="MISCELLANEOUS" nzLabel="MISCELLANEOUS"></nz-option>
+                            <nz-option nzValue="UNASSIGNED" nzLabel="UNASSIGNED"></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item *ngIf="user.role !== 'UNASSIGNED'">
+                    <div formGroupName="address" class="address-form-group">
+                        <nz-form-item>
+                            <nz-form-label [nzSpan]="6" nzFor="houseNumber">House Number</nz-form-label>
+                            <nz-form-control nzErrorTip="Please input your house number!">
+                                <nz-input-group nzPrefixIcon="home">
+                                    <input type="text" nz-input formControlName="houseNumber"
+                                        [placeholder]="user.address?.houseNumber || 'House Number'" />
+                                </nz-input-group>
+                            </nz-form-control>
+                        </nz-form-item>
+
+                        <nz-form-item>
+                            <nz-form-label [nzSpan]="6" nzFor="street">Street</nz-form-label>
+                            <nz-form-control nzErrorTip="Please input your street!">
+                                <nz-input-group>
+                                    <input type="text" nz-input formControlName="street"
+                                        [placeholder]="user.address?.street || 'Street'" />
+                                </nz-input-group>
+                            </nz-form-control>
+                        </nz-form-item>
+
+                        <nz-form-item>
+                            <nz-form-label [nzSpan]="6" nzFor="city">City</nz-form-label>
+                            <nz-form-control nzErrorTip="Please input your city!">
+                                <nz-input-group nzPrefixIcon="environment">
+                                    <input type="text" nz-input formControlName="city"
+                                        [placeholder]="user.address?.city || 'City'" />
+                                </nz-input-group>
+                            </nz-form-control>
+                        </nz-form-item>
+
+                        <nz-form-item>
+                            <nz-form-label [nzSpan]="6" nzFor="country">Country</nz-form-label>
+                            <nz-form-control nzErrorTip="Please select your country!">
+                                <div class="custom-select-wrapper">
+                                    <div class="custom-select">
+                                        <div class="custom-select-trigger" (click)="toggleDropdown()">
+                                            <img *ngIf="selectedCountry"
+                                                [src]="'../assets/flag-icons/1x1/' + selectedCountry?.code?.toLowerCase() + '.svg'"
+                                                [alt]="selectedCountry?.flag" style="height: 15px; width: 15px" />
+                                            {{ selectedCountry?.name || 'Select a Country' }}
+                                            <span class="dialCode">{{ selectedCountry?.dialCode || "" }}</span>
+                                        </div>
+                                        <div class="custom-options" *ngIf="dropdownOpen">
+                                            <div *ngFor="let country of countries" class="custom-option"
+                                                (click)="selectOption(country)">
+                                                <img [src]="'../assets/flag-icons/1x1/' + country.code.toLowerCase() + '.svg'"
+                                                    [alt]="country.flag" style="height: 15px; width: 15px" />
+                                                {{ country.name }}
+                                                <span class="dialCode">{{ country.dialCode }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="6" nzFor="phoneNumber">Phone Number</nz-form-label>
+                    <nz-form-control nzErrorTip="Please input your phone number!">
+                        <nz-input-group nzPrefixIcon="phone">
+                            <input type="text" nz-input formControlName="phoneNumber"
+                                [placeholder]="user.phoneNumber || 'Phone Number'" />
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item *ngIf="user.role !== 'UNASSIGNED'">
+                    <div formGroupName="edu_bg" class="educational-form-group">
+                        <nz-form-item>
+                            <nz-form-label [nzSpan]="6" nzFor="institution">Institution</nz-form-label>
+                            <nz-form-control nzErrorTip="Please input your institution!">
+                                <nz-input-group nzPrefixIcon="book">
+                                    <input type="text" nz-input formControlName="institution"
+                                        [placeholder]="user.educationalBackground?.institution || 'Institution'" />
+                                </nz-input-group>
+                            </nz-form-control>
+                        </nz-form-item>
+
+                        <nz-form-item>
+                            <nz-form-label [nzSpan]="6" nzFor="degree">Degree</nz-form-label>
+                            <nz-form-control nzErrorTip="Please input your degree!">
+                                <nz-input-group nzPrefixIcon="book">
+                                    <input type="text" nz-input formControlName="degree"
+                                        [placeholder]="user.educationalBackground?.degree || 'Degree'" />
+                                </nz-input-group>
+                            </nz-form-control>
+                        </nz-form-item>
+
+                        <nz-form-item>
+                            <nz-form-label [nzSpan]="6" nzFor="certificationExams">Certification Exams</nz-form-label>
+                            <nz-form-control nzErrorTip="Please input your certification exams!">
+                                <nz-input-group nzPrefixIcon="solution">
+                                    <input type="text" nz-input formControlName="certificationExams"
+                                        [placeholder]="user.educationalBackground?.certificationExams || 'Certification Exams'" />
+                                </nz-input-group>
+                            </nz-form-control>
+                        </nz-form-item>
+
+                        <nz-form-item>
+                            <nz-form-label [nzSpan]="6" nzFor="yearOfStudy">Year of Study</nz-form-label>
+                            <nz-form-control nzErrorTip="Please input your year of study!">
+                                <nz-input-group nzPrefixIcon="calendar">
+                                    <input type="text" nz-input formControlName="yearOfStudy"
+                                        [placeholder]="user.educationalBackground?.yearOfStudy || 'Year of Study'" />
+                                </nz-input-group>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                </nz-form-item>
+
+                <nz-form-item *ngIf="user.role === 'STUDENT'">
+                    <nz-form-label [nzSpan]="6" nzFor="preferred_meeting_days">Preferred Meeting Days</nz-form-label>
+                    <nz-form-control nzErrorTip="Please pick your preferred meeting days!">
+                        <div class="tags">
+                            <nz-tag *ngFor="let meeting_day of meetingDays" [nzColor]="getMeetingDayColor(meeting_day)"
+                                (click)="toggleMeetingDay(meeting_day)">
+                                {{ meeting_day }}
+                            </nz-tag>
+                        </div>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item *ngIf="user.role !== 'UNASSIGNED'">
+                    <nz-form-label [nzSpan]="6" nzFor="interests">Interests</nz-form-label>
+                    <nz-form-control nzErrorTip="Please input your interests!">
+                        <span nz-typography nzType="secondary">
+                            <i nz-icon nzType="info-circle" nzTheme="outline" style="margin-right: 8px;"></i>
+                            <p style="display: inline;">Separate interests with commas</p>
+                        </span>
+                        <nz-input-group nzPrefixIcon="heart">
+                            <input type="text" nz-input formControlName="interests"
+                                [placeholder]="user.additionalInformation?.interests || 'Interests'"
+                                (input)="onInterestsInput($event)" />
+                        </nz-input-group>
+                        <div class="tags">
+                            <nz-tag *ngFor="let interest of interests">{{ interest }}</nz-tag>
+                        </div>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item *ngIf="user.role !== 'UNASSIGNED'">
+                    <nz-form-label [nzSpan]="6" nzFor="bio">Bio</nz-form-label>
+                    <nz-form-control nzErrorTip="Please input your bio!">
+                        <nz-input-group nzPrefixIcon="info">
+                            <input type="text" nz-input formControlName="bio"
+                                [placeholder]="user.additionalInformation?.bio || 'Bio'" />
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <button nz-button class="login-form-button login-form-margin" [nzLoading]="isLoading"
+                    [nzType]="'primary'">Save</button>
+            </form>
+        </ng-container>
+    </nz-modal>
 </div>

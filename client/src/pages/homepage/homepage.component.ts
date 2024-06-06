@@ -12,10 +12,10 @@ export class HomepageComponent {
   constructor(
     private readonly apiService: ApiService
   ) {
-    this.apiService.getResource<{message: string}>().subscribe((value) => {
-      this.testString = value.message
-    })
-    console.log(this.testString);
+    // (await this.apiService.getResource<{message: string}>("/")).subscribe((value) => {
+    //   this.testString = value.message
+    // })
+    // console.log(this.testString);
   }
   testimonials = [
     { content: 'This platform helped me improve my grades significantly!', author: 'John Doe' },

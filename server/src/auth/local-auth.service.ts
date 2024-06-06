@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { ForbiddenException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
@@ -7,7 +7,7 @@ import {
   AuthenticatedUser,
   UserFromDb,
   User,
-  UserRoles,
+  UserRole,
   VerificationTokenType,
 } from 'src/user/utils/types';
 import { MailingService } from 'src/mailing/mailing.service';
@@ -30,10 +30,22 @@ export class LocalAuthService {
     private jwtService: JwtService,
     private readonly userService: UserService,
     private readonly mailerService: MailingService,
-  ) {}
+  ) { }
+  async findUserWithProfile(userId: number) {
+    const user: UserFromDb = await this.userService.findById(userId);
+    if (!user) return throwInvalidCredError();
+    const { password: passwordFromDb, createdAt, updatedAt, ...rest } = user;
+    return {
+      jwt_token: (await this.getJwtToken(user.email, user.id)).access_token,
+      ...rest,
+    };
+  }
   async login(email: string, password: string): Promise<AuthenticatedUser> {
     const user: UserFromDb = await this.userService.findOneByEmail(email);
     if (!user) return throwInvalidCredError();
+    if (user.strategy === "google") {
+      throw new ForbiddenException("Invalid Strategy")
+    }
     const isMatch: boolean = bcrypt.compareSync(password, user.password);
     if (!isMatch) return throwInvalidCredError();
     const { password: passwordFromDb, createdAt, updatedAt, ...rest } = user;
@@ -60,7 +72,7 @@ export class LocalAuthService {
   ): Promise<AuthenticatedUser> {
     const newUserToBeRegistered: Omit<User, 'id'> = {
       ...createUserDto,
-      role: UserRoles.UNASSIGNED,
+      role: "UNASSIGNED",
       verified_email: false,
       strategy: 'local',
     };
@@ -74,7 +86,7 @@ export class LocalAuthService {
       verificationToken,
       VerificationTokenType['VERIFICATION-TOKEN'],
     );
-    const newUser = await this.userService.create(
+    const newUser = await this.userService.createUser(
       {
         ...newUserToBeRegistered,
         password: hashedPassword,
@@ -90,7 +102,7 @@ export class LocalAuthService {
     );
     const {
       password,
-      verification_token: userVerifcationDetails,
+      verification_token: userVerificationDetails,
       ...rest
     } = newUser;
     return {
@@ -107,16 +119,9 @@ export class LocalAuthService {
         token,
         VerificationTokenType['VERIFICATION-TOKEN'],
       );
-      const {
-        // password,
-        // verification_token: userVerifcationDetails,
-        verified_email,
-        // ...rest
-      } = verifiedUser;
+      const { verified_email } = verifiedUser;
       return {
-        // jwt_token: (await this.getJwtToken(verifiedUser.email, verifiedUser.id)).access_token,
         verified_email,
-        // ...rest,
       };
     } catch (error: any) {
       throw new HttpException(error.message, HttpStatus.FORBIDDEN);
@@ -169,8 +174,8 @@ export class LocalAuthService {
     }
   }
 
-  sendVerificationMaillAgain() {}
-  async updateUserRole(userId: number, role: UserRoles) {
+  sendVerificationMailAgain() {}
+  async updateUserRole(userId: number, role: UserRole) {
     try {
       return await this.userService.findAndUpdateUserRole(userId, role);
     } catch (error) {

@@ -19,3 +19,7 @@ html {
     --mat-toolbar-container-background-color: #001529;
     --mat-toolbar-container-text-color: rgba(0, 0, 0, 0.87);
 }
+
+.ant-menu{
+    padding: 0
+}

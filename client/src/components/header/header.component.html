@@ -4,7 +4,11 @@
             <img class="logo-img" src="../assets/logo-no-background.png" alt="logo">
             <span class="logo-txt">EDU-HORIZONS</span>
         </div>
-        <app-modal modalBtnTxt="Sign In / Sign Up" [modalContentRef]="authForm" [maskable]="true"></app-modal>
+        <span *ngIf="isAuthenticated" class="flex">
+                <nz-avatar nzIcon="user" style="background-color:#87d068; margin-right: 10px;"></nz-avatar>
+                <button nz-button nzType="default">{{authenticatedUser}} / {{authenticatedUserEmail}} </button>
+        </span>
+        <app-modal *ngIf="!isAuthenticated" modalBtnTxt="Sign In / Sign Up" [modalContentRef]="authForm" [maskable]="true"></app-modal>
         <ng-template #authForm>
             <app-auth-form></app-auth-form>
         </ng-template>
